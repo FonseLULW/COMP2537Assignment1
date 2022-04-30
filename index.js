@@ -1,7 +1,7 @@
 const pokeContainer = document.getElementById("pokemon-grid");
 const pokeCount = 898;
 
-async function getPokemon(id) {
+async function getPokemonByID(id) {
     const url = `https://pokeapi.co/api/v2/pokemon/${id}`;
     const res = await fetch(url);
     const pokemon = await res.json();
@@ -23,10 +23,12 @@ function populateHomePage() {
 function createPokemonImage(imgsrc) {
     console.log(`Creating Pokemon ${imgsrc}`);
 
-    let pokemonContainer = document.createElement('div');
+    let pokemonContainer = document.createElement('a');
     pokemonContainer.classList.add("pokemon-container");
 
-    getPokemon(imgsrc).then((thisPokemon) => {
+    pokemonContainer.setAttribute("href", "");
+
+    getPokemonByID(imgsrc).then((thisPokemon) => {
         console.log(thisPokemon.sprites.back_default);
         pokemonContainer.innerHTML = `<img src="${thisPokemon.sprites.front_default}" alt="${thisPokemon.name}">`;
     });

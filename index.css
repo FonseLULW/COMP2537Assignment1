@@ -7,7 +7,7 @@ body {
     margin: auto;
     /* width: 100%; */
     height: 100%;
-    background-color: antiquewhite;
+    background-color: whitesmoke;
 }
 
 header {
@@ -37,13 +37,13 @@ nav {
     align-items: center;
 }
 
+.navlink-container:hover {
+    background-color: rgb(82, 82, 82);
+}
+
 .navlink {
     color: azure;
     font-family: 'Lucida Sans Regular';
-}
-
-a {
-    text-decoration: none;
 }
 
 footer {
@@ -51,7 +51,6 @@ footer {
     height: 8%;
     display: flex;
     justify-content: center;
-    background-color: whitesmoke;
 }
 
 h5 {
@@ -63,9 +62,8 @@ main {
     display: grid;
     grid-template-columns: 20% 20% 20%;
     justify-content: center;
-    background-color: whitesmoke;
     gap: 10px;
-    padding: 20px;
+    padding: 30px;
 }
 
 .pokemon-container {
@@ -75,6 +73,13 @@ main {
     flex-direction: column;
     background-color: rgb(230, 216, 216);
     border-radius: 24px;
+}
+
+.pokemon-container:hover {
+    background-color: rgb(194, 182, 182);
+    transform: rotateY(360deg) scale(1.1);
+    /* transition-duration: 10s; */
+    transition: 0.5s;
 }
 
 img {
