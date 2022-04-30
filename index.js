@@ -1,3 +1,4 @@
+const pokeContainer = document.getElementById("pokemon-grid");
 const pokeCount = 898;
 
 async function getPokemon(id) {
@@ -8,16 +9,29 @@ async function getPokemon(id) {
 }
     
 function getRandomPokemonID() {
-    return Math.floor(Math.random * pokeCount);
+    return Math.floor(Math.random() * pokeCount) + 1;
 }
     
 function populateHomePage() {
-    let pokemonContainers = document.getElementsByClassName("pokemon-container");
-    let containerCount = pokemonContainers.length;
+    let homePageLimit = 9;
 
-    for (let i = 0; i < containerCount; i++) {
-        
+    for (let i = 0; i < homePageLimit; i++) {
+        createPokemonImage(getRandomPokemonID());
     }
+}
+
+function createPokemonImage(imgsrc) {
+    console.log(`Creating Pokemon ${imgsrc}`);
+
+    let pokemonContainer = document.createElement('div');
+    pokemonContainer.classList.add("pokemon-container");
+
+    getPokemon(imgsrc).then((thisPokemon) => {
+        console.log(thisPokemon.sprites.back_default);
+        pokemonContainer.innerHTML = `<img src="${thisPokemon.sprites.front_default}">`;
+    });
+
+    pokeContainer.appendChild(pokemonContainer);
 }
 
 function ready() {
