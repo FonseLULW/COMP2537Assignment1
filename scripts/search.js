@@ -18,6 +18,7 @@ function reformat(oldstring) {
     return newstring.trim().toLowerCase().replace(/ /g, "-");
 }
 
+// Translate word representation of a number to actual number
 function translate(oldstring) {
     let newstring = POKEGENERATIONS.get(oldstring);
     if (newstring == undefined) {
@@ -29,6 +30,7 @@ function translate(oldstring) {
 }
 
 function search() {
+    let pokemon;
     switch(searchBy.innerHTML.toLowerCase()) {
         case "type":
             break;
@@ -39,23 +41,26 @@ function search() {
             break;
         default:
             console.log(reformat(searchQuery.value));
-            // getPokemonByName();
+            pokemon = getPokemonByIDorName(reformat(searchQuery.value));
     }
+    
+    pokemon.then((thisPokemon) => {
+        createPokemonImage(thisPokemon);
+    })
 }
 
 function ready() {
-    console.log("Translation services available...")
-
     // dropdown menu setup
     for (i = 1; i <= 4; i++) {
         setupDropItem(i);
     }
-    console.log("Dropdown menu complete...")
+    console.log("Dropdown menu initialized...")
 
     // search button click 
     document.querySelector("#searchPokemon").addEventListener("mousedown", () => {
         search();
     })
+    console.log("Search button initialized...")
 
 
     console.log("Initialization completed!");

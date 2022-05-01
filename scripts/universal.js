@@ -20,8 +20,8 @@ function getRandomPokemonID() {
     return Math.floor(Math.random() * POKECOUNT) + 1;
 }
 
-// Get a Pokemon from PokeAPI
-async function getPokemonByID(id) {
+// Get a Pokemon from PokeAPI by ID
+async function getPokemonByIDorName(id) {
     const url = `https://pokeapi.co/api/v2/pokemon/${id}`;
     const res = await fetch(url);
     const pokemon = await res.json();
@@ -29,18 +29,16 @@ async function getPokemonByID(id) {
 }
 
 // Custom Pokemon Image Graphic
-function createPokemonImage(imgsrc) {
-    console.log(`Creating Pokemon ${imgsrc}`);
+function createPokemonImage(thisPokemon) {
+    console.log(`Creating Pokemon ${thisPokemon.name}`);
 
     let pokemonContainer = document.createElement('a');
     pokemonContainer.classList.add("pokemon-container");
 
     pokemonContainer.setAttribute("href", "");
 
-    getPokemonByID(imgsrc).then((thisPokemon) => {
-        console.log(thisPokemon.sprites.back_default);
-        pokemonContainer.innerHTML = `<img src="${thisPokemon.sprites.front_default}" alt="${thisPokemon.name}">`;
-    });
+    console.log(thisPokemon.sprites.back_default);
+    pokemonContainer.innerHTML = `<img src="${thisPokemon.sprites.front_default}" alt="${thisPokemon.name}">`;
 
     pokeContainer.appendChild(pokemonContainer);
 }
