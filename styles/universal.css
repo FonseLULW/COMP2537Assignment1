@@ -47,6 +47,10 @@ nav {
     font-family: 'Lucida Sans Regular';
 }
 
+a {
+    text-decoration: none;
+}
+
 footer {
     /* width: 100%; */
     display: flex;
