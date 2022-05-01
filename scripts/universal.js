@@ -23,9 +23,13 @@ function getRandomPokemonID() {
 // Get a Pokemon from PokeAPI by ID
 async function getPokemonByIDorName(id) {
     const url = `https://pokeapi.co/api/v2/pokemon/${id}`;
-    const res = await fetch(url);
-    const pokemon = await res.json();
-    return pokemon;
+    try {
+        const res = await fetch(url);
+        const pokemon = await res.json();
+        return pokemon;
+    } catch {
+        return null;
+    }
 }
 
 // Custom Pokemon Image Graphic
@@ -34,10 +38,8 @@ function createPokemonImage(thisPokemon) {
 
     let pokemonContainer = document.createElement('a');
     pokemonContainer.classList.add("pokemon-container");
-
     pokemonContainer.setAttribute("href", "");
 
-    console.log(thisPokemon.sprites.back_default);
     pokemonContainer.innerHTML = `<img src="${thisPokemon.sprites.front_default}" alt="${thisPokemon.name}">`;
 
     pokeContainer.appendChild(pokemonContainer);

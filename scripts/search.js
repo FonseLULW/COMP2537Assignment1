@@ -43,20 +43,25 @@ function search() {
     let pokemonPromise;
     switch(searchBy.innerHTML.toLowerCase()) {
         case "type":
+            console.log(reformat(searchQuery.value));
             break;
         case "ability":
+            console.log(reformat(searchQuery.value));
             break;
         case "generation":
             console.log(translate(reformat(searchQuery.value)));
             break;
         default:
-            console.log(reformat(searchQuery.value));
             pokemonPromise = getPokemonByIDorName(reformat(searchQuery.value));
     }
 
     pokemonPromise.then((thisPokemon) => {
-        createPokemonImage(thisPokemon);
-    })
+        if (thisPokemon == null) {
+            console.log("No results found!");
+        } else {
+            createPokemonImage(thisPokemon);
+        }
+    });
 }
 
 function ready() {

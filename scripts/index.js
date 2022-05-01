@@ -4,8 +4,12 @@ function populateHomePage() {
     for (let i = 0; i < homePageLimit; i++) {
         let pokemonPromise = getPokemonByIDorName(getRandomPokemonID());
         pokemonPromise.then((thisPokemon) => {
-            createPokemonImage(thisPokemon);
-        })
+            if (thisPokemon == null) {
+                homePageLimit++;
+            } else {
+                createPokemonImage(thisPokemon);
+            }
+        });
     }
 }
 
