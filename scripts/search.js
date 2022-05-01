@@ -69,7 +69,6 @@ function search(searchingBy, searchingWhat) {
 
             if (searchingBy == "generation") {
                 pokeGroup.pokemon_species.forEach((pok) => {
-                    console.log("pokesector " + pok.name);
                     search("pokemons", pok.name);
                 })
             } else {
@@ -100,8 +99,24 @@ function addToHistory(searchCategory, searchValue) {
         search(searchCategory, searchValue);
     });
 
+    let removeElem = document.createElement("BUTTON");
+    removeElem.classList.add("hDel");
+
+    historyElem.appendChild(removeElem);
+    removeElem.addEventListener("mousedown", () => {
+        historyTab.removeChild(historyElem)
+    })
+
     historyTab.appendChild(historyElem);
     hID++;
+}
+
+function clearHistory() {
+    let child = historyTab.lastElementChild;
+    while (child && child.getAttribute("id") != "clear") {
+        historyTab.removeChild(child);
+        child = historyTab.lastElementChild;
+    }
 }
 
 function ready() {
@@ -117,6 +132,10 @@ function ready() {
         addToHistory(searchBy.innerHTML, searchQuery.value);
     })
     console.log("Search button initialized...")
+
+    document.querySelector("#clear").addEventListener("mousedown", () => {
+        clearHistory();
+    })
 
 
     console.log("Initialization completed!");

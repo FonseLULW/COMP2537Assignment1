@@ -110,7 +110,7 @@ h4 {
 .pokeHistory {
     height: 75px;
     display: grid;
-    grid-template-columns: 30% 70%;
+    grid-template-columns: 25% 70% 5%;
     align-items: center;
 }
 
@@ -123,6 +123,10 @@ h4 {
 .pokeHistory:active {
     background-color: #b1b1b1;
     transition: none;
+}
+
+#clear {
+    font-size: small;
 }
 
 .hTitle {
@@ -148,4 +152,17 @@ h4 {
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
+}
+
+.hDel {
+    grid-column: 3 / span 1;
+    grid-row: 1 / span 2;
+    height: 100%;
+    background-color: rgb(171, 0, 0);
+    border-color:rgb(134, 37, 37);
+    /* border: none; */
+}
+
+.hDel:hover {
+    background-color: rgb(211, 2, 2);
 }
