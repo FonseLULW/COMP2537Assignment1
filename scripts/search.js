@@ -53,15 +53,14 @@ function search() {
             break;
         default:
             pokemonPromise = getPokemonByIDorName(reformat(searchQuery.value));
+            pokemonPromise.then((thisPokemon) => {
+                if (thisPokemon == null) {
+                    console.log("No results found!");
+                } else {
+                    createPokemonImage(thisPokemon);
+                }
+            });
     }
-
-    pokemonPromise.then((thisPokemon) => {
-        if (thisPokemon == null) {
-            console.log("No results found!");
-        } else {
-            createPokemonImage(thisPokemon);
-        }
-    });
 }
 
 function ready() {
