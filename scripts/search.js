@@ -41,28 +41,40 @@ function search(searchingBy, searchingWhat) {
     clearSearchResults();
 
     searchingBy = searchingBy.toLowerCase();
+    searchingWhat = reformat(searchingWhat);
+    if (searchingWhat == null || searchingWhat == "") {
+        alert("Search bar must not be empty!");
+        return;
+    }
 
     let pokemonPromise;
-    if (searchingBy == "pokemon") {
-        pokemonPromise = getPokemon("pokemon", reformat(searchingWhat));
+    if (searchingBy == "pokemons") {
+        pokemonPromise = getPokemon("pokemon", searchingWhat);
         pokemonPromise.then((thisPokemon) => {
             if (thisPokemon == null) {
                 console.log("No results found!");
+                return;
             } else {
                 createPokemonImage(thisPokemon);
             }
         });
+    } else if (searchingBy == "pokemon") {
+        search("pokemons", searchingWhat);
     } else {
-        pokemonPromise = getPokemon(searchingBy, translate(reformat(searchingWhat)));
+        pokemonPromise = getPokemon(searchingBy, translate(searchingWhat));
         pokemonPromise.then((pokeGroup) => {
+            if (pokeGroup == null) {
+                return;
+            }
+
             if (searchingBy == "generation") {
                 pokeGroup.pokemon_species.forEach((pok) => {
                     console.log("pokesector " + pok.name);
-                    search("pokemon", pok.name);
+                    search("pokemons", pok.name);
                 })
             } else {
                 pokeGroup.pokemon.forEach((pok) => {
-                    search("pokemon", pok.pokemon.name);
+                    search("pokemons", pok.pokemon.name);
                 });
             }
         });
@@ -72,6 +84,10 @@ function search(searchingBy, searchingWhat) {
 let historyTab = document.getElementById("history");
 let hID = 1;
 function addToHistory(searchCategory, searchValue) {
+    if (searchValue == null || searchValue == "") {
+        return;
+    }
+
     let historyElem = document.createElement("DIV");
     historyElem.classList.add("pokeHistory");
     historyElem.setAttribute("ID", `history${hID}`);

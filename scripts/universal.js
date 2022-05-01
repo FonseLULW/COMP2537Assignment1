@@ -2,6 +2,7 @@
 const POKECOUNT = 898;
 
 // translate function setup
+const POKEGENERATIONSCOUNT = 8;
 const POKEGENERATIONS = new Map();
 POKEGENERATIONS.set('one', 1);
 POKEGENERATIONS.set('two', 2);
