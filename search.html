@@ -25,32 +25,37 @@
             </a>
         </nav>
 
-        <main>
-            <!-- Search bar -->
-            <div id="searchbar">
-                <div>Search by:</div>
+        <!-- Searchbar section -->
+        <section>
+            <h3><span>Searching by: </span></h3>
 
-                <!-- Dropdown menu -->
-                <div class="dropdown">
-                    <div class="drop-btn">Name</div>
+            <!-- Dropdown menu -->
+            <div class="dropdown">
+                <button id="searchbyCurrent">Name</button>
 
-                    <!-- Submenu -->
-                    <!-- <div id="searchByDropdown" class="dropdown-content">
-                        <div>Name</div>
-                        <div>Type</div>
-                        <div>Ability</div>
-                        <div>Generation</div>
-                    </div> -->
+                <!-- Submenu -->
+                <div id="searchbyDropdown" class="dropdown-content">
+                    <button id="1" class="dropdown-btn">Name</button>
+                    <button id="2" class="dropdown-btn">Type</button>
+                    <button id="3" class="dropdown-btn">Ability</button>
+                    <button id="4" class="dropdown-btn">Generations</button>
                 </div>
-
-                <!-- Input and Submit -->
-                <input type="text" id="searchinputfield">
-                <button>Search</button>
             </div>
 
-            <!-- Search results -->
-            <div id="pokemon-grid"></div>
+        
+            <input type="text" placeholder="Search here...">
+            <button>Search</button>
+        </section>
+
+        <!-- Pokemon search results -->
+        <main id="pokemon-grid">
+        
         </main>
+
+        <!-- History -->
+        <aside id="history">
+
+        </aside>
 
         <!-- Footer -->
         <footer>

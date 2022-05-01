@@ -1,10 +1,9 @@
+body {
+    grid-template-rows: 8% 8% auto 8%;
+}
+
 /* Main content */
 
 #pokemon-grid {
-    /* width: 100%; */
-    display: grid;
-    grid-template-columns: 20% 20% 20%;
-    justify-content: center;
-    gap: 10px;
     padding: 30px;
 }

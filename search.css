@@ -1,12 +1,83 @@
-/* Main Content */
-main {
-    background-color: aquamarine;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+body {
+    grid-template-rows: 8% 8% 8% auto 8%;
+    grid-template-columns: 80% 20%;
 }
 
-#searchbar {
+header {
+    grid-column: 1 / span 2;
+}
+
+nav {
+    grid-column: 1 / span 2;
+}
+
+section {
+    grid-column: 1 / span 1;
     display: flex;
     flex-direction: row;
+    justify-content: center;
+    background-color: rgb(204, 204, 204);
+    border-color: black;
+    border-style: solid;
+    border-width: 1px;
 }
+
+main {
+    grid-column: 1 / span 1;
+}
+
+aside {
+    grid-column: 2 / span 1;
+}
+
+footer {
+    grid-column: 1 / span 2;
+}
+
+h3 {
+    flex-basis: 20%;
+    color: rgb(37, 37, 37);
+    text-align: right;
+    padding-right: 1.5%;
+    margin: auto;
+    font-size: 25px;
+    font-family:'Franklin Gothic Medium';
+}
+
+section>div {
+    flex-basis: 20%;
+}
+
+section>input {
+    flex-basis: 60%;
+    border: none;
+    font-family:'Trebuchet MS';
+    font-size: 2em;
+    color: rgb(18, 18, 60);
+}
+
+section>button {
+    flex-basis: 20%;
+    
+}
+
+/* Dropdown */
+
+.dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: #f1f1f1;
+    width: auto;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    z-index: 1;
+}
+
+#searchbyDropdown button {
+    text-align: left;   
+}
+
+#searchbyCurrent {
+    height: 100%;
+}
+
+.dropdown:hover .dropdown-content {display: block;}
