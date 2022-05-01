@@ -83,3 +83,9 @@ section>button {
 }
 
 .dropdown:hover .dropdown-content {display: block;}
+
+/* Pokemon grid */
+#pokemon-grid {
+    grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+    grid-template-rows: 1fr 1fr 1fr;
+}

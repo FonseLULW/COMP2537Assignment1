@@ -12,10 +12,18 @@ function setupDropItem(item) {
     })
 }
 
+function search() {
+    createPokemonImage(23);
+}
+
 function ready() {
     for (i = 1; i <= 4; i++) {
         setupDropItem(i);
     }
+
+    document.querySelector("#searchPokemon").addEventListener("mousedown", () => {
+        search();
+    })
 }
 
 document.addEventListener("DOMContentLoaded", (e) => {
