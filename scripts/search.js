@@ -69,6 +69,20 @@ function search(searchingBy, searchingWhat) {
     }
 }
 
+let historyTab = document.getElementById("history");
+let hID = 1;
+function addToHistory(searchCategory, searchValue) {
+    let historyElem = document.createElement("DIV");
+    historyElem.classList.add("pokeHistory");
+    historyElem.setAttribute("ID", `history${hID}`);
+
+    historyElem.innerHTML = `<div>Query: ${hID}</div>
+                             <div class="hCateg">${searchCategory}: </div>
+                             <div class="hVal">${searchValue}</div>`;
+    historyTab.appendChild(historyElem);
+    hID++;
+}
+
 function ready() {
     // dropdown menu setup
     for (i = 1; i <= 4; i++) {
@@ -79,6 +93,7 @@ function ready() {
     // search button click 
     document.querySelector("#searchPokemon").addEventListener("mousedown", () => {
         search(searchBy.innerHTML, searchQuery.value);
+        addToHistory(searchBy.innerHTML, searchQuery.value);
     })
     console.log("Search button initialized...")
 
