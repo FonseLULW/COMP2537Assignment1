@@ -34,7 +34,7 @@ async function getPokemon(category, val) {
 
 // Custom Pokemon Image Graphic
 function createPokemonImage(thisPokemon) {
-    console.log(`Creating Pokemon ${thisPokemon.name}`);
+    console.log(`Creating Pokemon: ${thisPokemon.name}`);
 
     let pokemonContainer = document.createElement('a');
     pokemonContainer.classList.add("pokemon-container");
