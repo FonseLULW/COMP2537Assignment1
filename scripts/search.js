@@ -76,8 +76,8 @@ function addToHistory(searchCategory, searchValue) {
     historyElem.classList.add("pokeHistory");
     historyElem.setAttribute("ID", `history${hID}`);
 
-    historyElem.innerHTML = `<div>Query: ${hID}</div>
-                             <div class="hCateg">${searchCategory}: </div>
+    historyElem.innerHTML = `<div class="hTitle">${hID}</div>
+                             <div class="hCateg">${searchCategory}</div>
                              <div class="hVal">${searchValue}</div>`;
     historyTab.appendChild(historyElem);
     hID++;

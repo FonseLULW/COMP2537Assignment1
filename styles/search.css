@@ -31,7 +31,7 @@ aside {
     grid-row: 3 / span 2;
     display: flex;
     flex-direction: column;
-    height: 100%;
+    height:min-content;
     background-color: #cdcdcd;
 }
 
@@ -104,4 +104,48 @@ h4 {
     align-items: center;
     font-family:'Franklin Gothic Medium';
     font-size: 25px;
+    background-color: #b1b1b1;
+}
+
+.pokeHistory {
+    height: 75px;
+    display: grid;
+    grid-template-columns: 30% 70%;
+    align-items: center;
+}
+
+.pokeHistory:hover {
+    background-color: whitesmoke;
+    transition: ease-in;
+    transition: 1s;
+}
+
+.pokeHistory:active {
+    background-color: #b1b1b1;
+    transition: none;
+}
+
+.hTitle {
+    grid-column: 1 / span 1;
+    grid-row: 1 / span 2;
+    font-family: Impact;
+    font-size: 24px;
+    justify-self: center;
+}
+
+.hCateg {
+    grid-column: 2 / span 1;
+    grid-row: 1 / span 1;
+    font-family: monospace;
+    font-size: 18px;
+}
+
+.hVal {
+    grid-column: 2 / span 1;
+    grid-row: 2 / span 1;
+    font-family: 'Courier New', Courier, monospace;
+    font-size: 24px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
