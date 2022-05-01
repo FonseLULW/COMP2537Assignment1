@@ -1,5 +1,4 @@
 function ready() {
-    populateHomePage();
 }
 
 document.addEventListener("DOMContentLoaded", (e) => {

@@ -5,7 +5,7 @@
 
         <!-- Stylesheets -->
         <link rel="stylesheet" href="universal.css">
-        <!-- <link rel="stylesheet" href="search.css"> -->
+        <link rel="stylesheet" href="search.css">
     </head>
     <body>
         <!-- Header -->
@@ -24,6 +24,33 @@
                 <span class="navlink">Search</span>
             </a>
         </nav>
+
+        <main>
+            <!-- Search bar -->
+            <div id="searchbar">
+                <div>Search by:</div>
+
+                <!-- Dropdown menu -->
+                <div class="dropdown">
+                    <div class="drop-btn">Name</div>
+
+                    <!-- Submenu -->
+                    <!-- <div id="searchByDropdown" class="dropdown-content">
+                        <div>Name</div>
+                        <div>Type</div>
+                        <div>Ability</div>
+                        <div>Generation</div>
+                    </div> -->
+                </div>
+
+                <!-- Input and Submit -->
+                <input type="text" id="searchinputfield">
+                <button>Search</button>
+            </div>
+
+            <!-- Search results -->
+            <div id="pokemon-grid"></div>
+        </main>
 
         <!-- Footer -->
         <footer>
