@@ -21,8 +21,8 @@ function getRandomPokemonID() {
 }
 
 // Get a Pokemon from PokeAPI by ID
-async function getPokemonByIDorName(id) {
-    const url = `https://pokeapi.co/api/v2/pokemon/${id}`;
+async function getPokemon(category, val) {
+    const url = `https://pokeapi.co/api/v2/${category}/${val}`;
     try {
         const res = await fetch(url);
         const pokemon = await res.json();

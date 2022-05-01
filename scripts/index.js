@@ -2,7 +2,7 @@ function populateHomePage() {
     let homePageLimit = 9;
 
     for (let i = 0; i < homePageLimit; i++) {
-        let pokemonPromise = getPokemonByIDorName(getRandomPokemonID());
+        let pokemonPromise = getPokemon("pokemon", getRandomPokemonID());
         pokemonPromise.then((thisPokemon) => {
             if (thisPokemon == null) {
                 homePageLimit++;

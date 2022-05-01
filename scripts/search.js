@@ -37,22 +37,29 @@ function clearSearchResults() {
     }
 }
 
-function search() {
+function search(searchingBy, searchingWhat) {
     clearSearchResults();
 
     let pokemonPromise;
-    switch(searchBy.innerHTML.toLowerCase()) {
+    switch(searchingBy.toLowerCase()) {
         case "type":
-            console.log(reformat(searchQuery.value));
+            pokemonPromise = getPokemon("type", reformat(searchingWhat));
+            pokemonPromise.then((pokeType) => {
+                // console.log(pokeType.pokemon);
+                pokeType.pokemon.forEach((pok) => {
+                    console.log(pok.pokemon.name);
+                    search("pokemon", pok.pokemon.name);
+                })
+            })
             break;
         case "ability":
-            console.log(reformat(searchQuery.value));
+            console.log(reformat(searchingWhat));
             break;
         case "generation":
-            console.log(translate(reformat(searchQuery.value)));
+            console.log(translate(reformat(searchingWhat)));
             break;
         default:
-            pokemonPromise = getPokemonByIDorName(reformat(searchQuery.value));
+            pokemonPromise = getPokemon("pokemon", reformat(searchingWhat));
             pokemonPromise.then((thisPokemon) => {
                 if (thisPokemon == null) {
                     console.log("No results found!");
@@ -72,7 +79,7 @@ function ready() {
 
     // search button click 
     document.querySelector("#searchPokemon").addEventListener("mousedown", () => {
-        search();
+        search(searchBy.innerHTML, searchQuery.value);
     })
     console.log("Search button initialized...")
 
