@@ -57,6 +57,8 @@ h5 {
     font-family: 'Trebuchet MS';
 }
 
+/* Main content */
+
 main {
     /* width: 100%; */
     display: grid;
@@ -65,6 +67,8 @@ main {
     gap: 10px;
     padding: 30px;
 }
+
+/* Pokemon Card images */
 
 .pokemon-container {
     width: 100%;
