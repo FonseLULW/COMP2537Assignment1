@@ -79,6 +79,11 @@ function addToHistory(searchCategory, searchValue) {
     historyElem.innerHTML = `<div class="hTitle">${hID}</div>
                              <div class="hCateg">${searchCategory}</div>
                              <div class="hVal">${searchValue}</div>`;
+
+    historyElem.addEventListener("mousedown", () => {
+        search(searchCategory, searchValue);
+    });
+
     historyTab.appendChild(historyElem);
     hID++;
 }
