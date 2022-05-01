@@ -29,8 +29,18 @@ function translate(oldstring) {
     
 }
 
+function clearSearchResults() {
+    let child = pokeContainer.lastElementChild;
+    while (child) {
+        pokeContainer.removeChild(child);
+        child = pokeContainer.lastElementChild;
+    }
+}
+
 function search() {
-    let pokemon;
+    clearSearchResults();
+
+    let pokemonPromise;
     switch(searchBy.innerHTML.toLowerCase()) {
         case "type":
             break;
@@ -41,10 +51,10 @@ function search() {
             break;
         default:
             console.log(reformat(searchQuery.value));
-            pokemon = getPokemonByIDorName(reformat(searchQuery.value));
+            pokemonPromise = getPokemonByIDorName(reformat(searchQuery.value));
     }
-    
-    pokemon.then((thisPokemon) => {
+
+    pokemonPromise.then((thisPokemon) => {
         createPokemonImage(thisPokemon);
     })
 }
