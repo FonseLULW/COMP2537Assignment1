@@ -55,8 +55,6 @@ function search(searchingBy, searchingWhat) {
     } else {
         pokemonPromise = getPokemon(searchingBy, translate(reformat(searchingWhat)));
         pokemonPromise.then((pokeGroup) => {
-            console.log(pokeGroup);
-            
             if (searchingBy == "generation") {
                 pokeGroup.pokemon_species.forEach((pok) => {
                     console.log("pokesector " + pok.name);
@@ -64,40 +62,11 @@ function search(searchingBy, searchingWhat) {
                 })
             } else {
                 pokeGroup.pokemon.forEach((pok) => {
-                    // console.log(pok.pokemon.name);
                     search("pokemon", pok.pokemon.name);
                 });
             }
         });
     }
-
-    // switch (searchingBy.toLowerCase()) {
-    //     case "type":
-    //         pokemonPromise = getPokemon("type", reformat(searchingWhat));
-    //         pokemonPromise.then((pokeGroup) => {
-    //             // console.log(pokeGroup.pokemon);
-    //             pokeGroup.pokemon.forEach((pok) => {
-    //                 console.log(pok.pokemon.name);
-    //                 search("pokemon", pok.pokemon.name);
-    //             })
-    //         })
-    //         break;
-    //     case "ability":
-    //         console.log(reformat(searchingWhat));
-    //         break;
-    //     case "generation":
-    //         console.log(translate(reformat(searchingWhat)));
-    //         break;
-    //     default:
-    //         pokemonPromise = getPokemon("pokemon", reformat(searchingWhat));
-    //         pokemonPromise.then((thisPokemon) => {
-    //             if (thisPokemon == null) {
-    //                 console.log("No results found!");
-    //             } else {
-    //                 createPokemonImage(thisPokemon);
-    //             }
-    //         });
-    // }
 }
 
 function ready() {
