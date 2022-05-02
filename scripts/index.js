@@ -17,6 +17,7 @@ function ready() {
     populateHomePage();
     console.log("Home page populated...");
 
+    console.log(window.location.href);
     console.log("Initialization completed!");
 }
 

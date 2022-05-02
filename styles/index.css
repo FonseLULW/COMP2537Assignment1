@@ -1,7 +1,3 @@
-body {
-    grid-template-rows: 8% 8% auto 8%;
-}
-
 /* Main content */
 
 #pokemon-grid {
