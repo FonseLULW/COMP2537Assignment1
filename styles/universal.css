@@ -113,7 +113,8 @@ img {
 }
 
 @media screen and (max-width: 950px) {
-    nav {
-        background-color: turquoise;
+    #pokemon-grid {
+        grid-template-columns: 100% !important;
+        /* row-gap: 2%; */
     }
 }

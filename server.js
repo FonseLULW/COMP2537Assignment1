@@ -1,6 +1,7 @@
 // requires
 const express = require('express');
 const app = express();
+const https = require('https');
 app.set('view engine', 'ejs');
 
 let port = process.env.port || 8000;
@@ -9,11 +10,28 @@ app.use(express.static(`./html`));
 app.use(express.static(`./styles`));
 app.use(express.static(`./scripts`));
 
+
 // dynamic profile page
 app.get("/profile/:id", (req, res) => {
-    res.render("profile.ejs", {
-        "id": req.params.id
-    });
+
+    const url = `https://pokeapi.co/api/v2/pokemon/${req.params.id}`;
+    data = "";
+
+    https.get(url, (https_res) => {
+        https_res.on("data", (chunk) => {
+            data += chunk;
+        })
+
+        https_res.on("end", () => {
+            data = JSON.parse(data);
+            console.log(data);
+    
+            res.render("profile.ejs", {
+                "id": req.params.id,
+                "name": data.name
+            })
+        })
+    })
 });
 
 // entry point
