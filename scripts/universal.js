@@ -44,7 +44,7 @@ function createPokemonImage(thisPokemon) {
         gotoProfile(thisPokemon);
     })
 
-    pokemonContainer.innerHTML = `<img src="${thisPokemon.sprites.front_default}" alt="${thisPokemon.name}">`;
+    pokemonContainer.innerHTML = `<img src="${thisPokemon.sprites.other["official-artwork"].front_default}" alt="${thisPokemon.name}">`;
 
     pokeContainer.appendChild(pokemonContainer);
 }
