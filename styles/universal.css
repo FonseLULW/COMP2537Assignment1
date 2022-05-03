@@ -111,3 +111,9 @@ img {
     aspect-ratio: 1 1;
     width: 100%;
 }
+
+@media screen and (max-width: 950px) {
+    nav {
+        background-color: turquoise;
+    }
+}

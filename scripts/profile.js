@@ -20,6 +20,7 @@ function ready() {
 }
 
 document.addEventListener("DOMContentLoaded", () => {
+    // console.log(window)
     getPokemon("pokemon", localStorage.getItem("pokemonProfile"))
         .then((pok) => {
             pokeEntry = pok;
