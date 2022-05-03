@@ -53,5 +53,5 @@ function gotoProfile(pokemon) {
     let win = window.location;
     localStorage.setItem("pokemonProfile", `${pokemon.name}`);
 
-    win.assign(win.protocol + "//" + win.hostname + ":" + win.port + `/html/profile.html`);
+    win.assign(`profile/${pokemon.id}`);
 }
