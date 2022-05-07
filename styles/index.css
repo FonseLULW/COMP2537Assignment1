@@ -1,5 +1,10 @@
 /* Main content */
-
 #pokemon-grid {
     padding: 30px;
+}
+
+@media screen and (max-width: 950px) {
+    .pokemon-container {
+        height: 60vh;
+    }
 }

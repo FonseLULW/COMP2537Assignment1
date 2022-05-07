@@ -7,6 +7,8 @@ main {
 }
 
 #pIdentity {
+    grid-column: 2 / span 2;
+    grid-row: 1 / span 1;
     display: flex;
     flex-direction: row;
     justify-content: space-between;
@@ -23,11 +25,6 @@ main {
 #pImg {
     grid-column: 1 / span 1;
     grid-row: 1 / span 3;
-}
-
-#pIdentity {
-    grid-column: 2 / span 2;
-    grid-row: 1 / span 1;
 }
 
 #pStats {
@@ -96,4 +93,50 @@ h3 {
 /* All info text */
 .info {
     font-size: 1.5rem;
+}
+
+@media screen and (max-width: 950px) {
+    html, body {
+        height: auto !important;
+    }
+    main {
+        height: min-content;
+        grid-template-columns: 100vw;
+        grid-template-rows: 60vh 10vh 40vh 25vh 25vh;
+        padding-left: 0px;
+        padding-right: 0px;
+    }
+
+    #pImg {
+        grid-column: 1 / span 1;
+        grid-row: 1 / span 1;
+        width: 100%;
+        margin: 0px;
+        display: flex;
+        justify-content: center;
+    }
+
+    #pImg > img {
+        width: 100%;
+    }
+
+    #pIdentity {
+        grid-column: 1 / span 1;
+        grid-row: 2 / span 1;
+    }
+
+    #pStats {
+        grid-column: 1 / span 1;
+        grid-row: 3 / span 1;
+    }
+
+    #pTypes {
+        grid-column: 1 / span 1;
+        grid-row: 4 / span 1;
+    }
+
+    #pAbilities {
+        grid-column: 1 / span 1;
+        grid-row: 5 / span 1;
+    }
 }

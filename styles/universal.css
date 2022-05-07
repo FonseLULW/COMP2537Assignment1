@@ -1,15 +1,15 @@
 /* All webpages */
 html {
-    width: 100%;
+    width: 100vw;
     height: 100%;
 }
 
 body {
     display: grid;
-    grid-template-rows: 8% 8% auto 8%;
+    grid-template-rows: 8vh 8vh auto 8vh;
     margin: auto;
     /* width: 100%; */
-    height: 100%;
+    height: fit-content;
     background-color: whitesmoke;
 }
 
