@@ -166,3 +166,14 @@ h4 {
 .hDel:hover {
     background-color: rgb(211, 2, 2);
 }
+
+/* @media screen and (max-width: 950px) {
+    body {
+        grid-template-columns: 100vw;
+        grid-row: 8vh 8vh 30vh auto auto 8vh;
+    }
+
+    section {
+        flex-direction: column;
+    }
+} */
