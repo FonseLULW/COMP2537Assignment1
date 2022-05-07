@@ -1,0 +1,24 @@
+{
+  "name": "assignment1",
+  "version": "1.0.0",
+  "description": "Jose Alfonso Clarito\r ## ID:  \r A01262284\r ## Github:  \r FonseLULW\r ## Youtube link:",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/FonseLULW/COMP2537Assignment1.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/FonseLULW/COMP2537Assignment1/issues"
+  },
+  "homepage": "https://github.com/FonseLULW/COMP2537Assignment1#readme",
+  "dependencies": {
+    "ejs": "^3.1.7",
+    "express": "^4.18.1",
+    "nodemon": "^2.0.16"
+  }
+}
