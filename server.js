@@ -10,7 +10,6 @@ app.use(express.static(`./html`));
 app.use(express.static(`./styles`));
 app.use(express.static(`./scripts`));
 
-
 // dynamic profile page
 app.get("/profile/:id", (req, res) => {
 
@@ -24,12 +23,9 @@ app.get("/profile/:id", (req, res) => {
 
         https_res.on("end", () => {
             data = JSON.parse(data);
-            console.log(data);
     
             res.render("profile.ejs", {
-                "id": req.params.id,
-                "name": data.name
-            })
+                "pokemon": data})
         })
     })
 });

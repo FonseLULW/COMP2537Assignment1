@@ -8,13 +8,13 @@
 
     <!-- Stylesheets -->
     <link rel="stylesheet" href="../universal.css">
-    <!-- <link rel="stylesheet" href="../styles/profile.css"> -->
+    <link rel="stylesheet" href="../profile.css">
 </head>
 <body>
     <!-- Header -->
     <header>
         <h1>
-            Jose Alfonso Clarito - Pokedex: <%= id %>!
+            Jose Alfonso Clarito - Pokedex!
         </h1>
     </header>
 
@@ -31,27 +31,41 @@
     <!-- Main -->
     <main id="content">
         <!-- Image -->
-        <figure id="pImg"></figure>
-        <!-- Name -->
-        <h2 id="pName"><%= name %></h2>
+        <figure id="pImg">
+            <img alt="<%= pokemon.name %>" src="<%= pokemon.sprites.other["official-artwork"].front_default %>">
+        </figure>
+
+        <!-- Name & Id-->
+        <h2 id="pIdentity">
+            <div id="pName"><%= pokemon.name.toUpperCase() %></div>
+            <div id="pID"><%= pokemon.id %></div>
+        </h2>
+
         <!-- Type  -->
         <div id="pTypes">
             <h3>Types</h3>
+            <% pokemon.types.forEach((elem) => { %>
+                <div class="types info"><%= elem.type.name.toUpperCase() %></div>
+            <% }) %>
         </div>
+
         <!-- Stats -->
         <div id="pStats">
-            <h3>Stats</h3>
+            <h3 id="h3Stats">Stats</h3>
+            <% pokemon.stats.forEach((elem) => { %>
+                <div class="stats info">
+                    <div class="statname"><%= elem.stat.name.toUpperCase() %></div>
+                    <progress class="statpts" value="<%= elem.base_stat %>" max="255"><%= elem.base_stat %></progress>
+                </div>
+            <% }) %>
         </div>
+
         <!-- Abilities -->
         <div id="pAbilities">
             <h3>Abilities</h3>
-        </div>
-        <!-- Generation -->
-        <div id="pGen">Generation 5</div>
-        <!-- Others -->
-        <div>
-            <div id="pHeight"></div>
-            <div id="pWeight"></div>
+            <% pokemon.abilities.forEach((elem) => { %>
+                <div class="ables info"><%= elem.ability.name.toUpperCase() %></div>
+            <% }) %>
         </div>
     </main>
 

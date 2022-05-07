@@ -1,0 +1,99 @@
+main {
+    display: grid;
+    grid-template-columns: 40% 40% 20%;
+    grid-template-rows: 10% 45% 45%;
+    justify-content: center;
+    align-items: center;
+}
+
+#pIdentity {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    height: 100%;
+    width: 100%;
+    margin: 0px;
+    background-color: #333;
+    color: white;
+    font-family:Verdana, Geneva, Tahoma, sans-serif ;
+    
+}
+
+#pImg {
+    grid-column: 1 / span 1;
+    grid-row: 1 / span 3;
+}
+
+#pIdentity {
+    grid-column: 2 / span 2;
+    grid-row: 1 / span 1;
+}
+
+#pStats {
+    grid-column: 2 / span 1;
+    grid-row: 2 / span 2;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    padding-right: 1rem;
+    padding-left: 1rem;
+    background-color: rgb(254, 254, 254);
+}
+
+#pTypes {
+    grid-column: 3 / span 1;
+    grid-row: 2 / span 1;
+    height: 100%;
+    background-color: rgb(254, 254, 254);
+    padding-right: 1rem;
+    padding-left: 1rem;
+}
+
+#pAbilities {
+    grid-column: 3 / span 1;
+    grid-row: 3 / span 1;
+    height: 100%;
+    background-color: rgb(254, 254, 254);
+    padding-right: 1rem;
+    padding-left: 1rem;
+}
+
+h3 {
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    font-size: 2rem;
+}
+
+/* Stats */
+.stats {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+}
+
+/* Name and ID */
+#pName {
+    margin-left: 1rem;
+}
+
+#pID {
+    margin-right: 1rem;
+}
+
+/* Types */
+.types {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+/* Abilities */
+.ables {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+/* All info text */
+.info {
+    font-size: 1.5rem;
+}
