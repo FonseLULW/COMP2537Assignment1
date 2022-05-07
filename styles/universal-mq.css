@@ -1,0 +1,6 @@
+@media screen and (max-width: 950px) {
+    #pokemon-grid {
+        grid-template-columns: 100% !important;
+        /* row-gap: 2%; */
+    }
+}
