@@ -167,13 +167,18 @@ h4 {
     background-color: rgb(211, 2, 2);
 }
 
-/* @media screen and (max-width: 950px) {
+@media screen and (max-width: 950px) {
     body {
         grid-template-columns: 100vw;
-        grid-row: 8vh 8vh 30vh auto auto 8vh;
+        grid-template-rows: 8vh 8vh 20vh 20vh auto 8vh;
     }
 
     section {
         flex-direction: column;
     }
-} */
+
+    aside {
+        grid-row: 4 / span 1;
+        grid-column: 1 / span 1;
+    }
+}
