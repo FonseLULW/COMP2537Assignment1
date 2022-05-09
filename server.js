@@ -31,10 +31,6 @@ app.get("/profile/:id", (req, res) => {
     })
 });
 
-app.get("/", (req, res) => {
-    res.sendFile("html/index.html");
-})
-
 // entry point
 app.listen(port, (err) => {
     if (err) {
