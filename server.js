@@ -2,6 +2,7 @@
 const express = require('express');
 const app = express();
 const https = require('https');
+// const fs = require('fs');
 app.set('view engine', 'ejs');
 
 let port = process.env.port || 8000;
@@ -29,6 +30,10 @@ app.get("/profile/:id", (req, res) => {
         })
     })
 });
+
+app.get("/", (req, res) => {
+    res.sendFile("html/index.html");
+})
 
 // entry point
 app.listen(port, (err) => {
