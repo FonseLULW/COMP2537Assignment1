@@ -5,7 +5,7 @@ const https = require('https');
 // const fs = require('fs');
 app.set('view engine', 'ejs');
 
-let port = process.env.port || 8000;
+let port = process.env.PORT || 8000;
 
 app.use(express.static(`./html`));
 app.use(express.static(`./styles`));
