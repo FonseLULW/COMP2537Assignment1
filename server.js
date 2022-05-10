@@ -25,11 +25,15 @@ app.get("/profile/:id", (req, res) => {
         https_res.on("end", () => {
             data = JSON.parse(data);
     
-            res.render("profile.ejs", {
+            res.render("profile", {
                 "pokemon": data})
         })
     })
 });
+
+app.get("/timeline", (req, res) => {
+    res.render("timeline");
+})
 
 // entry point
 app.listen(port, (err) => {
