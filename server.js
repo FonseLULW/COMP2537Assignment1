@@ -39,7 +39,11 @@ app.get("/timeline", (req, res) => {
 })
 
 app.get("/", (req, res) => {
-    res.sendFile("./public/index.html");
+    res.sendFile("./public/index.html", { root: __dirname });
+})
+
+app.get("/search", (req, res) => {
+    res.sendFile(`./public/html/search.html`, { root: __dirname });
 })
 
 // entry point
