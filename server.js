@@ -2,14 +2,17 @@
 const express = require('express');
 const app = express();
 const https = require('https');
-// const fs = require('fs');
+const mongoose = require('mongoose');
+
+// mongoose.connect("mongodb://localhost:8000/timel")
+
 app.set('view engine', 'ejs');
 
 let port = process.env.PORT || 8000;
 
-app.use(express.static(`./html`));
-app.use(express.static(`./styles`));
-app.use(express.static(`./scripts`));
+// mongoose.connect("mongodb://localhost:27817")
+
+app.use(express.static(`./public`));
 
 // dynamic profile page
 app.get("/profile/:id", (req, res) => {
@@ -33,6 +36,10 @@ app.get("/profile/:id", (req, res) => {
 
 app.get("/timeline", (req, res) => {
     res.render("timeline");
+})
+
+app.get("/", (req, res) => {
+    res.sendFile("./public/index.html");
 })
 
 // entry point
