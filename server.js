@@ -29,7 +29,7 @@ app.use(bodyParser.urlencoded({
     extended: true
 }))
 
-// Database
+// [READ] all timelineDB events and render timeline.ejs
 app.get("/timeline", (req, res) => {
     eventModel.find({}, (err, events) => {
         if (err) {
@@ -41,6 +41,7 @@ app.get("/timeline", (req, res) => {
     })
 })
 
+// [CREATE] a new event and insert it to the timelineDB
 app.put("/events/insertEvent", (req, res) => {
     console.log(req.body);
     eventModel.create({
@@ -55,6 +56,10 @@ app.put("/events/insertEvent", (req, res) => {
         res.send("Created successfully")
     })
 })
+
+// [UPDATE] the `hits` field of an event in the timelineDB
+
+// [DELETE] an event from timelineDB
 
 // Dynamic profile page
 app.get("/profile/:id", (req, res) => {
