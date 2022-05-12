@@ -1,5 +1,3 @@
-const timelineLink = `http://localhost:8000`
-
 function updateEventsDisplay(data) {
     let timeline = document.querySelector("#timeline-items")
     timeline.innerHTML = ``

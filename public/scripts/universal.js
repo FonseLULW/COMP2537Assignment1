@@ -1,3 +1,6 @@
+
+const timelineLink = `http://localhost:8000`
+
 // Total number of existing Pokemon
 const POKECOUNT = 898;
 
@@ -39,9 +42,10 @@ function createPokemonImage(thisPokemon) {
 
     let pokemonContainer = document.createElement('a');
     pokemonContainer.classList.add("pokemon-container");
-    // pokemonContainer.setAttribute("onclick", `gotoProfile(${thisPokemon})`);
-    pokemonContainer.addEventListener("mousedown", () => {
-        gotoProfile(thisPokemon);
+    pokemonContainer.addEventListener("click", () => {
+        fireProfileEvent(thisPokemon.name, new Date()).then(() => {
+            gotoProfile(thisPokemon);
+        })
     })
 
     pokemonContainer.innerHTML = `<img src="${thisPokemon.sprites.other["official-artwork"].front_default}" alt="${thisPokemon.name}">`;

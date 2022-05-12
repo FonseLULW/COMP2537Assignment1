@@ -80,7 +80,7 @@ app.get("/events/incrementHits/:id", (req, res) => {
 
 // [DELETE] an event from timelineDB
 app.get("/events/deleteEvent/:id", (req, res) => {
-    eventModel.remove({_id: req.params.id}, (err, data) => {
+    eventModel.deleteOne({_id: req.params.id}, (err, data) => {
         if (err) {
             console.log(err);
         }
