@@ -2,7 +2,8 @@
 const express = require('express');
 const app = express();
 const https = require('https');
-const bodyParser = require('body-parser')
+const bodyParser = require('body-parser');
+const $ = require('jquery');
 let port = process.env.PORT || 8000;
 
 app.set('view engine', 'ejs');
@@ -28,12 +29,14 @@ app.use(bodyParser.urlencoded({
 }))
 
 // Database
-app.get("/events/getAllEvents", (req, res) => {
+app.get("/timeline", (req, res) => {
     eventModel.find({}, (err, events) => {
         if (err) {
             console.log(err);
         }
-        res.json(events)
+        res.render("timeline", {
+            "events": events
+        })
     })
 })
 
@@ -79,12 +82,6 @@ app.get("/", (req, res) => {
 // Search page route
 app.get("/search", (req, res) => {
     res.sendFile(`./public/html/search.html`, { root: __dirname });
-})
-
-// Timeline database
-
-app.get("/timeline", (req, res) => {
-    res.render("timeline");
 })
 
 // entry point

@@ -8,6 +8,7 @@
 
     <!-- Stylesheets -->
     <link rel="stylesheet" href="styles/universal.css">
+    <link rel="stylesheet" href="styles/timeline.css">
     <link rel="stylesheet" href="styles/universal-mq.css">
 </head>
 <body>
@@ -33,8 +34,16 @@
 
     <!-- Timeline -->
     <main>
-        <section id="timeline-items">
-            
+        <section id="timeline-items">  
+            <% events.forEach(event => { %>
+                <div id="<%=event.id%>" class="single-event">
+                    <div class="text"><%=event.text%></div>
+                    <div class="time"><%=event.time%></div>
+                    <div class="hits"><%=event.hits%></div>
+                    <button class="like"></button>
+                    <button class="delete"></button>
+                </div>
+            <% }) %>
         </section>
     </main>
     
@@ -45,5 +54,9 @@
             <a href="https://pokeapi.co/">pokeapi.co</a>
         </h5>
     </footer>
+    
+    <!-- Scripts -->
+    <script src="/scripts/universal.js"></script>
+    <script src="/scripts/timeline.js"></script>
 </body>
 </html>
