@@ -1,5 +1,5 @@
 body {
-    grid-template-rows: 8vh 8vh 8vh auto 8vh;
+    grid-template-rows: 8vh 8vh 8vh minmax(76vh, auto) 8vh;
     grid-template-columns: 80% 20%;
 }
 

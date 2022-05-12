@@ -37,11 +37,18 @@
         <section id="timeline-items">  
             <% events.forEach(event => { %>
                 <div id="<%=event.id%>" class="single-event">
-                    <div class="text"><%=event.text%></div>
-                    <div class="time"><%=event.time%></div>
-                    <div class="hits"><%=event.hits%></div>
-                    <button class="like"></button>
-                    <button class="delete"></button>
+                    <div class="event-data">
+                        <div class="datetime">
+                            <span class="date"><%=event.date%></span>
+                            <span class="time"><%=event.time%></span>
+                        </div>
+                        <div class="text">Event: <span><%=event.text%></span></div>
+                        <div class="hits">Likes: <span><%=event.hits%></span></div>
+                    </div>
+                    <div class="event-controls">
+                        <button class="like">Like</button>
+                        <button class="delete">Delete</button>
+                    </div>
                 </div>
             <% }) %>
         </section>

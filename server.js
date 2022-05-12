@@ -16,7 +16,8 @@ mongoose.connect("mongodb://localhost:27017/timelineDB", {
 const eventSchema = new mongoose.Schema({
     text: String,
     hits: Number,
-    time: String
+    time: String,
+    date: String
 })
 const eventModel = mongoose.model("events", eventSchema);
 
@@ -44,6 +45,7 @@ app.put("/events/insertEvent", (req, res) => {
     console.log(req.body);
     eventModel.create({
         text: req.body.text,
+        date: req.body.date,
         time: req.body.time,
         hits: req.body.hits
     }, (err, data) => {
