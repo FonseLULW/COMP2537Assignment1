@@ -58,7 +58,7 @@ app.put("/events/insertEvent", (req, res) => {
 })
 
 // [UPDATE] the `hits` field of an event in the timelineDB
-app.get("/events/incrementHits:id", (req, res) => {
+app.get("/events/incrementHits/:id", (req, res) => {
     eventModel.updateOne(
         {_id: req.params.id},
         {$inc: {hits: 1}}, (err, data) => {
@@ -70,12 +70,12 @@ app.get("/events/incrementHits:id", (req, res) => {
 })
 
 // [DELETE] an event from timelineDB
-app.get("/events/deleteEvent:id", (req, res) => {
+app.get("/events/deleteEvent/:id", (req, res) => {
     eventModel.remove({_id: req.params.id}, (err, data) => {
         if (err) {
             console.log(err);
         }
-        res.send("Incremented successfully")
+        res.send("Deleted successfully")
     })
 })
 
