@@ -2,19 +2,56 @@
 const express = require('express');
 const app = express();
 const https = require('https');
-const mongoose = require('mongoose');
-
-// mongoose.connect("mongodb://localhost:8000/timel")
-
-app.set('view engine', 'ejs');
-
+const bodyParser = require('body-parser')
 let port = process.env.PORT || 8000;
 
-// mongoose.connect("mongodb://localhost:27817")
+app.set('view engine', 'ejs');
+const mongoose = require('mongoose');
 
+mongoose.connect("mongodb://localhost:27017/timelineDB", {
+    useNewUrlParser: true, useUnifiedTopology: true
+})
+
+const eventSchema = new mongoose.Schema({
+    text: String,
+    hits: Number,
+    time: String
+})
+const eventModel = mongoose.model("events", eventSchema);
+
+// Statics
 app.use(express.static(`./public`));
+app.use(bodyParser.urlencoded({
+    parameterLimit: 100000,
+    limit: '50mb',
+    extended: true
+}))
 
-// dynamic profile page
+// Database
+app.get("/events/getAllEvents", (req, res) => {
+    eventModel.find({}, (err, events) => {
+        if (err) {
+            console.log(err);
+        }
+        res.json(events)
+    })
+})
+
+app.put("/events/insertEvent", (req, res) => {
+    console.log(req.body);
+    eventModel.create({
+        text: req.body.text,
+        time: req.body.time,
+        hits: req.body.hits
+    }, (err, data) => {
+        if (err) {
+            console.log(err);
+        }
+        res.send("Created successfully")
+    })
+})
+
+// Dynamic profile page
 app.get("/profile/:id", (req, res) => {
 
     const url = `https://pokeapi.co/api/v2/pokemon/${req.params.id}`;
@@ -34,16 +71,20 @@ app.get("/profile/:id", (req, res) => {
     })
 });
 
-app.get("/timeline", (req, res) => {
-    res.render("timeline");
-})
-
+// Home page route
 app.get("/", (req, res) => {
     res.sendFile("./public/index.html", { root: __dirname });
 })
 
+// Search page route
 app.get("/search", (req, res) => {
     res.sendFile(`./public/html/search.html`, { root: __dirname });
+})
+
+// Timeline database
+
+app.get("/timeline", (req, res) => {
+    res.render("timeline");
 })
 
 // entry point
