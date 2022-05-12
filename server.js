@@ -41,6 +41,15 @@ app.get("/timeline", (req, res) => {
     })
 })
 
+app.get("/events/readAllEvents", (req, res) => {
+    eventModel.find({}, (err, events) => {
+        if (err) {
+            console.log(err)
+        }
+        res.json(events)
+    })
+})
+
 // [CREATE] a new event and insert it to the timelineDB
 app.put("/events/insertEvent", (req, res) => {
     console.log(req.body);

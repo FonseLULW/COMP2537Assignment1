@@ -1,7 +1,40 @@
 const timelineLink = `http://localhost:8000`
 
-function reloadPage() {
+function updateEventsDisplay(data) {
+    let timeline = document.querySelector("#timeline-items")
+    timeline.innerHTML = ``
     
+    data.forEach((ev) => {
+        let singleEvent = document.createElement("DIV")
+        singleEvent.id = ev._id
+        singleEvent.classList.add("single-event")
+
+        singleEvent.innerHTML = `
+            <div class="event-data">
+                    <div class="datetime">
+                        <span class="date">${ev.date}</span>
+                        <span class="time">${ev.time}</span>
+                    </div>
+                <div class="text">Event: <span>${ev.text}</span></div>
+                <div class="hits">Likes: <span>${ev.hits}</span></div>
+            </div>
+            <div class="event-controls">
+                <button class="like">Like</button>
+                <button class="delete">Delete</button>
+            </div>`
+        timeline.appendChild(singleEvent)
+        initSingleEvent(singleEvent)
+    })
+}
+
+function reloadEvents() {
+    $.ajax({
+        url: `${timelineLink}/events/readAllEvents`,
+        type: `get`,
+        success: (resp) => {
+            updateEventsDisplay(resp)
+        }
+    })
 }
 
 function initSingleEvent(singleEventElem) {
@@ -13,7 +46,7 @@ function initSingleEvent(singleEventElem) {
         $.ajax({
             url: `${timelineLink}/events/incrementHits/${eventID}`,
             type: `get`,
-            success: reloadPage
+            success: reloadEvents
         })
     })
 
@@ -21,7 +54,7 @@ function initSingleEvent(singleEventElem) {
         $.ajax({
             url: `${timelineLink}/events/deleteEvent/${eventID}`,
             type: `get`,
-            success: reloadPage
+            success: reloadEvents
         })
     })
 }
