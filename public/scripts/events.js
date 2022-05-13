@@ -43,7 +43,7 @@ async function fireClearHistoryEvent(timestamp) {
         url: `${timelineLink}/events/insertEvent`,
         type: `put`,
         data: {
-            text: `Cleared history`,
+            text: `Cleared search history`,
             date: getFormattedDate(timestamp),
             time: getFormattedTime(timestamp),
             hits: 1
@@ -51,12 +51,12 @@ async function fireClearHistoryEvent(timestamp) {
     })
 }
 
-async function fireDeleteFromHistoryEvent(historyItem, timestamp) {
+async function fireDeleteFromHistoryEvent(historyType, historyValue, timestamp) {
     $.ajax({
         url: `${timelineLink}/events/insertEvent`,
         type: `put`,
         data: {
-            text: `Deleted search history item ${historyItem}`,
+            text: `Deleted search history item {${historyType}: ${historyValue}}`,
             date: getFormattedDate(timestamp),
             time: getFormattedTime(timestamp),
             hits: 1
@@ -64,12 +64,12 @@ async function fireDeleteFromHistoryEvent(historyItem, timestamp) {
     })
 }
 
-async function fireRestoreSearchEvent(historyItem, timestamp) {
+async function fireRestoreSearchEvent(historyType, historyValue, timestamp) {
     $.ajax({
         url: `${timelineLink}/events/insertEvent`,
         type: `put`,
         data: {
-            text: `Accessed search history item ${historyItem}`,
+            text: `Accessed search history item {${historyType}: ${historyValue}}`,
             date: getFormattedDate(timestamp),
             time: getFormattedTime(timestamp),
             hits: 1

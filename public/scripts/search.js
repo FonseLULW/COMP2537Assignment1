@@ -88,23 +88,34 @@ function addToHistory(searchCategory, searchValue) {
     }
 
     let historyElem = document.createElement("DIV");
-    historyElem.classList.add("pokeHistory");
+    historyElem.classList.add("pokeHCell");
     historyElem.setAttribute("ID", `history${hID}`);
 
-    historyElem.innerHTML = `<div class="hTitle">${hID}</div>
+    let historyData = document.createElement("DIV");
+    historyData.classList.add("pokeHistory");
+    historyData.innerHTML = `<div class="hTitle">${hID}</div>
                              <div class="hCateg">${searchCategory}</div>
                              <div class="hVal">${searchValue}</div>`;
-
-    historyElem.addEventListener("mousedown", () => {
-        search(searchCategory, searchValue);
+    historyData.addEventListener("click", () => {
+        fireRestoreSearchEvent(searchCategory, searchValue, new Date()).then(() => {
+            search(searchCategory, searchValue);
+        })
     });
+
+    historyElem.appendChild(historyData);
+
+    // historyElem.innerHTML = `<div class="hTitle">${hID}</div>
+    //                          <div class="hCateg">${searchCategory}</div>
+    //                          <div class="hVal">${searchValue}</div>`;
 
     let removeElem = document.createElement("BUTTON");
     removeElem.classList.add("hDel");
 
     historyElem.appendChild(removeElem);
-    removeElem.addEventListener("mousedown", () => {
-        historyTab.removeChild(historyElem)
+    removeElem.addEventListener("click", () => {
+        fireDeleteFromHistoryEvent(searchCategory, searchValue, new Date()).then(() => {
+            historyTab.removeChild(historyElem)
+        })
     })
 
     historyTab.appendChild(historyElem);
@@ -127,14 +138,18 @@ function ready() {
     console.log("Dropdown menu initialized...")
 
     // search button click 
-    document.querySelector("#searchPokemon").addEventListener("mousedown", () => {
-        search(searchBy.innerHTML, searchQuery.value);
-        addToHistory(searchBy.innerHTML, searchQuery.value);
+    document.querySelector("#searchPokemon").addEventListener("click", () => {
+        fireSearchEvent(searchBy.innerHTML, searchQuery.value, new Date()).then(() => {
+            search(searchBy.innerHTML, searchQuery.value);
+            addToHistory(searchBy.innerHTML, searchQuery.value);
+        })
     })
     console.log("Search button initialized...")
 
-    document.querySelector("#clear").addEventListener("mousedown", () => {
-        clearHistory();
+    document.querySelector("#clear").addEventListener("click", () => {
+        fireClearHistoryEvent(new Date()).then(() => {
+            clearHistory();
+        })
     })
 
 

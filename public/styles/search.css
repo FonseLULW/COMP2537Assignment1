@@ -107,11 +107,31 @@ h4 {
     background-color: #b1b1b1;
 }
 
+/* Single cell */
+.pokeHCell {
+    height: 8vh;
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+}
+
+/* Single cell items */
 .pokeHistory {
-    height: 75px;
+    width: 90%;
+    height: 100%;
     display: grid;
-    grid-template-columns: 25% 70% 5%;
+    grid-template-columns: 25% 70%;
     align-items: center;
+}
+
+.hDel {
+    width: 10%;
+    grid-column: 3 / span 1;
+    grid-row: 1 / span 2;
+    height: 100%;
+    background-color: rgb(171, 0, 0);
+    border-color:rgb(134, 37, 37);
+    /* border: none; */
 }
 
 .pokeHistory:hover {
@@ -137,6 +157,8 @@ h4 {
     justify-self: center;
 }
 
+/* History Data Items*/
+
 .hCateg {
     grid-column: 2 / span 1;
     grid-row: 1 / span 1;
@@ -152,15 +174,6 @@ h4 {
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
-}
-
-.hDel {
-    grid-column: 3 / span 1;
-    grid-row: 1 / span 2;
-    height: 100%;
-    background-color: rgb(171, 0, 0);
-    border-color:rgb(134, 37, 37);
-    /* border: none; */
 }
 
 .hDel:hover {

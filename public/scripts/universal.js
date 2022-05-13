@@ -1,8 +1,9 @@
-
+const mockAPILink = `http://localhost:3000`
 const timelineLink = `http://localhost:8000`
+const pokeAPILink = `https://pokeapi.co/api/v2`
 
 // Total number of existing Pokemon
-const POKECOUNT = 898;
+const POKECOUNT = 30;
 
 // translate function setup
 const POKEGENERATIONSCOUNT = 8;
@@ -26,7 +27,7 @@ function getRandomPokemonID() {
 
 // Get a Pokemon from PokeAPI by ID
 async function getPokemon(category, val) {
-    const url = `https://pokeapi.co/api/v2/${category}/${val}`;
+    const url = `${mockAPILink}/${category}/${val}`;
     try {
         const res = await fetch(url);
         const pokemon = await res.json();

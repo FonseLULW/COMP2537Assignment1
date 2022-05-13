@@ -55,3 +55,16 @@ button {
 .hits {
     width: 20%;
 }
+
+@media screen and (max-width: 950px) {
+    .single-event {
+        flex-direction: column;
+    }
+    .event-data, .event-controls {
+        width: 100%;
+        justify-content: center;
+    }
+    .datetime, .hits {
+        font-size: smaller;
+    }
+}
