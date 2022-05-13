@@ -1,5 +1,5 @@
 const mockAPILink = `https://stormy-temple-14536.herokuapp.com`
-const timelineLink = `https://hidden-reef-22852.herokuapp.com/`
+const timelineLink = `https://hidden-reef-22852.herokuapp.com`
 const pokeAPILink = `https://pokeapi.co/api/v2`
 
 // Total number of existing Pokemon
