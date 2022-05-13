@@ -3,8 +3,7 @@ const express = require('express');
 const app = express();
 const https = require('https');
 const bodyParser = require('body-parser');
-const $ = require('jquery');
-let port = process.env.PORT || 8000;
+const port = process.env.PORT || 8000;
 
 app.set('view engine', 'ejs');
 const mongoose = require('mongoose');
