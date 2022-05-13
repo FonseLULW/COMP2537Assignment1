@@ -4,11 +4,12 @@ const app = express();
 const https = require('https');
 const bodyParser = require('body-parser');
 const port = process.env.PORT || 8000;
+const uriString = process.env.MONGODB_URI
 
 app.set('view engine', 'ejs');
 const mongoose = require('mongoose');
 
-mongoose.connect("mongodb://localhost:27017/timelineDB", {
+mongoose.connect(uriString, {
     useNewUrlParser: true, useUnifiedTopology: true
 })
 
