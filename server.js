@@ -3,8 +3,11 @@ const express = require('express');
 const app = express();
 const https = require('https');
 const bodyParser = require('body-parser');
+const cors = require('cors')
 const port = process.env.PORT || 8000;
 const uriString = process.env.MONGODB_URI
+
+app.use(cors())
 
 app.set('view engine', 'ejs');
 const mongoose = require('mongoose');
