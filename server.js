@@ -10,7 +10,8 @@ const port = process.env.PORT || 8000;
 const uriString = process.env.MONGODB_URI
 
 // Middlewares
-const sessionLog = require("./middleware/session-log"); 
+const sessionLog = require("./middleware/session-log");
+const {ensureAuthenticated, forwardAuthenticated} = require("./middleware/auths"); 
 
 // Use middlewares
 app.use(cors())
@@ -54,7 +55,7 @@ app.use(bodyParser.urlencoded({
 }))
 
 // [READ] all timelineDB events and render timeline.ejs
-app.get("/timeline", (req, res) => {
+app.get("/timeline", ensureAuthenticated, (req, res) => {
     eventModel.find({}, (err, events) => {
         if (err) {
             console.log(err);
@@ -65,7 +66,7 @@ app.get("/timeline", (req, res) => {
     })
 })
 
-app.get("/events/readAllEvents", (req, res) => {
+app.get("/events/readAllEvents", ensureAuthenticated, (req, res) => {
     eventModel.find({}, (err, events) => {
         if (err) {
             console.log(err)
@@ -75,7 +76,7 @@ app.get("/events/readAllEvents", (req, res) => {
 })
 
 // [CREATE] a new event and insert it to the timelineDB
-app.put("/events/insertEvent", (req, res) => {
+app.put("/events/insertEvent", ensureAuthenticated, (req, res) => {
     console.log(req.body);
     eventModel.create({
         text: req.body.text,
@@ -91,7 +92,7 @@ app.put("/events/insertEvent", (req, res) => {
 })
 
 // [UPDATE] the `hits` field of an event in the timelineDB
-app.get("/events/incrementHits/:id", (req, res) => {
+app.get("/events/incrementHits/:id", ensureAuthenticated, (req, res) => {
     eventModel.updateOne(
         {_id: req.params.id},
         {$inc: {hits: 1}}, (err, data) => {
@@ -103,7 +104,7 @@ app.get("/events/incrementHits/:id", (req, res) => {
 })
 
 // [DELETE] an event from timelineDB
-app.get("/events/deleteEvent/:id", (req, res) => {
+app.get("/events/deleteEvent/:id", ensureAuthenticated, (req, res) => {
     eventModel.deleteOne({_id: req.params.id}, (err, data) => {
         if (err) {
             console.log(err);
@@ -113,7 +114,7 @@ app.get("/events/deleteEvent/:id", (req, res) => {
 })
 
 // Dynamic profile page
-app.get("/profile/:id", (req, res) => {
+app.get("/profile/:id", ensureAuthenticated, (req, res) => {
 
     const url = `https://pokeapi.co/api/v2/pokemon/${req.params.id}`;
     data = "";
@@ -190,22 +191,22 @@ app.get("/auth/logout", (req, res) => {
 })
 
 // Home page route
-app.get("/home", (req, res) => {
+app.get("/home", ensureAuthenticated, (req, res) => {
     res.sendFile("./public/html/home.html", {root: __dirname});
 })
 
 // Login page route
-app.get("/", (req, res) => {
+app.get("/", forwardAuthenticated, (req, res) => {
     res.sendFile("./public/html/login.html", { root: __dirname });
 })
 
 // Sign up page route
-app.get("/signup", (req, res) => {
+app.get("/signup", forwardAuthenticated, (req, res) => {
     res.sendFile("./public/html/signup.html", { root: __dirname });
 })
 
 // Search page route
-app.get("/search", (req, res) => {
+app.get("/search", ensureAuthenticated, (req, res) => {
     res.sendFile(`./public/html/search.html`, { root: __dirname });
 })
 
