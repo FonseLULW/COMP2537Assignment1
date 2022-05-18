@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Pokedex-Login! A01262284</title>
+    <title>Pokedex-Signup! A01262284</title>
 
     <!-- Stylesheets -->
     <link rel="stylesheet" href="/styles/universal.css">
@@ -17,7 +17,7 @@
     <!-- Header -->
     <header>
         <h1>
-            Jose Alfonso Clarito - Login!
+            Jose Alfonso Clarito - Sign Up!
         </h1>
     </header>
 
@@ -27,11 +27,15 @@
 
     <main>
         <div id="loginform-container">
-            <h2>Login to your account!</h2>
-            <form id="loginForm" action="/auth/login" method="POST">
+            <h2>Create a new account!</h2>
+            <form id="loginForm" action="/auth/signup" method="POST">
                 <div class="fields">
                     <label for="email">Email:</label>
-                    <input name="email" type="email" class="textfields">
+                    <input name="email" type="email" class="textfields" placeholder="email@domain.com">
+                </div>
+                <div class="fields">
+                    <label for="username">Username:</label>
+                    <input name="username" type="text" class="textfields">
                 </div>
                 <div class="fields">
                     <label for="password">Password:</label>
@@ -39,7 +43,7 @@
                 </div>
                 <input id="submitBtn" type="submit" value="Login">
             </form>
-            <div id="footnote">Or you can <a href="/signup">Sign Up</a>!</div>
+            <div id="footnote">Already have an account? <a href="/signup">Login</a>!</div>
         </div>
     </main>
 
