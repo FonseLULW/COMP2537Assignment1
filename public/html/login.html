@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -8,9 +9,10 @@
 
     <!-- Stylesheets -->
     <link rel="stylesheet" href="/styles/universal.css">
-
+    <link rel="stylesheet" href="/styles/login.css">
     <link rel="stylesheet" href="/styles/universal-mq.css">
 </head>
+
 <body>
     <!-- Header -->
     <header>
@@ -19,21 +21,40 @@
         </h1>
     </header>
 
-    <main id="loginform-container">
+    <!-- Navbar -->
+    <nav>
+    </nav>
 
+    <main>
+        <div id="loginform-container">
+            <h2>Login to your account!</h2>
+            <form id="loginForm" action="/auth/login" method="POST">
+                <div class="fields">
+                    <label for="email">Email:</label>
+                    <input name="email" type="email" class="textfields">
+                </div>
+                <div class="fields">
+                    <label for="password">Password:</label>
+                    <input name="password" type="password" class="textfields">
+                </div>
+                <input id="submitBtn" type="submit" value="Login">
+            </form>
+            <div id="footnote">Or you can <a href="">Sign Up</a>!</div>
+        </div>
     </main>
 
     <!-- Footer -->
     <footer>
         <h5>
-            Copyright © FonseLULW; API from 
-            <a href="https://pokeapi.co/">pokeapi.co</a>
+            Copyright © FonseLULW; API from
+            <a href="https://stormy-temple-14536.herokuapp.com">myMockAPI</a>
         </h5>
     </footer>
 
     <!-- Scripts -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <script src="/scripts/universal.js"></script>
-    
+
 </body>
+
 </html>
