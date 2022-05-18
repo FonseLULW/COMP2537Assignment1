@@ -31,19 +31,19 @@
             <form id="loginForm" action="/auth/signup" method="POST">
                 <div class="fields">
                     <label for="email">Email:</label>
-                    <input name="email" type="email" class="textfields" placeholder="email@domain.com">
+                    <input name="email" type="email" class="textfields" placeholder="email@domain.com" autocomplete="off" required>
                 </div>
                 <div class="fields">
                     <label for="username">Username:</label>
-                    <input name="username" type="text" class="textfields">
+                    <input name="username" type="text" class="textfields" autocomplete="off" required>
                 </div>
                 <div class="fields">
                     <label for="password">Password:</label>
-                    <input name="password" type="password" class="textfields">
+                    <input name="password" type="password" class="textfields" autocomplete="off" required>
                 </div>
-                <input id="submitBtn" type="submit" value="Login">
+                <input id="submitBtn" type="submit" value="Create Account">
             </form>
-            <div id="footnote">Already have an account? <a href="/signup">Login</a>!</div>
+            <div id="footnote">Already have an account? <a href="/">Login</a>!</div>
         </div>
     </main>
 

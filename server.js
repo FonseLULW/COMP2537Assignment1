@@ -17,6 +17,7 @@ mongoose.connect(uriString, {
     useNewUrlParser: true, useUnifiedTopology: true
 })
 
+// Timeline Model
 const eventSchema = new mongoose.Schema({
     text: String,
     hits: Number,
@@ -24,6 +25,14 @@ const eventSchema = new mongoose.Schema({
     date: String
 })
 const eventModel = mongoose.model("events", eventSchema);
+
+// User Model
+const userSchema = new mongoose.Schema({
+    email: String,
+    username: String,
+    password: String
+})
+const userModel = mongoose.model("users", userSchema);
 
 // Statics
 app.use(express.static(`./public`));
@@ -112,6 +121,51 @@ app.get("/profile/:id", (req, res) => {
     })
 });
 
+// Auth routes
+app.post("/auth/login", (req, res) => {
+    const {email, password} = req.body
+    userModel.findOne({email: email, password: password}, (err, resp) => {
+        if (err) {
+            console.log(err.message)
+        } else if (resp == null || resp == undefined){
+            res.send("Email or password is incorrect")
+        } else {
+            res.redirect("/home")
+        }
+    })
+})
+
+app.post("/auth/signup", (req, res) => {
+    const {email, username, password} = req.body
+    userModel.findOne({$or: [
+        {username: username}, 
+        {email: email}
+    ]}, (err, resp) => {
+        console.log(resp)
+        if (err) {
+            console.log(err.message)
+        } else if (resp == null || resp == undefined) {
+            userModel.create({
+                email: email,
+                username: username,
+                password: password
+            }, (err, resp) => {
+                if (err) {
+                    console.log(err.message)
+                } else {
+                    res.redirect("/home")
+                }
+            })
+        } else if (resp.email === email && resp.username === username) {
+            res.send("This email and username already exists!")
+        } else if (resp.email === email) {
+            res.send("This email already exists!")
+        } else {
+            res.send("This username is taken!")
+        }
+    })
+})
+
 // Home page route
 app.get("/home", (req, res) => {
     res.sendFile("./public/html/home.html", {root: __dirname});
@@ -120,6 +174,11 @@ app.get("/home", (req, res) => {
 // Login page route
 app.get("/", (req, res) => {
     res.sendFile("./public/html/login.html", { root: __dirname });
+})
+
+// Sign up page route
+app.get("/signup", (req, res) => {
+    res.sendFile("./public/html/signup.html", { root: __dirname });
 })
 
 // Search page route

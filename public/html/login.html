@@ -28,14 +28,14 @@
     <main>
         <div id="loginform-container">
             <h2>Login to your account!</h2>
-            <form id="loginForm" action="/auth/login" method="POST">
+            <form id="loginForm" action="/auth/login" method="POST" autocomplete="off">
                 <div class="fields">
                     <label for="email">Email:</label>
-                    <input name="email" type="email" class="textfields">
+                    <input name="email" type="email" class="textfields" autocomplete="off" required>
                 </div>
                 <div class="fields">
                     <label for="password">Password:</label>
-                    <input name="password" type="password" class="textfields">
+                    <input name="password" type="password" class="textfields" autocomplete="off" required>
                 </div>
                 <input id="submitBtn" type="submit" value="Login">
             </form>
