@@ -95,7 +95,7 @@ app.get("/events/deleteEvent/:id", (req, res) => {
 // Dynamic profile page
 app.get("/profile/:id", (req, res) => {
 
-    const url = `https://pokeapi.co/api/v2/pokemon/${req.params.id}`;
+    const url = `https://stormy-temple-14536.herokuapp.com/pokemon/${req.params.id}`;
     data = "";
 
     https.get(url, (https_res) => {
@@ -119,7 +119,7 @@ app.get("/home", (req, res) => {
 
 // Login page route
 app.get("/", (req, res) => {
-    res.sendFile("./public/login.html", { root: __dirname });
+    res.sendFile("./public/html/login.html", { root: __dirname });
 })
 
 // Search page route
