@@ -27,7 +27,7 @@ function updateEventsDisplay(data) {
 
 function reloadEvents() {
     $.ajax({
-        url: `${timelineLink}/events/readAllEvents`,
+        url: `/events/readAllEvents`,
         type: `get`,
         success: (resp) => {
             updateEventsDisplay(resp)
@@ -42,7 +42,7 @@ function initSingleEvent(singleEventElem) {
 
     likeBtn.addEventListener("click", () => {
         $.ajax({
-            url: `${timelineLink}/events/incrementHits/${eventID}`,
+            url: `/events/incrementHits/${eventID}`,
             type: `get`,
             success: reloadEvents
         })
@@ -50,7 +50,7 @@ function initSingleEvent(singleEventElem) {
 
     delBtn.addEventListener("click", () => {
         $.ajax({
-            url: `${timelineLink}/events/deleteEvent/${eventID}`,
+            url: `/events/deleteEvent/${eventID}`,
             type: `get`,
             success: reloadEvents
         })
