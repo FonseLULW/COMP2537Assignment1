@@ -10,22 +10,16 @@ const port = process.env.PORT || 8000;
 const uriString = process.env.MONGODB_URI
 
 // Middlewares
+const sessionLog = require("./middleware/session-log"); 
+
+// Use middlewares
 app.use(cors())
 app.use(session({
     secret: "sssshhhhh",
     saveUninitialized: true,
     resave: true
 }))
-
-// Log Session
-app.use((req, res, next) => {
-    console.log(`{
-        sessionID: ${req.sessionID},
-        username: ${req.session.username},
-        authenticated: ${req.session.authenticated}
-    }`)
-    next()
-})
+app.use(sessionLog)
 
 app.set('view engine', 'ejs');
 const mongoose = require('mongoose');
