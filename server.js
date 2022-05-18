@@ -112,9 +112,14 @@ app.get("/profile/:id", (req, res) => {
     })
 });
 
-// Home page route
+// Index page route
+app.get("/home", (req, res) => {
+    res.sendFile("./public/html/index.html", {root: __dirname});
+})
+
+// Login page route
 app.get("/", (req, res) => {
-    res.sendFile("./public/index.html", { root: __dirname });
+    res.sendFile("./public/login.html", { root: __dirname });
 })
 
 // Search page route
