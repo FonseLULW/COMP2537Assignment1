@@ -24,6 +24,7 @@ app.use(sessionLog)
 
 app.set('view engine', 'ejs');
 const mongoose = require('mongoose');
+const { nextTick } = require("process");
 
 mongoose.connect(uriString, {
     useNewUrlParser: true, useUnifiedTopology: true
@@ -42,8 +43,8 @@ const eventSchema = new mongoose.Schema({
     text: String,
     hits: Number,
     time: String,
-    date: String,
-    doneBy: {type: mongoose.Schema.Types.ObjectId, ref: 'User'} 
+    doneBy: {type: mongoose.Schema.Types.ObjectId, ref: "User"},
+    date: String
 })
 const eventModel = mongoose.model("Event", eventSchema);
 
@@ -57,7 +58,7 @@ app.use(bodyParser.urlencoded({
 
 // [READ] all timelineDB events and render timeline.ejs
 app.get("/timeline", ensureAuthenticated, (req, res) => {
-    eventModel.find({}, (err, events) => {
+    eventModel.find({doneBy: req.session.uid}, (err, events) => {
         if (err) {
             console.log(err);
         }
@@ -68,7 +69,7 @@ app.get("/timeline", ensureAuthenticated, (req, res) => {
 })
 
 app.get("/events/readAllEvents", ensureAuthenticated, (req, res) => {
-    eventModel.find({}, (err, events) => {
+    eventModel.find({doneBy: req.session.uid}, (err, events) => {
         if (err) {
             console.log(err)
         }
@@ -78,16 +79,18 @@ app.get("/events/readAllEvents", ensureAuthenticated, (req, res) => {
 
 // [CREATE] a new event and insert it to the timelineDB
 app.put("/events/insertEvent", ensureAuthenticated, (req, res) => {
-    console.log(req.body);
     eventModel.create({
         text: req.body.text,
         date: req.body.date,
         time: req.body.time,
-        hits: req.body.hits
+        doneBy: req.session.uid,
+        hits: req.body.hits,
     }, (err, data) => {
         if (err) {
             console.log(err);
         }
+        console.log("DATA")
+        console.log(data)
         res.send("Created successfully")
     })
 })

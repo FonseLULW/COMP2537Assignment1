@@ -14,7 +14,7 @@ function getFormattedDate(currentTimestamp) {
 
 async function fireProfileEvent(pokeName, timestamp) {
     $.ajax({
-        url: `${timelineLink}/events/insertEvent`,
+        url: `/events/insertEvent`,
         type: `put`,
         data: {
             text: `Accessed ${pokeName}'s profile`,
@@ -27,7 +27,7 @@ async function fireProfileEvent(pokeName, timestamp) {
 
 async function fireSearchEvent(searchType, searchValue, timestamp) {
     $.ajax({
-        url: `${timelineLink}/events/insertEvent`,
+        url: `/events/insertEvent`,
         type: `put`,
         data: {
             text: `Searched for ${searchType} ${searchValue}`,
@@ -40,7 +40,7 @@ async function fireSearchEvent(searchType, searchValue, timestamp) {
 
 async function fireClearHistoryEvent(timestamp) {
     $.ajax({
-        url: `${timelineLink}/events/insertEvent`,
+        url: `/events/insertEvent`,
         type: `put`,
         data: {
             text: `Cleared search history`,
@@ -53,7 +53,7 @@ async function fireClearHistoryEvent(timestamp) {
 
 async function fireDeleteFromHistoryEvent(historyType, historyValue, timestamp) {
     $.ajax({
-        url: `${timelineLink}/events/insertEvent`,
+        url: `/events/insertEvent`,
         type: `put`,
         data: {
             text: `Deleted search history item {${historyType}: ${historyValue}}`,
@@ -66,7 +66,7 @@ async function fireDeleteFromHistoryEvent(historyType, historyValue, timestamp) 
 
 async function fireRestoreSearchEvent(historyType, historyValue, timestamp) {
     $.ajax({
-        url: `${timelineLink}/events/insertEvent`,
+        url: `/events/insertEvent`,
         type: `put`,
         data: {
             text: `Accessed search history item {${historyType}: ${historyValue}}`,
