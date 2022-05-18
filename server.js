@@ -112,9 +112,9 @@ app.get("/profile/:id", (req, res) => {
     })
 });
 
-// Index page route
+// Home page route
 app.get("/home", (req, res) => {
-    res.sendFile("./public/html/index.html", {root: __dirname});
+    res.sendFile("./public/html/home.html", {root: __dirname});
 })
 
 // Login page route
