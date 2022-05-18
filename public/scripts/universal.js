@@ -1,9 +1,9 @@
 const mockAPILink = `https://stormy-temple-14536.herokuapp.com`
 const timelineLink = `https://hidden-reef-22852.herokuapp.com`
-const pokeAPILink = `https:/https://stormy-temple-14536.herokuapp.com/pokeapi.co/api/v2`
+const pokeAPILink = `https://pokeapi.co/api/v2`
 
 // Total number of existing Pokemon
-const POKECOUNT = 30;
+const POKECOUNT = 898;
 
 // translate function setup
 const POKEGENERATIONSCOUNT = 8;
@@ -27,7 +27,7 @@ function getRandomPokemonID() {
 
 // Get a Pokemon from PokeAPI by ID
 async function getPokemon(category, val) {
-    const url = `${mockAPILink}/${category}/${val}`;
+    const url = `${pokeAPILink}/${category}/${val}`;
     try {
         const res = await fetch(url);
         const pokemon = await res.json();
