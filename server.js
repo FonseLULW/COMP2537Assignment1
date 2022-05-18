@@ -29,22 +29,23 @@ mongoose.connect(uriString, {
     useNewUrlParser: true, useUnifiedTopology: true
 })
 
-// Timeline Model
-const eventSchema = new mongoose.Schema({
-    text: String,
-    hits: Number,
-    time: String,
-    date: String
-})
-const eventModel = mongoose.model("events", eventSchema);
-
 // User Model
 const userSchema = new mongoose.Schema({
     email: String,
     username: String,
     password: String
 })
-const userModel = mongoose.model("users", userSchema);
+const userModel = mongoose.model("User", userSchema);
+
+// Timeline Model
+const eventSchema = new mongoose.Schema({
+    text: String,
+    hits: Number,
+    time: String,
+    date: String,
+    doneBy: {type: mongoose.Schema.Types.ObjectId, ref: 'User'} 
+})
+const eventModel = mongoose.model("Event", eventSchema);
 
 // Statics
 app.use(express.static(`./public`));
@@ -143,6 +144,7 @@ app.post("/auth/login", (req, res) => {
             res.send("Email or password is incorrect")
         } else {
             req.session.username = resp.username
+            req.session.uid = resp._id
             req.session.authenticated = true
             res.redirect("/home")
         }
@@ -155,7 +157,6 @@ app.post("/auth/signup", (req, res) => {
         {username: username}, 
         {email: email}
     ]}, (err, resp) => {
-        console.log(resp)
         if (err) {
             console.log(err.message)
         } else if (resp == null || resp == undefined) {
@@ -163,10 +164,14 @@ app.post("/auth/signup", (req, res) => {
                 email: email,
                 username: username,
                 password: password
-            }, (err, resp) => {
+            }, (err, data) => {
+                console.log(data)
                 if (err) {
                     console.log(err.message)
                 } else {
+                    req.session.username = data.username
+                    req.session.uid = data._id
+                    req.session.authenticated = true
                     res.redirect("/home")
                 }
             })
