@@ -20,7 +20,7 @@ app.use(session({
     saveUninitialized: true,
     resave: true
 }))
-app.use(sessionLog)
+// app.use(sessionLog)
 
 app.set('view engine', 'ejs');
 const mongoose = require('mongoose');
