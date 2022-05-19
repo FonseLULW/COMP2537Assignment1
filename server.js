@@ -24,52 +24,15 @@ app.use(session({
 
 app.set('view engine', 'ejs');
 const mongoose = require('mongoose');
-const { nextTick } = require("process");
 
 mongoose.connect(uriString, {
     useNewUrlParser: true, useUnifiedTopology: true
 })
 
-// User Model
-const userSchema = new mongoose.Schema({
-    email: String,
-    username: String,
-    password: String
-})
-const userModel = mongoose.model("User", userSchema);
-
-// Timeline Model
-const eventSchema = new mongoose.Schema({
-    text: String,
-    hits: Number,
-    time: String,
-    doneBy: {type: mongoose.Schema.Types.ObjectId, ref: "User"},
-    date: String
-})
-const eventModel = mongoose.model("Event", eventSchema);
-
-// Product Model
-const productSchema = new mongoose.Schema({
-    pokemon: String,
-    productCost: Number,
-    quantity: Number,
-    ordersInvolved: [{type: mongoose.Schema.Types.ObjectId, ref: "Order"}]
-})
-const productModel = mongoose.model("Product", productSchema);
-
-// Order Model
-const orderSchema = new mongoose.Schema({
-    orderedBy: {type: mongoose.Schema.Types.ObjectId, ref: "User"},
-    products: [{type: mongoose.Schema.Types.ObjectId, ref: "Product"}],
-    shippingCost: Number,
-    productsCost: Number,
-    taxCost: Number,
-    totalCost: Number,
-    estimatedArrivalDate: Date, 
-    shippedFrom: String,
-    orderStatus: String // could be unconfirmed, delivering, complete, cancelled
-})
-const orderModel = mongoose.model("Order", orderSchema);
+const User = require('./models/User')
+const Event = require('./models/Event')
+const Product = require('./models/Product')
+const Order = require('./models/Order')
 
 // Statics
 app.use(express.static(`./public`));
@@ -81,7 +44,7 @@ app.use(bodyParser.urlencoded({
 
 // [READ] all timelineDB events and render timeline.ejs
 app.get("/timeline", ensureAuthenticated, (req, res) => {
-    eventModel.find({doneBy: req.session.uid}, (err, events) => {
+    Event.find({doneBy: req.session.uid}, (err, events) => {
         if (err) {
             console.log(err);
         }
@@ -92,7 +55,7 @@ app.get("/timeline", ensureAuthenticated, (req, res) => {
 })
 
 app.get("/events/readAllEvents", ensureAuthenticated, (req, res) => {
-    eventModel.find({doneBy: req.session.uid}, (err, events) => {
+    Event.find({doneBy: req.session.uid}, (err, events) => {
         if (err) {
             console.log(err)
         }
@@ -102,7 +65,7 @@ app.get("/events/readAllEvents", ensureAuthenticated, (req, res) => {
 
 // [CREATE] a new event and insert it to the timelineDB
 app.put("/events/insertEvent", ensureAuthenticated, (req, res) => {
-    eventModel.create({
+    Event.create({
         text: req.body.text,
         date: req.body.date,
         time: req.body.time,
@@ -120,7 +83,7 @@ app.put("/events/insertEvent", ensureAuthenticated, (req, res) => {
 
 // [UPDATE] the `hits` field of an event in the timelineDB
 app.get("/events/incrementHits/:id", ensureAuthenticated, (req, res) => {
-    eventModel.updateOne(
+    Event.updateOne(
         {_id: req.params.id},
         {$inc: {hits: 1}}, (err, data) => {
             if (err) {
@@ -132,7 +95,7 @@ app.get("/events/incrementHits/:id", ensureAuthenticated, (req, res) => {
 
 // [DELETE] an event from timelineDB
 app.get("/events/deleteEvent/:id", ensureAuthenticated, (req, res) => {
-    eventModel.deleteOne({_id: req.params.id}, (err, data) => {
+    Event.deleteOne({_id: req.params.id}, (err, data) => {
         if (err) {
             console.log(err);
         }
@@ -163,7 +126,7 @@ app.get("/profile/:id", ensureAuthenticated, (req, res) => {
 // Auth routes
 app.post("/auth/login", (req, res) => {
     const {email, password} = req.body
-    userModel.findOne({email: email, password: password}, (err, resp) => {
+    User.findOne({email: email, password: password}, (err, resp) => {
         if (err) {
             console.log(err.message)
         } else if (resp == null || resp == undefined){
@@ -179,14 +142,14 @@ app.post("/auth/login", (req, res) => {
 
 app.post("/auth/signup", (req, res) => {
     const {email, username, password} = req.body
-    userModel.findOne({$or: [
+    User.findOne({$or: [
         {username: username}, 
         {email: email}
     ]}, (err, resp) => {
         if (err) {
             console.log(err.message)
         } else if (resp == null || resp == undefined) {
-            userModel.create({
+            User.create({
                 email: email,
                 username: username,
                 password: password
@@ -232,7 +195,7 @@ app.get("/", forwardAuthenticated, (req, res) => {
 })
 
 // Sign up page route
-app.get("/signup", forwardAuthenticated, (req, res) => {
+app.get("/signup", (req, res) => {
     res.sendFile("./public/html/signup.html", { root: __dirname });
 })
 
