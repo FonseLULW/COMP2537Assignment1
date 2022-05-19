@@ -48,6 +48,28 @@ const eventSchema = new mongoose.Schema({
 })
 const eventModel = mongoose.model("Event", eventSchema);
 
+// Product Model
+const productSchema = new mongoose.Schema({
+    pokemon: String,
+    productCost: Number,
+    quantity: Number,
+    ordersInvolved: [{type: mongoose.Schema.Types.ObjectId, ref: "Order"}]
+})
+const productModel = mongoose.model("Product", productSchema);
+
+// Order Model
+const orderSchema = new mongoose.Schema({
+    orderedBy: {type: mongoose.Schema.Types.ObjectId, ref: "User"},
+    products: [{type: mongoose.Schema.Types.ObjectId, ref: "Product"}],
+    shippingCost: Number,
+    productsCost: Number,
+    taxCost: Number,
+    totalCost: Number,
+    estimatedArrivalDate: Date, 
+    shippedFrom: String
+})
+const orderModel = mongoose.model("Order", orderSchema);
+
 // Statics
 app.use(express.static(`./public`));
 app.use(bodyParser.urlencoded({
