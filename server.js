@@ -66,7 +66,8 @@ const orderSchema = new mongoose.Schema({
     taxCost: Number,
     totalCost: Number,
     estimatedArrivalDate: Date, 
-    shippedFrom: String
+    shippedFrom: String,
+    orderStatus: String // could be unconfirmed, delivering, complete, cancelled
 })
 const orderModel = mongoose.model("Order", orderSchema);
 

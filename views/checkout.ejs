@@ -8,7 +8,7 @@
 
     <!-- Stylesheets -->
     <link rel="stylesheet" href="styles/universal.css">
-    <link rel="stylesheet" href="styles/timeline.css">
+    <link rel="stylesheet" href="styles/checkout.css">
     <link rel="stylesheet" href="styles/universal-mq.css">
 </head>
 <body>
@@ -43,6 +43,19 @@
 
     <!-- Shopping Cart -->
     <main>
+        <h2>Your current order</h2>
+        <section id="products">
+            <div class="single-product">
+                <div class="prod-name">[PRODUCT NAME]</div>
+                <div class="prod-singlecost">[ITEM COST]</div>
+                <div class="prod-quantity">[QUANTITY]</div>
+            </div>
+        </section>
+        <div>Your subtotal is [$68] </div>
+        <div>+ Shipping [$0]</div>
+        <div>+ tax of [$1]</div>
+        <div>For a total of [$69]</div>
+        <input type="submit" value="Checkout">
     </main>
     
     <!-- Footer -->
@@ -57,6 +70,6 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <script src="/scripts/universal.js"></script>
     <script src="/scripts/events.js"></script>
-    <script src="/scripts/timeline.js"></script>
+    <script src="/scripts/checkout.js"></script>
 </body>
 </html>
