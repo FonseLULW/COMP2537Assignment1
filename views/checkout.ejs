@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Pokedex-Timeline! A01262284</title>
+    <title>Pokedex-Checkout! A01262284</title>
 
     <!-- Stylesheets -->
     <link rel="stylesheet" href="styles/universal.css">
@@ -15,7 +15,7 @@
     <!-- Header -->
     <header>
         <h1>
-            Jose Alfonso Clarito - Timeline!
+            Jose Alfonso Clarito - Checkout!
         </h1>
     </header>
 
@@ -41,26 +41,8 @@
         </a>
     </nav>
 
-    <!-- Timeline -->
+    <!-- Shopping Cart -->
     <main>
-        <section id="timeline-items">  
-            <% events.forEach(event => { %>
-                <div id="<%=event.id%>" class="single-event">
-                    <div class="event-data">
-                        <div class="datetime">
-                            <span class="date"><%=event.date%></span>
-                            <span class="time"><%=event.time%></span>
-                        </div>
-                        <div class="text">Event: <span><%=event.text%></span></div>
-                        <div class="hits">Likes: <span><%=event.hits%></span></div>
-                    </div>
-                    <div class="event-controls">
-                        <button class="like">Like</button>
-                        <button class="delete">Delete</button>
-                    </div>
-                </div>
-            <% }) %>
-        </section>
     </main>
     
     <!-- Footer -->

@@ -6,7 +6,7 @@ html {
 
 body {
     display: grid;
-    grid-template-rows: 8vh 8vh minmax(76vh, auto) 8vh;
+    grid-template-rows: 8vh minmax(8vh, auto) minmax(76vh, auto) 8vh;
     margin: auto;
     /* width: 100%; */
     height: fit-content;
