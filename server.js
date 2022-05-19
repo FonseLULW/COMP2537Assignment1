@@ -240,6 +240,16 @@ app.get("/search", ensureAuthenticated, (req, res) => {
     res.sendFile(`./public/html/search.html`, { root: __dirname });
 })
 
+// Checkout page route
+app.get("/checkout", ensureAuthenticated, (req, res) => {
+    res.render("checkout")
+})
+
+// Receipts page route
+app.get("/receipts", ensureAuthenticated, (req, res) => {
+    res.render("receipts")
+})
+
 // entry point
 app.listen(port, (err) => {
     if (err) {
