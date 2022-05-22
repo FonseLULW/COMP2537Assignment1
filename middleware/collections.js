@@ -107,4 +107,37 @@ const updateOrderCost = (req, res, next) => {
     })
 }
 
-module.exports = { createProductIfNotExists, createOrderIfNotExists, incrementQuantityInOrderIfExists, pushToOrder, updateOrderCost }
+const getCurrentOrder = (req, res, next) => {
+    Order.findOne({orderedBy: req.session.uid, orderStatus: "unconfirmed"}, (err, resp) => {
+        if (err) {
+            res.send(err)
+        } else {
+            req.currentOrder = resp
+            next()
+        }
+    })
+}
+
+const getProductsFromCurrentOrder = (req, res, next) => {
+    let productsInvolved = req.currentOrder.products.map(prod => prod.id)
+    console.log("PRODS INVOLVED: ", productsInvolved)
+    Product.find({_id: {$in: productsInvolved}}, (err, resp) => {
+        if (err) {
+            res.send(err)
+        } else {
+            console.log("PRODUCTS: ", resp)
+            req.products = req.currentOrder.products.map((prod, i) => {
+                return {
+                    name: resp[i].pokemonName,
+                    id: resp[i].pokemonId,
+                    cost: resp[i].productCost,
+                    quantity: prod.quantity
+                }
+            })
+            console.log("MODIFIED: ", req.products)
+            next()
+        }
+    })
+}
+
+module.exports = { getProductsFromCurrentOrder, getCurrentOrder, createProductIfNotExists, createOrderIfNotExists, incrementQuantityInOrderIfExists, pushToOrder, updateOrderCost }

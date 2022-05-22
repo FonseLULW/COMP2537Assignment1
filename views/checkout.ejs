@@ -43,18 +43,20 @@
 
     <!-- Shopping Cart -->
     <main>
-        <h2>Your current order</h2>
+        <h2>Your current order: <%= orderId %> by <%= orderedBy %></h2> 
         <section id="products">
-            <div class="single-product">
-                <div class="prod-name">[PRODUCT NAME]</div>
-                <div class="prod-singlecost">[ITEM COST]</div>
-                <div class="prod-quantity">[QUANTITY]</div>
-            </div>
+            <% products.forEach(item => { %>
+                <div class="single-product">
+                    <div class="prod-pokeId"><%= item.id %></div>
+                    <div class="prod-name"><%= item.name %></div>
+                    <div class="prod-singlecost"><%= item.cost %></div>
+                    <div class="prod-quantity"><%= item.quantity %></div>
+                </div>
+            <% }) %>
         </section>
-        <div>Your subtotal is [$68] </div>
-        <div>+ Shipping [$0]</div>
-        <div>+ tax of [$1]</div>
-        <div>For a total of [$69]</div>
+        <div>Your subtotal is <%= productsCost %>  </div>
+        <div>+ <%= taxCost %> tax percentage </div>
+        <div>For a total of <%= totalCost %></div>
         <input type="submit" value="Checkout">
     </main>
     

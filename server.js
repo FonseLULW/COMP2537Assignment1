@@ -12,7 +12,7 @@ const uriString = process.env.MONGODB_URI
 // Middlewares
 const sessionLog = require("./middleware/session-log");
 const { ensureAuthenticated, forwardAuthenticated } = require("./middleware/auths");
-const { createProductIfNotExists, createOrderIfNotExists, incrementQuantityInOrderIfExists, pushToOrder, updateOrderCost } = require("./middleware/collections")
+const { getProductsFromCurrentOrder, createProductIfNotExists, createOrderIfNotExists, incrementQuantityInOrderIfExists, pushToOrder, updateOrderCost, getCurrentOrder } = require("./middleware/collections")
 
 // Use middlewares
 app.use(cors())
@@ -209,8 +209,18 @@ app.get("/search", ensureAuthenticated, (req, res) => {
 })
 
 // Checkout page route
-app.get("/checkout", ensureAuthenticated, (req, res) => {
-    res.render("checkout")
+app.get("/checkout", ensureAuthenticated, getCurrentOrder, getProductsFromCurrentOrder,(req, res) => {
+    console.log(req.currentOrder)
+    console.log(req.products)
+    res.render("checkout", {
+        orderId: req.currentOrder._id,
+        orderedBy: req.currentOrder.orderedBy,
+        productsCost: req.currentOrder.productsCost,
+        taxCost: req.currentOrder.taxCost,
+        totalCost: req.currentOrder.totalCost,
+        orderStatus: req.currentOrder.orderStatus,
+        products: req.products
+    })
 })
 
 // Receipts page route
@@ -218,7 +228,7 @@ app.get("/receipts", ensureAuthenticated, (req, res) => {
     res.render("receipts")
 })
 
-// Shop
+// Shop [ADD] to Cart
 app.post("/shop/addToCart", ensureAuthenticated, createProductIfNotExists, createOrderIfNotExists, incrementQuantityInOrderIfExists, pushToOrder, updateOrderCost, (req, res) => {
     console.log("REQ", req.body)
     
