@@ -6,7 +6,7 @@ function updateCartDisplay(data) {
     let newHtml = ``
     console.log(data.totalCost)
 
-    if (data.noActiveOrders) {
+    if (data.noActiveOrders || data.cartSize <= 0) {
         newHtml += `<h2 id="none">Shopping Cart is empty!</h2>`
     } else {
         newHtml += `<h2>You have <b>
@@ -50,7 +50,7 @@ function updateCartDisplay(data) {
                     </span>
                     <button class="quantity-control add">+</button>
                 </td>
-                <td class="prod-singlecost">
+                <td class="prod-singlecostsubtotal">
                     ${(item.cost * item.quantity).toLocaleString('en-GB', {
                 style: 'currency',
                 currency: 'CAD'
@@ -62,7 +62,7 @@ function updateCartDisplay(data) {
         newHtml += `<tr class="bottomline">
                                 <td class="label" colspan="5">Subtotal Cost</td>
                                 <td>
-                                    ${data.productsCost.toLocaleString('en-GB', { style: 'currency' , currency: 'CAD' })}
+                                    ${data.productsCost.toLocaleString('en-GB', { style: 'currency', currency: 'CAD' })}
                                 </td>
                             </tr>
                             <tr class="bottomline">
@@ -70,14 +70,16 @@ function updateCartDisplay(data) {
                                     ${data.taxCost * 100}% Sales Tax
                                 </td>
                                 <td>
-                                    ${(data.taxCost * data.productsCost).toLocaleString('en-GB', { style: 'currency' ,
-                                        currency: 'CAD' })}
+                                    ${(data.taxCost * data.productsCost).toLocaleString('en-GB', {
+            style: 'currency',
+            currency: 'CAD'
+        })}
                                 </td>
                             </tr>
                             <tr class="bottomline finaltally">
                                 <td class="label" colspan="5">Total</td>
                                 <td>
-                                    ${data.totalCost.toLocaleString('en-GB', { style: 'currency' , currency: 'CAD' })}
+                                    ${data.totalCost.toLocaleString('en-GB', { style: 'currency', currency: 'CAD' })}
                                 </td>
                             </tr>
                 </table>
@@ -85,9 +87,9 @@ function updateCartDisplay(data) {
                     <button class="submit">Checkout</button>
                     <button class="deleteAllItems">Empty Cart</button>
                 </div>`
-                cart.innerHTML = newHtml
-                setup()
     }
+    cart.innerHTML = newHtml
+    setup()
 }
 
 function reloadCart() {
@@ -107,6 +109,20 @@ function deleteAllItems() {
 
 function deleteItem(row) {
     console.log(row)
+    let productSubtotal = -Number(row.querySelector(".prod-singlecostsubtotal").innerHTML.trim().replace(/[^0-9.-]+/g, ""))
+
+    $.ajax({
+        url: "/checkout/deleteItem",
+        method: "POST",
+        data: {
+            _orderId: orderId,
+            _productId: row.id,
+            productCostSubtotal: productSubtotal,
+        },
+    }).done(() => {
+        console.log("UIASOJMDIJSANKSA")
+        reloadCart()
+    })
 }
 
 function incrementQuantity(row, decrement) {

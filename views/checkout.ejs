@@ -47,7 +47,7 @@
 
     <!-- Shopping Cart -->
     <main id="shopcart">
-        <% if (noActiveOrders) { %>
+        <% if (noActiveOrders || cartSize <= 0) { %>
             <h2 id="none">Shopping Cart is empty!</h2>
             <% } else { %>
 
@@ -91,7 +91,7 @@
                                 </span>
                                 <button class="quantity-control add">+</button>
                             </td>
-                            <td class="prod-singlecost">
+                            <td class="prod-singlecostsubtotal">
                                 <%= (item.cost * item.quantity).toLocaleString('en-GB', { style: 'currency' ,
                                     currency: 'CAD' }) %>
                             </td>

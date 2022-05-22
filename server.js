@@ -12,7 +12,7 @@ const uriString = process.env.MONGODB_URI
 // Middlewares
 const sessionLog = require("./middleware/session-log");
 const { ensureAuthenticated, forwardAuthenticated } = require("./middleware/auths");
-const { getProductsFromCurrentOrder, createProductIfNotExists, createOrderIfNotExists, incrementQuantityInOrderIfExists, pushToOrder, updateOrderCost, getCurrentOrder } = require("./middleware/collections")
+const { removeProductFromOrder, getProductsFromCurrentOrder, createProductIfNotExists, createOrderIfNotExists, incrementQuantityInOrderIfExists, pushToOrder, updateOrderCost, getCurrentOrder } = require("./middleware/collections")
 
 // Use middlewares
 app.use(cors())
@@ -234,11 +234,12 @@ app.get("/checkout", ensureAuthenticated, getCurrentOrder, getProductsFromCurren
 // Checkout increment route
 app.post("/checkout/incrementQuantity", incrementQuantityInOrderIfExists, updateOrderCost, (req, res) => {
     console.log("COMPLETED!")
-    res.json({
-        a: "hi",
-        b: "hello",
-        c: "ok"
-    })
+    res.send("DONE")
+})
+
+app.post("/checkout/deleteItem", ensureAuthenticated, removeProductFromOrder, updateOrderCost, (req, res) => {
+    console.log("DONE DELETE!")
+    res.send("DONE")
 })
 
 app.get("/checkout/getOrder", ensureAuthenticated, getCurrentOrder, getProductsFromCurrentOrder, (req, res) => {
