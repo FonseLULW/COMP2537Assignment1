@@ -229,6 +229,16 @@ app.get("/checkout", ensureAuthenticated, getCurrentOrder, getProductsFromCurren
     })
 })
 
+// Checkout increment route
+app.put("/checkout/incrementQuantity", incrementQuantityInOrderIfExists, updateOrderCost, (req, res) => {
+    console.log("COMPLETED!")
+    res.json({
+        a: "hi",
+        b: "hello",
+        c: "ok"
+    })
+})
+
 app.get("/checkout/getOrder", ensureAuthenticated, getCurrentOrder, getProductsFromCurrentOrder, (req, res) => {
     res.json({
         noActiveOrders: false, 
@@ -240,16 +250,6 @@ app.get("/checkout/getOrder", ensureAuthenticated, getCurrentOrder, getProductsF
         orderStatus: req.currentOrder.orderStatus,
         products: req.products,
         cartSize: req.products.length
-    })
-})
-
-// Checkout increment route
-app.put("/checkout/incrementQuantity", incrementQuantityInOrderIfExists, updateOrderCost, (req, res) => {
-    console.log("COMPLETED!")
-    res.json({
-        a: "hi",
-        b: "hello",
-        c: "ok"
     })
 })
 

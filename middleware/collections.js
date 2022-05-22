@@ -98,7 +98,7 @@ const updateOrderCost = (req, res, next) => {
                     console.log(err.message)
                     res.send(err)
                 } else {
-                    console.log(resp)
+                    console.log("RESP ROC: ", resp)
                     next()
                 }
             })
@@ -112,6 +112,7 @@ const getCurrentOrder = (req, res, next) => {
             res.send(err)
         } else if (resp) {
             req.currentOrder = resp
+            console.log(resp.totalCost)
             next()
         } else {
             res.render("checkout", {
