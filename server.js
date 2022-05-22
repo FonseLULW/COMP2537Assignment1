@@ -42,6 +42,10 @@ app.use(bodyParser.urlencoded({
     limit: '50mb',
     extended: true
 }))
+app.use((req, res, next) => {
+    console.log("\n----------NEW ROUTE----------------\n")
+    next()
+})
 
 // [READ] all timelineDB events and render timeline.ejs
 app.get("/timeline", ensureAuthenticated, (req, res) => {
@@ -209,9 +213,9 @@ app.get("/search", ensureAuthenticated, (req, res) => {
 })
 
 // Checkout page route
-app.get("/checkout", ensureAuthenticated, getCurrentOrder, getProductsFromCurrentOrder,(req, res) => {
-    // console.log(req.currentOrder)
-    // console.log(req.products)
+app.get("/checkout", ensureAuthenticated, getCurrentOrder, getProductsFromCurrentOrder, (req, res) => {
+    console.log(req.currentOrder)
+    console.log(req.products)
     res.render("checkout", {
         noActiveOrders: false, 
         orderId: req.currentOrder._id,
@@ -225,6 +229,30 @@ app.get("/checkout", ensureAuthenticated, getCurrentOrder, getProductsFromCurren
     })
 })
 
+app.get("/checkout/getOrder", ensureAuthenticated, getCurrentOrder, getProductsFromCurrentOrder, (req, res) => {
+    res.json({
+        noActiveOrders: false, 
+        orderId: req.currentOrder._id,
+        orderedBy: req.currentOrder.orderedBy,
+        productsCost: req.currentOrder.productsCost,
+        taxCost: req.currentOrder.taxCost,
+        totalCost: req.currentOrder.totalCost,
+        orderStatus: req.currentOrder.orderStatus,
+        products: req.products,
+        cartSize: req.products.length
+    })
+})
+
+// Checkout increment route
+app.put("/checkout/incrementQuantity", incrementQuantityInOrderIfExists, updateOrderCost, (req, res) => {
+    console.log("COMPLETED!")
+    res.json({
+        a: "hi",
+        b: "hello",
+        c: "ok"
+    })
+})
+
 // Receipts page route
 app.get("/receipts", ensureAuthenticated, (req, res) => {
     res.render("receipts")
@@ -232,13 +260,10 @@ app.get("/receipts", ensureAuthenticated, (req, res) => {
 
 // Shop [ADD] to Cart
 app.post("/shop/addToCart", ensureAuthenticated, createProductIfNotExists, createOrderIfNotExists, incrementQuantityInOrderIfExists, pushToOrder, updateOrderCost, (req, res) => {
-    console.log("REQ", req.body)
-    
-    console.log("USER: ", req.session.uid)
-    console.log("PROD: ", req.body._productId)
-    console.log("ORDER: ", req.body._orderId)
-    
-    
+    // console.log("REQ", req.body)
+    // console.log("USER: ", req.session.uid)
+    // console.log("PROD: ", req.body._productId)
+    // console.log("ORDER: ", req.body._orderId)  
 })
 
 // entry point

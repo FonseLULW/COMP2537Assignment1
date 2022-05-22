@@ -46,79 +46,83 @@
     </nav>
 
     <!-- Shopping Cart -->
-    <main>
+    <main id="shopcart">
         <% if (noActiveOrders) { %>
             <h2 id="none">Shopping Cart is empty!</h2>
             <% } else { %>
 
-                <h2>You have <b><%= cartSize %></b> different pokemon in your shopping cart!</h2>
+                <h2>You have <b>
+                        <%= cartSize %>
+                    </b> different pokemon in your shopping cart!</h2>
 
-                <form>
-                    <table id="products">
-                        <tr>
-                            <th></th>
-                            <th>ID</th>
-                            <th>Pokemon</th>
-                            <th>Price</th>
-                            <th>Quantity</th>
-                            <th>Subtotal</th>
-                        </tr>
-                        <% products.forEach(item=> { %>
-                            <tr class="single-product">
-                                <td class="deleteItem">
-                                    <span class="material-symbols-outlined">
-                                        delete
-                                    </span>
-                                </td>
-                                <td class="prod-pokeId">
-                                    #<%= item.id %>
-                                </td>
-                                <td class="prod-name">
-                                    <%= item.name[0].toUpperCase() + item.name.substring(1) %>
-                                </td>
-                                <td class="prod-singlecost">
-                                    <%= (item.cost).toLocaleString('en-GB', { style: 'currency' , currency: 'CAD' }) %>
-                                </td>
-                                <td class="prod-quantity">
-                                    <button class="quantity-control">-</button>
+                <div id="orderID" style="display: none">
+                    <%= orderId %>
+                </div>
+
+                <table id="products">
+                    <tr>
+                        <th></th>
+                        <th>ID</th>
+                        <th>Pokemon</th>
+                        <th>Price</th>
+                        <th>Quantity</th>
+                        <th>Subtotal</th>
+                    </tr>
+                    <% products.forEach(item=> { %>
+                        <tr class="single-product" id="<%= item._id%>">
+                            <td class="deleteItem">
+                                <span class="material-symbols-outlined">
+                                    delete
+                                </span>
+                            </td>
+                            <td class="prod-pokeId">
+                                #<%= item.id %>
+                            </td>
+                            <td class="prod-name">
+                                <%= item.name[0].toUpperCase() + item.name.substring(1) %>
+                            </td>
+                            <td class="prod-singlecost">
+                                <%= (item.cost).toLocaleString('en-GB', { style: 'currency' , currency: 'CAD' }) %>
+                            </td>
+                            <td class="prod-quantity">
+                                <button class="quantity-control minus">-</button>
+                                <span class="quantity">
                                     <%= item.quantity %>
-                                    <button class="quantity-control">+</button>
+                                </span>
+                                <button class="quantity-control add">+</button>
+                            </td>
+                            <td class="prod-singlecost">
+                                <%= (item.cost * item.quantity).toLocaleString('en-GB', { style: 'currency' ,
+                                    currency: 'CAD' }) %>
+                            </td>
+                        </tr>
+                        <% }) %>
+                            <tr class="bottomline">
+                                <td class="label" colspan="5">Subtotal Cost</td>
+                                <td>
+                                    <%= productsCost.toLocaleString('en-GB', { style: 'currency' , currency: 'CAD' }) %>
                                 </td>
-                                <td class="prod-singlecost">
-                                    <%= (item.cost * item.quantity).toLocaleString('en-GB', { style: 'currency' ,
+                            </tr>
+                            <tr class="bottomline">
+                                <td class="label" colspan="5">
+                                    <%= taxCost * 100 %>% Sales Tax
+                                </td>
+                                <td>
+                                    <%= (taxCost * productsCost).toLocaleString('en-GB', { style: 'currency' ,
                                         currency: 'CAD' }) %>
                                 </td>
                             </tr>
-                            <% }) %>
-                                <tr class="bottomline">
-                                    <td class="label" colspan="5">Subtotal Cost</td>
-                                    <td>
-                                        <%= productsCost.toLocaleString('en-GB', { style: 'currency' , currency: 'CAD'
-                                            }) %>
-                                    </td>
-                                </tr>
-                                <tr class="bottomline">
-                                    <td class="label" colspan="5">
-                                        <%= taxCost * 100 %>% Sales Tax
-                                    </td>
-                                    <td>
-                                        <%= (taxCost * productsCost).toLocaleString('en-GB', { style: 'currency' ,
-                                            currency: 'CAD' }) %>
-                                    </td>
-                                </tr>
-                                <tr class="bottomline finaltally">
-                                    <td class="label" colspan="5">Total</td>
-                                    <td>
-                                        <%= totalCost.toLocaleString('en-GB', { style: 'currency' , currency: 'CAD' })
-                                            %>
-                                    </td>
-                                </tr>
-                    </table>
-                    <div id="submit-controls">
-                        <input type="submit" value="Checkout">
-                        <button class="deleteAllItems">Empty Cart</button>
-                    </div>
-                </form>
+                            <tr class="bottomline finaltally">
+                                <td class="label" colspan="5">Total</td>
+                                <td>
+                                    <%= totalCost.toLocaleString('en-GB', { style: 'currency' , currency: 'CAD' }) %>
+                                </td>
+                            </tr>
+                </table>
+                <div id="submit-controls">
+                    <button class="submit">Checkout</button>
+                    <button class="deleteAllItems">Empty Cart</button>
+                </div>
                 <% } %>
     </main>
 

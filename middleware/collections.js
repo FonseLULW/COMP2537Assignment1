@@ -92,14 +92,13 @@ const updateOrderCost = (req, res, next) => {
         if (err) {
             res.send(err)
         } else {
-            console.log("COSTS: ", resp)
             let total = resp.productsCost + (resp.productsCost * resp.taxCost)
-            console.log("TOTAL: ", total)
             Order.findByIdAndUpdate(req.body._orderId, {totalCost: total}, (err, resp) => {
                 if (err) {
+                    console.log(err.message)
                     res.send(err)
                 } else {
-                    console.log("UPDATED")
+                    console.log(resp)
                     next()
                 }
             })
@@ -138,11 +137,10 @@ const getProductsFromCurrentOrder = (req, res, next) => {
             })
             console.log("REQ SORTED: ", sortedReq)
 
-            req.products = req.currentOrder.products.sort((a, b) => {
-                return a.id.toString() - b.id.toString()
-            }).map((prod, i) => {
+            req.products = sortedReq.map((prod, i) => {
                 console.log("Product " + i + ": ", prod)
                 return {
+                    _id: sortedResp[i]._id,
                     name: sortedResp[i].pokemonName,
                     id: sortedResp[i].pokemonId,
                     cost: sortedResp[i].productCost,
