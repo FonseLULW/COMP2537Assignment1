@@ -4,8 +4,6 @@ const mongoose = require('mongoose')
 const productSchema = new mongoose.Schema({
     pokemonId: {type: Number, unique: true},
     pokemonName: String,
-    productCost: Number,
-    quantity: Number,
-    ordersInvolved: [{type: mongoose.Schema.Types.ObjectId, ref: "Order"}]
+    productCost: Number
 })
 module.exports = mongoose.model("Product", productSchema);

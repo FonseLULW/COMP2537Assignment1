@@ -2,18 +2,18 @@ function ready() {
     console.log(pokeEntry);
     
     const cartBtn = document.querySelector("#pBuy")
-    // cartBtn.addEventListener("click", () => {
-    //     $.ajax({
-    //         url: "",
-    //         type: "POST",
-    //         data: {
-    //             pokemonId: pokeEntry.id,
-    //             pokemonName: pokeEntry.name,
-    //             productCost: pokeEntry.id + pokeEntry.height + pokeEntry.weight + pokeEntry.base_experience,
-    //             quantity
-    //         }
-    //     })
-    // })
+    cartBtn.addEventListener("click", () => {
+        console.log(`SENDING:\nId: ${pokeEntry.id}\nName: ${pokeEntry.name}\nPrice: ${pokeEntry.id + pokeEntry.height + pokeEntry.weight + pokeEntry.base_experience}`)
+        $.ajax({
+            url: "/shop/addToCart",
+            type: "POST",
+            data: {
+                pokemonId: pokeEntry.id,
+                pokemonName: pokeEntry.name,
+                productCost: pokeEntry.id + pokeEntry.height + pokeEntry.weight + pokeEntry.base_experience
+            }
+        })
+    })
 }
 
 document.addEventListener("DOMContentLoaded", () => {

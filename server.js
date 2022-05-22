@@ -11,7 +11,8 @@ const uriString = process.env.MONGODB_URI
 
 // Middlewares
 const sessionLog = require("./middleware/session-log");
-const {ensureAuthenticated, forwardAuthenticated} = require("./middleware/auths"); 
+const { ensureAuthenticated, forwardAuthenticated } = require("./middleware/auths");
+const { createProductIfNotExists, createOrderIfNotExists, incrementQuantityInOrderIfExists, pushToOrder, updateOrderCost } = require("./middleware/collections")
 
 // Use middlewares
 app.use(cors())
@@ -44,7 +45,7 @@ app.use(bodyParser.urlencoded({
 
 // [READ] all timelineDB events and render timeline.ejs
 app.get("/timeline", ensureAuthenticated, (req, res) => {
-    Event.find({doneBy: req.session.uid}, (err, events) => {
+    Event.find({ doneBy: req.session.uid }, (err, events) => {
         if (err) {
             console.log(err);
         }
@@ -55,7 +56,7 @@ app.get("/timeline", ensureAuthenticated, (req, res) => {
 })
 
 app.get("/events/readAllEvents", ensureAuthenticated, (req, res) => {
-    Event.find({doneBy: req.session.uid}, (err, events) => {
+    Event.find({ doneBy: req.session.uid }, (err, events) => {
         if (err) {
             console.log(err)
         }
@@ -84,8 +85,8 @@ app.put("/events/insertEvent", ensureAuthenticated, (req, res) => {
 // [UPDATE] the `hits` field of an event in the timelineDB
 app.get("/events/incrementHits/:id", ensureAuthenticated, (req, res) => {
     Event.updateOne(
-        {_id: req.params.id},
-        {$inc: {hits: 1}}, (err, data) => {
+        { _id: req.params.id },
+        { $inc: { hits: 1 } }, (err, data) => {
             if (err) {
                 console.log(err);
             }
@@ -95,7 +96,7 @@ app.get("/events/incrementHits/:id", ensureAuthenticated, (req, res) => {
 
 // [DELETE] an event from timelineDB
 app.get("/events/deleteEvent/:id", ensureAuthenticated, (req, res) => {
-    Event.deleteOne({_id: req.params.id}, (err, data) => {
+    Event.deleteOne({ _id: req.params.id }, (err, data) => {
         if (err) {
             console.log(err);
         }
@@ -116,20 +117,21 @@ app.get("/profile/:id", ensureAuthenticated, (req, res) => {
 
         https_res.on("end", () => {
             data = JSON.parse(data);
-    
+
             res.render("profile", {
-                "pokemon": data})
+                "pokemon": data
+            })
         })
     })
 });
 
 // Auth routes
 app.post("/auth/login", (req, res) => {
-    const {email, password} = req.body
-    User.findOne({email: email, password: password}, (err, resp) => {
+    const { email, password } = req.body
+    User.findOne({ email: email, password: password }, (err, resp) => {
         if (err) {
             console.log(err.message)
-        } else if (resp == null || resp == undefined){
+        } else if (resp == null || resp == undefined) {
             res.send("Email or password is incorrect")
         } else {
             req.session.username = resp.username
@@ -141,11 +143,13 @@ app.post("/auth/login", (req, res) => {
 })
 
 app.post("/auth/signup", (req, res) => {
-    const {email, username, password} = req.body
-    User.findOne({$or: [
-        {username: username}, 
-        {email: email}
-    ]}, (err, resp) => {
+    const { email, username, password } = req.body
+    User.findOne({
+        $or: [
+            { username: username },
+            { email: email }
+        ]
+    }, (err, resp) => {
         if (err) {
             console.log(err.message)
         } else if (resp == null || resp == undefined) {
@@ -186,7 +190,7 @@ app.get("/auth/logout", (req, res) => {
 
 // Home page route
 app.get("/home", ensureAuthenticated, (req, res) => {
-    res.sendFile("./public/html/home.html", {root: __dirname});
+    res.sendFile("./public/html/home.html", { root: __dirname });
 })
 
 // Login page route
@@ -213,6 +217,50 @@ app.get("/checkout", ensureAuthenticated, (req, res) => {
 app.get("/receipts", ensureAuthenticated, (req, res) => {
     res.render("receipts")
 })
+
+// Shop
+/*
+Procedure:
+User clicks add to Cart
+Client sends pokemon info to server {pokeid, name, cost}
+    If pokemon product does NOT exist yet, create it
+    If it DOES exist already, don't create it
+    Either way, get the unique Id of the pokemon product
+Server now has the pokemon's product Id
+
+Get the current order of the user
+    If this user does not have an existing unconfirmed order, create it
+    else, don't create anything
+    Get the unique Id of the current user unconfirmed order
+Server should now have the product Id, AND the order Id
+
+Inside the Order, there is an array of objects storing Product references and their associated quantity
+    If the product is already inside their Object in the array, don't do anything yet
+    else, create a new object of Product Id, quantity, then push to the Order array
+    Either way increment 1 to the quantity associated with the product Id reference in the object inside the array
+The product is now added to the cart 
+*/
+app.post("/shop/addToCart", ensureAuthenticated, createProductIfNotExists, createOrderIfNotExists, incrementQuantityInOrderIfExists, pushToOrder, updateOrderCost, (req, res) => {
+    console.log("REQ", req.body)
+    
+    console.log("USER: ", req.session.uid)
+    console.log("PROD: ", req.body._productId)
+    console.log("ORDER: ", req.body._orderId)
+    
+    
+})
+
+// orderedBy: {type: mongoose.Schema.Types.ObjectId, ref: "User"},
+//     products: [
+//         {
+//             id: {type: mongoose.Schema.Types.ObjectId, ref: "Product"},
+//             quantity: {type: Number, default: 0}
+//         }
+//     ],
+//     productsCost: {type: Number, default: 0},
+//     taxCost: {type: Number, default: 5},
+//     totalCost: {type: Number, default: 0},
+//     orderStatus: {type: String, default: "unconfirmed"} // could be unconfirmed, delivering, complete, cancelled
 
 // entry point
 app.listen(port, (err) => {
