@@ -154,9 +154,6 @@ const getProductsFromCurrentOrder = (req, res, next) => {
 }
 
 const removeProductFromOrder = (req, res, next) => {
-    // Update the Order
-    // $Pull the product object from the order.products array
-    // Update the productsCost of the order ($inc -something)
     const {_orderId, _productId, productCostSubtotal} = req.body
     Order.findByIdAndUpdate(_orderId, {
         $pull: {products: {id: _productId}},
@@ -170,4 +167,17 @@ const removeProductFromOrder = (req, res, next) => {
     })
 }
 
-module.exports = { removeProductFromOrder, getProductsFromCurrentOrder, getCurrentOrder, createProductIfNotExists, createOrderIfNotExists, incrementQuantityInOrderIfExists, pushToOrder, updateOrderCost }
+const deleteAllProductsFromOrder = (req, res, next) => {
+    const {_orderId} = req.params
+    Order.findByIdAndUpdate(_orderId, {
+        $set: {products: [], productsCost: 0, totalCost: 0}
+    }, (err, resp) => {
+        if (err) {
+            res.send(err)
+        } else {
+            next()
+        }
+    })
+}
+
+module.exports = { deleteAllProductsFromOrder, removeProductFromOrder, getProductsFromCurrentOrder, getCurrentOrder, createProductIfNotExists, createOrderIfNotExists, incrementQuantityInOrderIfExists, pushToOrder, updateOrderCost }

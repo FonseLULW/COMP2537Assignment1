@@ -12,7 +12,7 @@ const uriString = process.env.MONGODB_URI
 // Middlewares
 const sessionLog = require("./middleware/session-log");
 const { ensureAuthenticated, forwardAuthenticated } = require("./middleware/auths");
-const { removeProductFromOrder, getProductsFromCurrentOrder, createProductIfNotExists, createOrderIfNotExists, incrementQuantityInOrderIfExists, pushToOrder, updateOrderCost, getCurrentOrder } = require("./middleware/collections")
+const { deleteAllProductsFromOrder, removeProductFromOrder, getProductsFromCurrentOrder, createProductIfNotExists, createOrderIfNotExists, incrementQuantityInOrderIfExists, pushToOrder, updateOrderCost, getCurrentOrder } = require("./middleware/collections")
 
 // Use middlewares
 app.use(cors())
@@ -208,6 +208,10 @@ app.get("/signup", (req, res) => {
     res.sendFile("./public/html/signup.html", { root: __dirname });
 })
 
+app.get("/user", ensureAuthenticated, (req, res) => {
+    res.render("user")
+})
+
 // Search page route
 app.get("/search", ensureAuthenticated, (req, res) => {
     res.sendFile(`./public/html/search.html`, { root: __dirname });
@@ -239,6 +243,11 @@ app.post("/checkout/incrementQuantity", incrementQuantityInOrderIfExists, update
 
 app.post("/checkout/deleteItem", ensureAuthenticated, removeProductFromOrder, updateOrderCost, (req, res) => {
     console.log("DONE DELETE!")
+    res.send("DONE")
+})
+
+app.get("/checkout/empty/:_orderId", ensureAuthenticated, deleteAllProductsFromOrder, (req, res) => {
+    console.log("DONE DELETE ALL")
     res.send("DONE")
 })
 

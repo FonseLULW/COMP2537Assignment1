@@ -1,6 +1,6 @@
 const forwardAuthenticated = (req, res, next) => {
     if (req.session.authenticated) {
-        res.redirect("/home")
+        res.redirect("/user")
     } else {
         next()
     }

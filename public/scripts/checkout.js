@@ -104,7 +104,10 @@ function reloadCart() {
 }
 
 function deleteAllItems() {
-
+    $.ajax({
+        url: `/checkout/empty/${orderId}`,
+        method: "GET"
+    }).done(reloadCart)
 }
 
 function deleteItem(row) {
@@ -119,10 +122,7 @@ function deleteItem(row) {
             _productId: row.id,
             productCostSubtotal: productSubtotal,
         },
-    }).done(() => {
-        console.log("UIASOJMDIJSANKSA")
-        reloadCart()
-    })
+    }).done(reloadCart)
 }
 
 function incrementQuantity(row, decrement) {
@@ -150,9 +150,7 @@ function incrementQuantity(row, decrement) {
             incrementVal: incrementQuantity,
             productCost: incrementCost,
         }
-    }).done(() => {
-        reloadCart()
-    })
+    }).done(reloadCart)
 }
 
 function checkout() {
@@ -165,6 +163,8 @@ function setup() {
         prod.querySelector(".add").addEventListener("click", () => incrementQuantity(prod))
         prod.querySelector(".minus").addEventListener("click", () => incrementQuantity(prod, true))
     })
+
+    document.querySelector(".deleteAllItems").addEventListener("click", deleteAllItems)
 }
 
 document.addEventListener("DOMContentLoaded", setup)
