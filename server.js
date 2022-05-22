@@ -142,7 +142,7 @@ app.post("/auth/login", (req, res) => {
             req.session.username = resp.username
             req.session.uid = resp._id
             req.session.authenticated = true
-            res.redirect("/home")
+            res.redirect("/user")
         }
     })
 })
@@ -170,7 +170,7 @@ app.post("/auth/signup", (req, res) => {
                     req.session.username = data.username
                     req.session.uid = data._id
                     req.session.authenticated = true
-                    res.redirect("/home")
+                    res.redirect("/user")
                 }
             })
         } else if (resp.email === email && resp.username === username) {
@@ -209,7 +209,13 @@ app.get("/signup", (req, res) => {
 })
 
 app.get("/user", ensureAuthenticated, (req, res) => {
-    res.render("user")
+    User.findById(req.session.uid, "email username", (err, resp) => {
+        if (err) {
+            res.send(err)
+        } else {
+            res.render("user", {data: resp})
+        }
+    })
 })
 
 // Search page route
@@ -273,6 +279,7 @@ app.get("/receipts", ensureAuthenticated, (req, res) => {
 
 // Shop [ADD] to Cart
 app.post("/shop/addToCart", ensureAuthenticated, createProductIfNotExists, createOrderIfNotExists, incrementQuantityInOrderIfExists, pushToOrder, updateOrderCost, (req, res) => {
+    res.send("DONE ADDING")
     // console.log("REQ", req.body)
     // console.log("USER: ", req.session.uid)
     // console.log("PROD: ", req.body._productId)

@@ -1,0 +1,24 @@
+@import url('https://fonts.googleapis.com/css2?family=Neucha&display=swap');
+
+main {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    row-gap: 5rem;
+}
+
+.greeting {
+    font-family: 'Neucha', cursive;
+    font-size: 2rem;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+#browse {
+    width: fit-content;
+    padding-left: 1rem;
+    padding-right: 1rem;
+}
