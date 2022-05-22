@@ -111,9 +111,13 @@ const getCurrentOrder = (req, res, next) => {
     Order.findOne({orderedBy: req.session.uid, orderStatus: "unconfirmed"}, (err, resp) => {
         if (err) {
             res.send(err)
-        } else {
+        } else if (resp) {
             req.currentOrder = resp
             next()
+        } else {
+            res.render("checkout", {
+                noActiveOrders: true 
+            })
         }
     })
 }

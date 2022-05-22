@@ -1,16 +1,20 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Pokedex-Checkout! A01262284</title>
 
+    <link rel="stylesheet"
+        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
     <!-- Stylesheets -->
     <link rel="stylesheet" href="styles/universal.css">
     <link rel="stylesheet" href="styles/checkout.css">
     <link rel="stylesheet" href="styles/universal-mq.css">
 </head>
+
 <body>
     <!-- Header -->
     <header>
@@ -43,35 +47,94 @@
 
     <!-- Shopping Cart -->
     <main>
-        <h2>Your current order: <%= orderId %> by <%= orderedBy %></h2> 
-        <section id="products">
-            <% products.forEach(item => { %>
-                <div class="single-product">
-                    <div class="prod-pokeId"><%= item.id %></div>
-                    <div class="prod-name"><%= item.name %></div>
-                    <div class="prod-singlecost"><%= item.cost %></div>
-                    <div class="prod-quantity"><%= item.quantity %></div>
-                </div>
-            <% }) %>
-        </section>
-        <div>Your subtotal is <%= productsCost %>  </div>
-        <div>+ <%= taxCost %> tax percentage </div>
-        <div>For a total of <%= totalCost %></div>
-        <input type="submit" value="Checkout">
+        <% if (noActiveOrders) { %>
+            <h2 id="none">Shopping Cart is empty!</h2>
+            <% } else { %>
+
+                <h2>You have <b><%= cartSize %></b> different pokemon in your shopping cart!</h2>
+
+                <form>
+                    <table id="products">
+                        <tr>
+                            <th></th>
+                            <th>ID</th>
+                            <th>Pokemon</th>
+                            <th>Price</th>
+                            <th>Quantity</th>
+                            <th>Subtotal</th>
+                        </tr>
+                        <% products.forEach(item=> { %>
+                            <tr class="single-product">
+                                <td class="deleteItem">
+                                    <span class="material-symbols-outlined">
+                                        delete
+                                    </span>
+                                </td>
+                                <td class="prod-pokeId">
+                                    #<%= item.id %>
+                                </td>
+                                <td class="prod-name">
+                                    <%= item.name[0].toUpperCase() + item.name.substring(1) %>
+                                </td>
+                                <td class="prod-singlecost">
+                                    <%= (item.cost).toLocaleString('en-GB', { style: 'currency' , currency: 'CAD' }) %>
+                                </td>
+                                <td class="prod-quantity">
+                                    <button class="quantity-control">-</button>
+                                    <%= item.quantity %>
+                                    <button class="quantity-control">+</button>
+                                </td>
+                                <td class="prod-singlecost">
+                                    <%= (item.cost * item.quantity).toLocaleString('en-GB', { style: 'currency' ,
+                                        currency: 'CAD' }) %>
+                                </td>
+                            </tr>
+                            <% }) %>
+                                <tr class="bottomline">
+                                    <td class="label" colspan="5">Subtotal Cost</td>
+                                    <td>
+                                        <%= productsCost.toLocaleString('en-GB', { style: 'currency' , currency: 'CAD'
+                                            }) %>
+                                    </td>
+                                </tr>
+                                <tr class="bottomline">
+                                    <td class="label" colspan="5">
+                                        <%= taxCost * 100 %>% Sales Tax
+                                    </td>
+                                    <td>
+                                        <%= (taxCost * productsCost).toLocaleString('en-GB', { style: 'currency' ,
+                                            currency: 'CAD' }) %>
+                                    </td>
+                                </tr>
+                                <tr class="bottomline finaltally">
+                                    <td class="label" colspan="5">Total</td>
+                                    <td>
+                                        <%= totalCost.toLocaleString('en-GB', { style: 'currency' , currency: 'CAD' })
+                                            %>
+                                    </td>
+                                </tr>
+                    </table>
+                    <div id="submit-controls">
+                        <input type="submit" value="Checkout">
+                        <button class="deleteAllItems">Empty Cart</button>
+                    </div>
+                </form>
+                <% } %>
     </main>
-    
+
     <!-- Footer -->
     <footer>
         <h5>
-            Copyright © FonseLULW; API from 
+            Copyright © FonseLULW; API from
             <a href="https://pokeapi.co">pokeAPI</a>
         </h5>
     </footer>
-    
+
     <!-- Scripts -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <script src="/scripts/universal.js"></script>
     <script src="/scripts/events.js"></script>
     <script src="/scripts/checkout.js"></script>
 </body>
+
 </html>

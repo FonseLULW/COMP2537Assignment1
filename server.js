@@ -213,13 +213,15 @@ app.get("/checkout", ensureAuthenticated, getCurrentOrder, getProductsFromCurren
     console.log(req.currentOrder)
     console.log(req.products)
     res.render("checkout", {
+        noActiveOrders: false, 
         orderId: req.currentOrder._id,
         orderedBy: req.currentOrder.orderedBy,
         productsCost: req.currentOrder.productsCost,
         taxCost: req.currentOrder.taxCost,
         totalCost: req.currentOrder.totalCost,
         orderStatus: req.currentOrder.orderStatus,
-        products: req.products
+        products: req.products,
+        cartSize: req.products.length
     })
 })
 
