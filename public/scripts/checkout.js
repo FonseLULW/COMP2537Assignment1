@@ -88,28 +88,6 @@ function updateCartDisplay(data) {
                 cart.innerHTML = newHtml
                 setup()
     }
-
-    // data.forEach((ev) => {
-    //     let singleEvent = document.createElement("DIV")
-    //     singleEvent.id = ev._id
-    //     singleEvent.classList.add("single-event")
-
-    //     singleEvent.innerHTML = `
-    //         <div class="event-data">
-    //                 <div class="datetime">
-    //                     <span class="date">${ev.date}</span>
-    //                     <span class="time">${ev.time}</span>
-    //                 </div>
-    //             <div class="text">Event: <span>${ev.text}</span></div>
-    //             <div class="hits">Likes: <span>${ev.hits}</span></div>
-    //         </div>
-    //         <div class="event-controls">
-    //             <button class="like">Like</button>
-    //             <button class="delete">Delete</button>
-    //         </div>`
-    //     timeline.appendChild(singleEvent)
-    //     initSingleEvent(singleEvent)
-    // })
 }
 
 function reloadCart() {
@@ -117,7 +95,7 @@ function reloadCart() {
         url: `/checkout/getOrder`,
         type: `get`,
         success: (resp) => {
-            console.log(resp)
+            console.log("/GETORDER SUCCESS", resp)
             updateCartDisplay(resp)
         }
     })
@@ -146,16 +124,18 @@ function incrementQuantity(row, decrement) {
     }
 
     console.log(row, incrementQuantity, incrementCost, row.id, orderId)
+
     $.ajax({
         url: "/checkout/incrementQuantity",
-        method: "PUT",
+        method: "POST",
         data: {
             _orderId: orderId,
             _productId: row.id,
             incrementVal: incrementQuantity,
             productCost: incrementCost,
-            success: reloadCart
         }
+    }).done(() => {
+        reloadCart()
     })
 }
 

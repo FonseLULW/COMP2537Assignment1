@@ -44,6 +44,7 @@ app.use(bodyParser.urlencoded({
 }))
 app.use((req, res, next) => {
     console.log("\n----------NEW ROUTE----------------\n")
+    console.log("REQUEST BODY: ", req.body)
     next()
 })
 
@@ -214,8 +215,9 @@ app.get("/search", ensureAuthenticated, (req, res) => {
 
 // Checkout page route
 app.get("/checkout", ensureAuthenticated, getCurrentOrder, getProductsFromCurrentOrder, (req, res) => {
-    console.log(req.currentOrder)
-    console.log(req.products)
+    // console.log(req.currentOrder)
+    // console.log(req.products)
+    console.log("THIS: ", req.currentOrder.totalCost)
     res.render("checkout", {
         noActiveOrders: false, 
         orderId: req.currentOrder._id,
@@ -230,7 +232,7 @@ app.get("/checkout", ensureAuthenticated, getCurrentOrder, getProductsFromCurren
 })
 
 // Checkout increment route
-app.put("/checkout/incrementQuantity", incrementQuantityInOrderIfExists, updateOrderCost, (req, res) => {
+app.post("/checkout/incrementQuantity", incrementQuantityInOrderIfExists, updateOrderCost, (req, res) => {
     console.log("COMPLETED!")
     res.json({
         a: "hi",
@@ -240,6 +242,7 @@ app.put("/checkout/incrementQuantity", incrementQuantityInOrderIfExists, updateO
 })
 
 app.get("/checkout/getOrder", ensureAuthenticated, getCurrentOrder, getProductsFromCurrentOrder, (req, res) => {
+    console.log("THIS: ", req.currentOrder.totalCost)
     res.json({
         noActiveOrders: false, 
         orderId: req.currentOrder._id,
