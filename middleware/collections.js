@@ -60,7 +60,7 @@ const incrementQuantityInOrderIfExists = (req, res, next) => {
         orderedBy: req.session.uid,
         "products.id": req.body._productId
     }, {
-        $inc: {"products.$.quantity": 1, productsCost: req.body.productCost},
+        $inc: {"products.$.quantity": req.body.incrementVal, productsCost: req.body.productCost},
     }, (err, resp) => {
         console.log("INC: ", resp)
         if (err) {
@@ -124,21 +124,31 @@ const getCurrentOrder = (req, res, next) => {
 
 const getProductsFromCurrentOrder = (req, res, next) => {
     let productsInvolved = req.currentOrder.products.map(prod => prod.id)
-    console.log("PRODS INVOLVED: ", productsInvolved)
     Product.find({_id: {$in: productsInvolved}}, (err, resp) => {
         if (err) {
             res.send(err)
         } else {
-            console.log("PRODUCTS: ", resp)
-            req.products = req.currentOrder.products.map((prod, i) => {
+            let sortedResp = resp.sort((a, b) => {
+                return a._id.toString().localeCompare(b._id.toString())
+            })
+            console.log("SORTED RES: ", sortedResp)
+            
+            let sortedReq = req.currentOrder.products.sort((a, b) => {
+                return a.id.toString().localeCompare(b.id.toString())
+            })
+            console.log("REQ SORTED: ", sortedReq)
+
+            req.products = req.currentOrder.products.sort((a, b) => {
+                return a.id.toString() - b.id.toString()
+            }).map((prod, i) => {
+                console.log("Product " + i + ": ", prod)
                 return {
-                    name: resp[i].pokemonName,
-                    id: resp[i].pokemonId,
-                    cost: resp[i].productCost,
+                    name: sortedResp[i].pokemonName,
+                    id: sortedResp[i].pokemonId,
+                    cost: sortedResp[i].productCost,
                     quantity: prod.quantity
                 }
             })
-            console.log("MODIFIED: ", req.products)
             next()
         }
     })

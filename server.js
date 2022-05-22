@@ -210,8 +210,8 @@ app.get("/search", ensureAuthenticated, (req, res) => {
 
 // Checkout page route
 app.get("/checkout", ensureAuthenticated, getCurrentOrder, getProductsFromCurrentOrder,(req, res) => {
-    console.log(req.currentOrder)
-    console.log(req.products)
+    // console.log(req.currentOrder)
+    // console.log(req.products)
     res.render("checkout", {
         noActiveOrders: false, 
         orderId: req.currentOrder._id,

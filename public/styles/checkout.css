@@ -35,6 +35,12 @@ td {
     background-color: rgb(197, 197, 197);
 }
 
+.deleteItem:hover {
+    transition: 1s;
+    cursor: pointer;
+    background-color: rgb(249, 74, 74);
+}
+
 .prod-quantity {
     display: flex;
     flex-direction: row;

@@ -10,7 +10,8 @@ function ready() {
             data: {
                 pokemonId: pokeEntry.id,
                 pokemonName: pokeEntry.name,
-                productCost: pokeEntry.id + pokeEntry.height + pokeEntry.weight + pokeEntry.base_experience
+                productCost: pokeEntry.id + pokeEntry.height + pokeEntry.weight + pokeEntry.base_experience,
+                incrementVal: 1
             }
         })
     })
