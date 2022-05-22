@@ -219,27 +219,6 @@ app.get("/receipts", ensureAuthenticated, (req, res) => {
 })
 
 // Shop
-/*
-Procedure:
-User clicks add to Cart
-Client sends pokemon info to server {pokeid, name, cost}
-    If pokemon product does NOT exist yet, create it
-    If it DOES exist already, don't create it
-    Either way, get the unique Id of the pokemon product
-Server now has the pokemon's product Id
-
-Get the current order of the user
-    If this user does not have an existing unconfirmed order, create it
-    else, don't create anything
-    Get the unique Id of the current user unconfirmed order
-Server should now have the product Id, AND the order Id
-
-Inside the Order, there is an array of objects storing Product references and their associated quantity
-    If the product is already inside their Object in the array, don't do anything yet
-    else, create a new object of Product Id, quantity, then push to the Order array
-    Either way increment 1 to the quantity associated with the product Id reference in the object inside the array
-The product is now added to the cart 
-*/
 app.post("/shop/addToCart", ensureAuthenticated, createProductIfNotExists, createOrderIfNotExists, incrementQuantityInOrderIfExists, pushToOrder, updateOrderCost, (req, res) => {
     console.log("REQ", req.body)
     
@@ -249,18 +228,6 @@ app.post("/shop/addToCart", ensureAuthenticated, createProductIfNotExists, creat
     
     
 })
-
-// orderedBy: {type: mongoose.Schema.Types.ObjectId, ref: "User"},
-//     products: [
-//         {
-//             id: {type: mongoose.Schema.Types.ObjectId, ref: "Product"},
-//             quantity: {type: Number, default: 0}
-//         }
-//     ],
-//     productsCost: {type: Number, default: 0},
-//     taxCost: {type: Number, default: 5},
-//     totalCost: {type: Number, default: 0},
-//     orderStatus: {type: String, default: "unconfirmed"} // could be unconfirmed, delivering, complete, cancelled
 
 // entry point
 app.listen(port, (err) => {
