@@ -13,5 +13,7 @@ const orderSchema = new mongoose.Schema({
     taxCost: {type: Number, default: 0.05},
     totalCost: {type: Number, default: 0},
     orderStatus: {type: String, default: "unconfirmed"} // could be unconfirmed, delivering, complete, cancelled
+}, {
+    timestamps: true
 })
 module.exports = mongoose.model("Order", orderSchema);

@@ -47,14 +47,17 @@
     <!-- Receipts -->
     <main>
         <h2>Your Orders (No refunds)</h2>
-        <section>
-            <div class="single-order">
-                <div class="prod-id"></div>
-                <div class="prod-region"></div>
-                <div class="prod-arrival"></div>
-                <div class="prod-cost"></div>
-                <div class="prod-status"></div>
+        <section id="orders">
+        <% data.forEach(order => { %>
+            <div class="single-order <%= order.orderStatus %>">
+                <div class="o-id"><%= order._id %></div>
+                <div class="o-timestamp"><%= order.createdAt %></div>
+                <div class="o-subtotal"><%= order.productsCost %></div>
+                <div class="o-tax"><%= order.taxCost * 100 %></div>
+                <div class="o-total"><%= order.totalCost %></div>
+                <div class="o-status"><%= order.orderStatus %></div>
             </div>
+        <% }) %>
         </section>
     </main>
     

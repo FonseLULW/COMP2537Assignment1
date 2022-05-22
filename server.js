@@ -274,7 +274,10 @@ app.get("/checkout/getOrder", ensureAuthenticated, getCurrentOrder, getProductsF
 
 // Receipts page route
 app.get("/receipts", ensureAuthenticated, (req, res) => {
-    res.render("receipts")
+    Order.find({orderedBy: req.session.uid}, (err, resp) => {
+        console.log("RECEIPTS: ", resp)
+        res.render("receipts", {data: resp})
+    })
 })
 
 // Shop [ADD] to Cart
