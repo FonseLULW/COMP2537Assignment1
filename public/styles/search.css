@@ -1,3 +1,9 @@
+@import url('https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@300&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Libre+Franklin&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inconsolata:wght@300&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Josefin+Sans&display=swap');
+
 body {
     grid-template-rows: 8vh 8vh 8vh minmax(76vh, auto) 8vh;
     grid-template-columns: 80% 20%;
@@ -48,7 +54,7 @@ h3 {
     padding-right: 1.5%;
     margin: auto;
     font-size: 25px;
-    font-family:'Franklin Gothic Medium';
+    font-family: 'Barlow Condensed', sans-serif;
 }
 
 section>div {
@@ -58,7 +64,7 @@ section>div {
 section>input {
     flex-basis: 60%;
     border: none;
-    font-family:'Trebuchet MS';
+    font-family: 'Montserrat', sans-serif;
     font-size: 2em;
     color: rgb(18, 18, 60);
 }
@@ -102,7 +108,7 @@ h4 {
     display: flex;
     justify-content: center;
     align-items: center;
-    font-family:'Franklin Gothic Medium';
+    font-family: 'Barlow Condensed', sans-serif;
     font-size: 25px;
     background-color: #b1b1b1;
 }
@@ -152,7 +158,7 @@ h4 {
 .hTitle {
     grid-column: 1 / span 1;
     grid-row: 1 / span 2;
-    font-family: Impact;
+    font-family: 'Libre Franklin', sans-serif;
     font-size: 24px;
     justify-self: center;
 }
@@ -162,14 +168,14 @@ h4 {
 .hCateg {
     grid-column: 2 / span 1;
     grid-row: 1 / span 1;
-    font-family: monospace;
+    font-family: 'Josefin Sans', sans-serif;
     font-size: 18px;
 }
 
 .hVal {
     grid-column: 2 / span 1;
     grid-row: 2 / span 1;
-    font-family: 'Courier New', Courier, monospace;
+    font-family: 'Inconsolata', monospace;
     font-size: 24px;
     white-space: nowrap;
     overflow: hidden;
