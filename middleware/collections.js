@@ -58,6 +58,7 @@ const createOrderIfNotExists = (req, res, next) => {
 const incrementQuantityInOrderIfExists = (req, res, next) => {
     Order.findOneAndUpdate({
         orderedBy: req.session.uid,
+        orderStatus: "unconfirmed",
         "products.id": req.body._productId
     }, {
         $inc: {"products.$.quantity": req.body.incrementVal, productsCost: req.body.productCost},
