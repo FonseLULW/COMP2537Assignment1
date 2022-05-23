@@ -29,6 +29,7 @@
         <div id="loginform-container">
             <h2>Create a new account!</h2>
             <form id="loginForm" action="/auth/signup" method="POST">
+                <div id="errMsg"><%= err %></div>
                 <div class="fields">
                     <label for="email">Email:</label>
                     <input name="email" type="email" class="textfields" placeholder="email@domain.com" autocomplete="off" required>

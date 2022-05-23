@@ -137,7 +137,7 @@ app.post("/auth/login", (req, res) => {
         if (err) {
             console.log(err.message)
         } else if (resp == null || resp == undefined) {
-            res.send("Email or password is incorrect")
+            res.render("login", {err: "Incorrect Email or Password"})
         } else {
             req.session.username = resp.username
             req.session.uid = resp._id
@@ -174,11 +174,11 @@ app.post("/auth/signup", (req, res) => {
                 }
             })
         } else if (resp.email === email && resp.username === username) {
-            res.send("This email and username already exists!")
+            res.render("signup", {err: "This email and username already exists!"})
         } else if (resp.email === email) {
-            res.send("This email already exists!")
+            res.render("signup", {err: "This email already exists!"})
         } else {
-            res.send("This username is taken!")
+            res.render("signup", {err: "This username is taken!"})
         }
     })
 })
@@ -200,12 +200,12 @@ app.get("/home", ensureAuthenticated, (req, res) => {
 
 // Login page route
 app.get("/", forwardAuthenticated, (req, res) => {
-    res.sendFile("./public/html/login.html", { root: __dirname });
+    res.render("login", {err: ""})
 })
 
 // Sign up page route
 app.get("/signup", (req, res) => {
-    res.sendFile("./public/html/signup.html", { root: __dirname });
+    res.render("signup", {err: ""});
 })
 
 app.get("/user", ensureAuthenticated, (req, res) => {
