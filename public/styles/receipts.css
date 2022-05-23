@@ -1,0 +1,125 @@
+@import url('https://fonts.googleapis.com/css2?family=Cantarell&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=PT+Sans&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Kalam:wght@300&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Saira:wght@300&display=swap');
+
+h2 {
+    text-align: center;
+    font-family: 'Cantarell', sans-serif;
+}
+
+#orders {
+    display: grid;
+    grid-template-columns: 20% 20% 20% 20%;
+    justify-content: center;
+    gap: 36px;
+}
+
+.single-order {
+    background-color: rgb(254, 254, 254);
+    border-radius: 2%;
+    box-shadow: 3px 3px 8px #888888;
+    height: 50vh;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.cell {
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    box-sizing: border-box;
+    padding-left: 0.5rem;
+    padding-right: 0.5rem;
+    align-items: center;
+}
+
+.empty, .single-order {
+    border-top-left-radius: 2%;
+    border-top-right-radius: 2%;
+}
+
+.empty {
+    height: 15%;
+    background-color: #333;
+}
+
+/* color depends on status:
+could be unconfirmed, delivering, complete, cancelled */
+.delivering > .empty {
+    background-color: rgb(255, 234, 0);
+}
+
+.unconfirmed > .empty {
+    background-color: rgb(0, 131, 7);
+}
+
+.complete > .empty {
+    background-color: rgb(0, 73, 128);
+}
+
+.cancelled > .empty {
+    background-color: #888;
+}
+
+.unconfirmed:hover {
+    transition: 0.3s;
+    transform: scale(1.075);
+    cursor: pointer;
+}
+
+.o-timestamp {
+    height: 20%;
+    justify-content: center;
+    align-items: flex-start;
+    font-family: 'PT Sans', sans-serif;
+    font-size: 1.5rem;
+}
+
+.o-subtotal {
+    height: 10%;
+    justify-content: space-between;
+}
+
+.o-tax {
+    height: 10%;
+    justify-content: space-between;
+}
+
+.o-total {
+    height: 10%;
+    justify-content: space-between;
+}
+
+.o-status {
+    height: 20%;
+    margin-top: auto;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    column-gap: 1rem;
+    
+}
+
+.label, .info {
+    font-family: 'Saira', sans-serif;
+    font-size: 1.25rem;
+}
+
+.label {
+    font-weight: bold;
+}
+
+.o-status .info {
+    font-family: 'Kalam', cursive;
+}
+
+@media screen and (max-width: 950px) {
+    #orders {
+        display: grid;
+        grid-template-columns: 50% 50%;
+        justify-content: center;
+    }
+}

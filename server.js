@@ -12,7 +12,7 @@ const uriString = process.env.MONGODB_URI
 // Middlewares
 const sessionLog = require("./middleware/session-log");
 const { ensureAuthenticated, forwardAuthenticated } = require("./middleware/auths");
-const { deleteAllProductsFromOrder, removeProductFromOrder, getProductsFromCurrentOrder, createProductIfNotExists, createOrderIfNotExists, incrementQuantityInOrderIfExists, pushToOrder, updateOrderCost, getCurrentOrder } = require("./middleware/collections")
+const { confirmOrder, deleteAllProductsFromOrder, removeProductFromOrder, getProductsFromCurrentOrder, createProductIfNotExists, createOrderIfNotExists, incrementQuantityInOrderIfExists, pushToOrder, updateOrderCost, getCurrentOrder } = require("./middleware/collections")
 
 // Use middlewares
 app.use(cors())
@@ -275,9 +275,18 @@ app.get("/checkout/getOrder", ensureAuthenticated, getCurrentOrder, getProductsF
 // Receipts page route
 app.get("/receipts", ensureAuthenticated, (req, res) => {
     Order.find({orderedBy: req.session.uid}, (err, resp) => {
-        console.log("RECEIPTS: ", resp)
-        res.render("receipts", {data: resp})
+        let sortOrder = ["unconfirmed", "delivering", "complete", "cancelled"]
+
+        const sortedResp = resp.sort((a, b) => {
+            return sortOrder.indexOf(a.orderStatus) - sortOrder.indexOf(b.orderStatus)
+        })
+        console.log("RECEIPTS: ", sortedResp)
+        res.render("receipts", {data: sortedResp})
     })
+})
+
+app.get("/checkout/buy/:_orderId", ensureAuthenticated, confirmOrder, (req, res) => {
+    res.send("DONE")
 })
 
 // Shop [ADD] to Cart

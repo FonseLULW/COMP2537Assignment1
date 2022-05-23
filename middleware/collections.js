@@ -180,4 +180,17 @@ const deleteAllProductsFromOrder = (req, res, next) => {
     })
 }
 
-module.exports = { deleteAllProductsFromOrder, removeProductFromOrder, getProductsFromCurrentOrder, getCurrentOrder, createProductIfNotExists, createOrderIfNotExists, incrementQuantityInOrderIfExists, pushToOrder, updateOrderCost }
+const confirmOrder = (req, res, next) => {
+    const {_orderId} = req.params
+    Order.findByIdAndUpdate(_orderId, {
+        $set: {orderStatus: "delivering"}
+    }, (err, resp) => {
+        if (err) {
+            res.send(err)
+        } else {
+            next()
+        }
+    }) 
+}
+
+module.exports = { confirmOrder, deleteAllProductsFromOrder, removeProductFromOrder, getProductsFromCurrentOrder, getCurrentOrder, createProductIfNotExists, createOrderIfNotExists, incrementQuantityInOrderIfExists, pushToOrder, updateOrderCost }

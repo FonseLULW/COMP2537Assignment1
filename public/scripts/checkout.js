@@ -154,7 +154,9 @@ function incrementQuantity(row, decrement) {
 }
 
 function checkout() {
-
+    fetch(`/checkout/buy/${orderId}`).then(() => {
+        window.location.href = "/receipts"
+    })
 }
 
 function setup() {
@@ -165,6 +167,7 @@ function setup() {
     })
 
     document.querySelector(".deleteAllItems").addEventListener("click", deleteAllItems)
+    document.querySelector(".submit").addEventListener("click", checkout)
 }
 
 document.addEventListener("DOMContentLoaded", setup)
