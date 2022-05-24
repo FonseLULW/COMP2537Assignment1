@@ -295,6 +295,9 @@ app.post("/shop/addToCart", ensureAuthenticated, createProductIfNotExists, creat
 })
 
 // Admin
+app.get("/dashboard", ensureAuthenticated, (req, res, next) => {
+    res.render("dashboard")
+})
 
 // Game
 app.get("/play", ensureAuthenticated, (req, res) => {
