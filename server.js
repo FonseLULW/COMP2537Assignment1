@@ -292,10 +292,13 @@ app.get("/checkout/buy/:_orderId", ensureAuthenticated, confirmOrder, (req, res)
 // Shop [ADD] to Cart
 app.post("/shop/addToCart", ensureAuthenticated, createProductIfNotExists, createOrderIfNotExists, incrementQuantityInOrderIfExists, pushToOrder, updateOrderCost, (req, res) => {
     res.send("DONE ADDING")
-    // console.log("REQ", req.body)
-    // console.log("USER: ", req.session.uid)
-    // console.log("PROD: ", req.body._productId)
-    // console.log("ORDER: ", req.body._orderId)  
+})
+
+// Admin
+
+// Game
+app.get("/play", ensureAuthenticated, (req, res) => {
+    res.render("game")
 })
 
 // entry point
