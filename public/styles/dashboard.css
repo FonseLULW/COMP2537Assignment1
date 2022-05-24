@@ -1,0 +1,51 @@
+.material-symbols-outlined {
+  font-variation-settings:
+  'FILL' 0,
+  'wght' 400,
+  'GRAD' 0,
+  'opsz' 48
+}
+
+.header {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-start;
+}
+
+.head-text {
+    margin: auto;
+}
+
+.single-account {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.single-account > * {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+.status {
+    width: 10%;
+    justify-content: center;
+}
+
+.info {
+    width: 60%;
+    box-sizing: border-box;
+    padding-right: 20%;
+    justify-content: space-around;
+}
+
+.controls {
+    width: 25%;
+    box-sizing: border-box;
+    justify-content: space-between;
+    padding-left: 1rem;
+    padding-right: 1rem;
+}

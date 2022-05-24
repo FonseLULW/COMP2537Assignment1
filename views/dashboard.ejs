@@ -20,7 +20,7 @@
     <!-- Header -->
     <header>
         <h1>
-            Jose Alfonso Clarito - You!
+            Jose Alfonso Clarito - Admin!
         </h1>
     </header>
 
@@ -54,7 +54,63 @@
 
     <!-- Main -->
     <main id="content">
-        Admin Dashboard time!
+        <!-- Header for this page -->
+        <h2 class="header">
+            <span class="head-icon material-symbols-outlined">
+                arrow_back
+            </span>
+            <span class="head-text">All User Accounts</span>
+        </h2>
+
+        <!-- Accounts List -->
+        <section id="accounts">
+
+            <!-- One single account -->
+            <div class="single-account">
+
+                <!-- Status Section -->
+                <div class="status">
+                    <div class="tag">Admin</div>
+                </div>
+
+                <!-- Info Section -->
+                <div class="info">
+                    <div class="username">
+                        <span class="uname-info label">Username:</span>
+                        <span class="uname-info val">Fonse</span>
+                    </div>
+                    <div class="email">
+                        <span class="email-info label">Email:</span>
+                        <span class="email-info val">fonse@fonse.com</span>
+                    </div>
+                </div>
+
+                <!-- Controls Section -->
+                <div class="controls">
+                    <div class="a-switch">
+                        <span class="admin-label">Toggle Admin:</span>
+                        <span class="admin-toggle">
+                            <label class="switch">
+                                <input type="checkbox">
+                                <span class="slider round"></span>
+                            </label>
+                        </span>
+                    </div>
+                    <div class="a-delete">
+                        <span class="material-symbols-outlined">
+                            delete
+                        </span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Add new account -->
+            <button class="account-create">
+                <span class="material-symbols-outlined">
+                    add
+                </span>
+            </button>
+        </section>
     </main>
 
     <!-- Footer -->
