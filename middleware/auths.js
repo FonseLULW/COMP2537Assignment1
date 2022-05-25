@@ -1,21 +1,21 @@
 const forwardAuthenticated = (req, res, next) => {
     if (req.session.authenticated) {
-        res.redirect("/user")
+        res.redirect("/user");
     } else {
-        next()
+        next();
     }
-}
+};
 
 const ensureAuthenticated = (req, res, next) => {
-    console.log("SESSION: ", req.session)
+    console.log("SESSION: ", req.session);
 
     if (req.session.authenticated) {
-        console.log("PROCEED")
-        next()
+        console.log("PROCEED");
+        next();
     } else {
-        console.log("INVALID")
-        res.redirect("/")
+        console.log("INVALID");
+        res.redirect("/");
     }
-}
+};
 
-module.exports = {forwardAuthenticated, ensureAuthenticated}
+module.exports = {forwardAuthenticated, ensureAuthenticated};

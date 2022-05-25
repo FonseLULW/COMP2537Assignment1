@@ -1,5 +1,5 @@
-const mockAPILink = `https://stormy-temple-14536.herokuapp.com`
-const pokeAPILink = `https://pokeapi.co/api/v2`
+const mockAPILink = `https://stormy-temple-14536.herokuapp.com`;
+const pokeAPILink = `https://pokeapi.co/api/v2`;
 
 // Total number of existing Pokemon
 const POKECOUNT = 898;
@@ -45,8 +45,8 @@ function createPokemonImage(thisPokemon) {
     pokemonContainer.addEventListener("click", () => {
         fireProfileEvent(thisPokemon.name, new Date()).then(() => {
             gotoProfile(thisPokemon);
-        })
-    })
+        });
+    });
 
     pokemonContainer.innerHTML = `<img src="${thisPokemon.sprites.other["official-artwork"].front_default}" alt="${thisPokemon.name}">`;
 

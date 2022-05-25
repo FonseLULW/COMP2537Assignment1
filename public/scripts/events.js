@@ -1,15 +1,15 @@
 function getFormattedTime(currentTimestamp) {
-    let hrs = currentTimestamp.getHours().toLocaleString(undefined, {minimumIntegerDigits: 2, useGrouping:false})
-    let mins = currentTimestamp.getMinutes().toLocaleString(undefined, {minimumIntegerDigits: 2, useGrouping:false})
-    let secs = currentTimestamp.getSeconds().toLocaleString(undefined, {minimumIntegerDigits: 2, useGrouping:false})
-    return `${hrs}:${mins}:${secs}`
+    let hrs = currentTimestamp.getHours().toLocaleString(undefined, {minimumIntegerDigits: 2, useGrouping:false});
+    let mins = currentTimestamp.getMinutes().toLocaleString(undefined, {minimumIntegerDigits: 2, useGrouping:false});
+    let secs = currentTimestamp.getSeconds().toLocaleString(undefined, {minimumIntegerDigits: 2, useGrouping:false});
+    return `${hrs}:${mins}:${secs}`;
 }
 
 function getFormattedDate(currentTimestamp) {
-    let year = currentTimestamp.getFullYear().toLocaleString(undefined, {minimumIntegerDigits: 2, useGrouping:false})
-    let month = (currentTimestamp.getMonth()+1).toLocaleString(undefined, {minimumIntegerDigits: 2, useGrouping:false})
-    let day = currentTimestamp.getDate().toLocaleString(undefined, {minimumIntegerDigits: 2, useGrouping:false})
-    return `${year}-${month}-${day}`
+    let year = currentTimestamp.getFullYear().toLocaleString(undefined, {minimumIntegerDigits: 2, useGrouping:false});
+    let month = (currentTimestamp.getMonth()+1).toLocaleString(undefined, {minimumIntegerDigits: 2, useGrouping:false});
+    let day = currentTimestamp.getDate().toLocaleString(undefined, {minimumIntegerDigits: 2, useGrouping:false});
+    return `${year}-${month}-${day}`;
 }
 
 async function fireProfileEvent(pokeName, timestamp) {
@@ -22,7 +22,7 @@ async function fireProfileEvent(pokeName, timestamp) {
             time: getFormattedTime(timestamp),
             hits: 1
         },
-    })
+    });
 }
 
 async function fireSearchEvent(searchType, searchValue, timestamp) {
@@ -35,7 +35,7 @@ async function fireSearchEvent(searchType, searchValue, timestamp) {
             time: getFormattedTime(timestamp),
             hits: 1
         },
-    })
+    });
 }
 
 async function fireClearHistoryEvent(timestamp) {
@@ -48,7 +48,7 @@ async function fireClearHistoryEvent(timestamp) {
             time: getFormattedTime(timestamp),
             hits: 1
         },
-    })
+    });
 }
 
 async function fireDeleteFromHistoryEvent(historyType, historyValue, timestamp) {
@@ -61,7 +61,7 @@ async function fireDeleteFromHistoryEvent(historyType, historyValue, timestamp) 
             time: getFormattedTime(timestamp),
             hits: 1
         },
-    })
+    });
 }
 
 async function fireRestoreSearchEvent(historyType, historyValue, timestamp) {
@@ -74,11 +74,11 @@ async function fireRestoreSearchEvent(historyType, historyValue, timestamp) {
             time: getFormattedTime(timestamp),
             hits: 1
         },
-    })
+    });
 }
 
 function setup() {
-    console.log("Events have been loaded!")
+    console.log("Events have been loaded!");
 }
 
-document.addEventListener("DOMContentLoaded", setup)
+document.addEventListener("DOMContentLoaded", setup);

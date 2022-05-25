@@ -1,9 +1,9 @@
 function ready() {
     console.log(pokeEntry);
     
-    const cartBtn = document.querySelector("#pBuy")
+    const cartBtn = document.querySelector("#pBuy");
     cartBtn.addEventListener("click", () => {
-        console.log(`SENDING:\nId: ${pokeEntry.id}\nName: ${pokeEntry.name}\nPrice: ${pokeEntry.id + pokeEntry.height + pokeEntry.weight + pokeEntry.base_experience}`)
+        console.log(`SENDING:\nId: ${pokeEntry.id}\nName: ${pokeEntry.name}\nPrice: ${pokeEntry.id + pokeEntry.height + pokeEntry.weight + pokeEntry.base_experience}`);
         $.ajax({
             url: "/shop/addToCart",
             type: "POST",
@@ -13,8 +13,8 @@ function ready() {
                 productCost: pokeEntry.id + pokeEntry.height + pokeEntry.weight + pokeEntry.base_experience,
                 incrementVal: 1
             }
-        })
-    })
+        });
+    });
 }
 
 document.addEventListener("DOMContentLoaded", () => {

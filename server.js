@@ -5,22 +5,22 @@ const app = express();
 const session = require("express-session");
 const https = require('https');
 const bodyParser = require('body-parser');
-const cors = require('cors')
+const cors = require('cors');
 const port = process.env.PORT || 8000;
-const uriString = process.env.MONGODB_URI
+const uriString = process.env.MONGODB_URI;
 
 // Middlewares
 const sessionLog = require("./middleware/session-log");
 const { ensureAuthenticated, forwardAuthenticated } = require("./middleware/auths");
-const { confirmOrder, deleteAllProductsFromOrder, removeProductFromOrder, getProductsFromCurrentOrder, createProductIfNotExists, createOrderIfNotExists, incrementQuantityInOrderIfExists, pushToOrder, updateOrderCost, getCurrentOrder } = require("./middleware/collections")
+const { confirmOrder, deleteAllProductsFromOrder, removeProductFromOrder, getProductsFromCurrentOrder, createProductIfNotExists, createOrderIfNotExists, incrementQuantityInOrderIfExists, pushToOrder, updateOrderCost, getCurrentOrder } = require("./middleware/collections");
 
 // Use middlewares
-app.use(cors())
+app.use(cors());
 app.use(session({
     secret: "sssshhhhh",
     saveUninitialized: true,
     resave: true
-}))
+}));
 // app.use(sessionLog)
 
 app.set('view engine', 'ejs');
@@ -28,12 +28,12 @@ const mongoose = require('mongoose');
 
 mongoose.connect(uriString, {
     useNewUrlParser: true, useUnifiedTopology: true
-})
+});
 
-const User = require('./models/User')
-const Event = require('./models/Event')
-const Product = require('./models/Product')
-const Order = require('./models/Order')
+const User = require('./models/User');
+const Event = require('./models/Event');
+const Product = require('./models/Product');
+const Order = require('./models/Order');
 
 // Statics
 app.use(express.static(`./public`));
@@ -41,12 +41,12 @@ app.use(bodyParser.urlencoded({
     parameterLimit: 100000,
     limit: '50mb',
     extended: true
-}))
+}));
 app.use((req, res, next) => {
-    console.log("\n----------NEW ROUTE----------------\n")
-    console.log("REQUEST BODY: ", req.body)
-    next()
-})
+    console.log("\n----------NEW ROUTE----------------\n");
+    console.log("REQUEST BODY: ", req.body);
+    next();
+});
 
 // [READ] all timelineDB events and render timeline.ejs
 app.get("/timeline", ensureAuthenticated, (req, res) => {
@@ -56,18 +56,18 @@ app.get("/timeline", ensureAuthenticated, (req, res) => {
         }
         res.render("timeline", {
             "events": events
-        })
-    })
-})
+        });
+    });
+});
 
 app.get("/events/readAllEvents", ensureAuthenticated, (req, res) => {
     Event.find({ doneBy: req.session.uid }, (err, events) => {
         if (err) {
-            console.log(err)
+            console.log(err);
         }
-        res.json(events)
-    })
-})
+        res.json(events);
+    });
+});
 
 // [CREATE] a new event and insert it to the timelineDB
 app.put("/events/insertEvent", ensureAuthenticated, (req, res) => {
@@ -81,11 +81,11 @@ app.put("/events/insertEvent", ensureAuthenticated, (req, res) => {
         if (err) {
             console.log(err);
         }
-        console.log("DATA")
-        console.log(data)
-        res.send("Created successfully")
-    })
-})
+        console.log("DATA");
+        console.log(data);
+        res.send("Created successfully");
+    });
+});
 
 // [UPDATE] the `hits` field of an event in the timelineDB
 app.get("/events/incrementHits/:id", ensureAuthenticated, (req, res) => {
@@ -95,9 +95,9 @@ app.get("/events/incrementHits/:id", ensureAuthenticated, (req, res) => {
             if (err) {
                 console.log(err);
             }
-            res.send("Incremented successfully")
-        })
-})
+            res.send("Incremented successfully");
+        });
+});
 
 // [DELETE] an event from timelineDB
 app.get("/events/deleteEvent/:id", ensureAuthenticated, (req, res) => {
@@ -105,9 +105,9 @@ app.get("/events/deleteEvent/:id", ensureAuthenticated, (req, res) => {
         if (err) {
             console.log(err);
         }
-        res.send("Deleted successfully")
-    })
-})
+        res.send("Deleted successfully");
+    });
+});
 
 // Dynamic profile page
 app.get("/profile/:id", ensureAuthenticated, (req, res) => {
@@ -118,37 +118,37 @@ app.get("/profile/:id", ensureAuthenticated, (req, res) => {
     https.get(url, (https_res) => {
         https_res.on("data", (chunk) => {
             data += chunk;
-        })
+        });
 
         https_res.on("end", () => {
             data = JSON.parse(data);
 
             res.render("profile", {
                 "pokemon": data
-            })
-        })
-    })
+            });
+        });
+    });
 });
 
 // Auth routes
 app.post("/auth/login", (req, res) => {
-    const { email, password } = req.body
+    const { email, password } = req.body;
     User.findOne({ email: email, password: password }, (err, resp) => {
         if (err) {
-            console.log(err.message)
+            console.log(err.message);
         } else if (resp == null || resp == undefined) {
-            res.render("login", {err: "Incorrect Email or Password"})
+            res.render("login", {err: "Incorrect Email or Password"});
         } else {
-            req.session.username = resp.username
-            req.session.uid = resp._id
-            req.session.authenticated = true
-            res.redirect("/user")
+            req.session.username = resp.username;
+            req.session.uid = resp._id;
+            req.session.authenticated = true;
+            res.redirect("/user");
         }
-    })
-})
+    });
+});
 
 app.post("/auth/signup", (req, res) => {
-    const { email, username, password } = req.body
+    const { email, username, password } = req.body;
     User.findOne({
         $or: [
             { username: username },
@@ -156,78 +156,76 @@ app.post("/auth/signup", (req, res) => {
         ]
     }, (err, resp) => {
         if (err) {
-            console.log(err.message)
+            console.log(err.message);
         } else if (resp == null || resp == undefined) {
             User.create({
                 email: email,
                 username: username,
                 password: password
             }, (err, data) => {
-                console.log(data)
+                console.log(data);
                 if (err) {
-                    console.log(err.message)
+                    console.log(err.message);
                 } else {
-                    req.session.username = data.username
-                    req.session.uid = data._id
-                    req.session.authenticated = true
-                    res.redirect("/user")
+                    req.session.username = data.username;
+                    req.session.uid = data._id;
+                    req.session.authenticated = true;
+                    res.redirect("/user");
                 }
-            })
+            });
         } else if (resp.email === email && resp.username === username) {
-            res.render("signup", {err: "This email and username already exists!"})
+            res.render("signup", {err: "This email and username already exists!"});
         } else if (resp.email === email) {
-            res.render("signup", {err: "This email already exists!"})
+            res.render("signup", {err: "This email already exists!"});
         } else {
-            res.render("signup", {err: "This username is taken!"})
+            res.render("signup", {err: "This username is taken!"});
         }
-    })
-})
+    });
+});
 
 app.get("/auth/logout", (req, res) => {
     req.session.destroy(err => {
         if (err) {
-            console.log(err.message)
+            console.log(err.message);
         } else {
-            res.redirect("/")
+            res.redirect("/");
         }
-    })
-})
+    });
+});
 
 // Home page route
 app.get("/home", ensureAuthenticated, (req, res) => {
     res.sendFile("./public/html/home.html", { root: __dirname });
-})
+});
 
 // Login page route
 app.get("/", forwardAuthenticated, (req, res) => {
-    res.render("login", {err: ""})
-})
+    res.render("login", {err: ""});
+});
 
 // Sign up page route
 app.get("/signup", (req, res) => {
     res.render("signup", {err: ""});
-})
+});
 
 app.get("/user", ensureAuthenticated, (req, res) => {
     User.findById(req.session.uid, "email username", (err, resp) => {
         if (err) {
-            res.send(err)
+            res.send(err);
         } else {
-            res.render("user", {data: resp})
+            res.render("user", {data: resp});
         }
-    })
-})
+    });
+});
 
 // Search page route
 app.get("/search", ensureAuthenticated, (req, res) => {
     res.sendFile(`./public/html/search.html`, { root: __dirname });
-})
+});
 
 // Checkout page route
 app.get("/checkout", ensureAuthenticated, getCurrentOrder, getProductsFromCurrentOrder, (req, res) => {
-    // console.log(req.currentOrder)
-    // console.log(req.products)
-    console.log("THIS: ", req.currentOrder.totalCost)
+    console.log("THIS: ", req.currentOrder.totalCost);
     res.render("checkout", {
         noActiveOrders: false, 
         orderId: req.currentOrder._id,
@@ -238,27 +236,27 @@ app.get("/checkout", ensureAuthenticated, getCurrentOrder, getProductsFromCurren
         orderStatus: req.currentOrder.orderStatus,
         products: req.products,
         cartSize: req.products.length
-    })
-})
+    });
+});
 
 // Checkout increment route
 app.post("/checkout/incrementQuantity", incrementQuantityInOrderIfExists, updateOrderCost, (req, res) => {
-    console.log("COMPLETED!")
-    res.send("DONE")
-})
+    console.log("COMPLETED!");
+    res.send("DONE");
+});
 
 app.post("/checkout/deleteItem", ensureAuthenticated, removeProductFromOrder, updateOrderCost, (req, res) => {
-    console.log("DONE DELETE!")
-    res.send("DONE")
-})
+    console.log("DONE DELETE!");
+    res.send("DONE");
+});
 
 app.get("/checkout/empty/:_orderId", ensureAuthenticated, deleteAllProductsFromOrder, (req, res) => {
-    console.log("DONE DELETE ALL")
-    res.send("DONE")
-})
+    console.log("DONE DELETE ALL");
+    res.send("DONE");
+});
 
 app.get("/checkout/getOrder", ensureAuthenticated, getCurrentOrder, getProductsFromCurrentOrder, (req, res) => {
-    console.log("THIS: ", req.currentOrder.totalCost)
+    console.log("THIS: ", req.currentOrder.totalCost);
     res.json({
         noActiveOrders: false, 
         orderId: req.currentOrder._id,
@@ -269,40 +267,40 @@ app.get("/checkout/getOrder", ensureAuthenticated, getCurrentOrder, getProductsF
         orderStatus: req.currentOrder.orderStatus,
         products: req.products,
         cartSize: req.products.length
-    })
-})
+    });
+});
 
 // Receipts page route
 app.get("/receipts", ensureAuthenticated, (req, res) => {
     Order.find({orderedBy: req.session.uid}, (err, resp) => {
-        let sortOrder = ["unconfirmed", "delivering", "complete", "cancelled"]
+        let sortOrder = ["unconfirmed", "delivering", "complete", "cancelled"];
 
         const sortedResp = resp.sort((a, b) => {
-            return sortOrder.indexOf(a.orderStatus) - sortOrder.indexOf(b.orderStatus)
-        })
-        console.log("RECEIPTS: ", sortedResp)
-        res.render("receipts", {data: sortedResp})
-    })
-})
+            return sortOrder.indexOf(a.orderStatus) - sortOrder.indexOf(b.orderStatus);
+        });
+        console.log("RECEIPTS: ", sortedResp);
+        res.render("receipts", {data: sortedResp});
+    });
+});
 
 app.get("/checkout/buy/:_orderId", ensureAuthenticated, confirmOrder, (req, res) => {
-    res.send("DONE")
-})
+    res.send("DONE");
+});
 
 // Shop [ADD] to Cart
 app.post("/shop/addToCart", ensureAuthenticated, createProductIfNotExists, createOrderIfNotExists, incrementQuantityInOrderIfExists, pushToOrder, updateOrderCost, (req, res) => {
-    res.send("DONE ADDING")
-})
+    res.send("DONE ADDING");
+});
 
 // Admin
 app.get("/dashboard", ensureAuthenticated, (req, res, next) => {
-    res.render("dashboard")
-})
+    res.render("dashboard");
+});
 
 // Game
 app.get("/play", ensureAuthenticated, (req, res) => {
-    res.render("game")
-})
+    res.render("game");
+});
 
 // entry point
 app.listen(port, (err) => {

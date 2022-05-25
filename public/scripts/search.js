@@ -9,7 +9,7 @@ function setupDropItem(item) {
     let elem = document.querySelector("#drop" + item);
     elem.addEventListener("mousedown", () => {
         changeSearchBy(elem.innerHTML);
-    })
+    });
 }
 
 // Reformat query to proper PokeAPI format
@@ -70,7 +70,7 @@ function search(searchingBy, searchingWhat) {
             if (searchingBy == "generation") {
                 pokeGroup.pokemon_species.forEach((pok) => {
                     search("pokemons", pok.name);
-                })
+                });
             } else {
                 pokeGroup.pokemon.forEach((pok) => {
                     search("pokemons", pok.pokemon.name);
@@ -99,14 +99,10 @@ function addToHistory(searchCategory, searchValue) {
     historyData.addEventListener("click", () => {
         fireRestoreSearchEvent(searchCategory, searchValue, new Date()).then(() => {
             search(searchCategory, searchValue);
-        })
+        });
     });
 
     historyElem.appendChild(historyData);
-
-    // historyElem.innerHTML = `<div class="hTitle">${hID}</div>
-    //                          <div class="hCateg">${searchCategory}</div>
-    //                          <div class="hVal">${searchValue}</div>`;
 
     let removeElem = document.createElement("BUTTON");
     removeElem.classList.add("hDel");
@@ -114,9 +110,9 @@ function addToHistory(searchCategory, searchValue) {
     historyElem.appendChild(removeElem);
     removeElem.addEventListener("click", () => {
         fireDeleteFromHistoryEvent(searchCategory, searchValue, new Date()).then(() => {
-            historyTab.removeChild(historyElem)
-        })
-    })
+            historyTab.removeChild(historyElem);
+        });
+    });
 
     historyTab.appendChild(historyElem);
     hID++;
@@ -135,22 +131,22 @@ function ready() {
     for (i = 1; i <= 4; i++) {
         setupDropItem(i);
     }
-    console.log("Dropdown menu initialized...")
+    console.log("Dropdown menu initialized...");
 
     // search button click 
     document.querySelector("#searchPokemon").addEventListener("click", () => {
         fireSearchEvent(searchBy.innerHTML, searchQuery.value, new Date()).then(() => {
             search(searchBy.innerHTML, searchQuery.value);
             addToHistory(searchBy.innerHTML, searchQuery.value);
-        })
-    })
-    console.log("Search button initialized...")
+        });
+    });
+    console.log("Search button initialized...");
 
     document.querySelector("#clear").addEventListener("click", () => {
         fireClearHistoryEvent(new Date()).then(() => {
             clearHistory();
-        })
-    })
+        });
+    });
 
 
     console.log("Initialization completed!");
@@ -159,4 +155,4 @@ function ready() {
 document.addEventListener("DOMContentLoaded", (e) => {
     console.log(`${e.type}! Running scripts...`);
     ready();
-})
+});

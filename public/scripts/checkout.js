@@ -1,13 +1,12 @@
 const orderId = document.querySelector("#orderID").innerHTML.trim();
 
 function updateCartDisplay(data) {
-    let cart = document.querySelector("#shopcart")
-    cart.innerHTML = ``
-    let newHtml = ``
-    console.log(data.totalCost)
-
+    let cart = document.querySelector("#shopcart");
+    cart.innerHTML = ``;
+    let newHtml = ``;
+    console.log(data.totalCost);
     if (data.noActiveOrders || data.cartSize <= 0) {
-        newHtml += `<h2 id="none">Shopping Cart is empty!</h2>`
+        newHtml += `<h2 id="none">Shopping Cart is empty!</h2>`;
     } else {
         newHtml += `<h2>You have <b>
                         ${data.cartSize}
@@ -25,7 +24,7 @@ function updateCartDisplay(data) {
                         <th>Price</th>
                         <th>Quantity</th>
                         <th>Subtotal</th>
-                    </tr>`
+                    </tr>`;
 
         data.products.forEach(item => {
             newHtml += `<tr class="single-product" id="${item._id}">
@@ -56,8 +55,8 @@ function updateCartDisplay(data) {
                 currency: 'CAD'
             })}
                 </td>
-            </tr>`
-        })
+            </tr>`;
+        });
 
         newHtml += `<tr class="bottomline">
                                 <td class="label" colspan="5">Subtotal Cost</td>
@@ -86,10 +85,10 @@ function updateCartDisplay(data) {
                 <div id="submit-controls">
                     <button class="submit">Checkout</button>
                     <button class="deleteAllItems">Empty Cart</button>
-                </div>`
+                </div>`;
     }
-    cart.innerHTML = newHtml
-    setup()
+    cart.innerHTML = newHtml;
+    setup();
 }
 
 function reloadCart() {
@@ -97,22 +96,22 @@ function reloadCart() {
         url: `/checkout/getOrder`,
         type: `get`,
         success: (resp) => {
-            console.log("/GETORDER SUCCESS", resp)
-            updateCartDisplay(resp)
+            console.log("/GETORDER SUCCESS", resp);
+            updateCartDisplay(resp);
         }
-    })
+    });
 }
 
 function deleteAllItems() {
     $.ajax({
         url: `/checkout/empty/${orderId}`,
         method: "GET"
-    }).done(reloadCart)
+    }).done(reloadCart);
 }
 
 function deleteItem(row) {
-    console.log(row)
-    let productSubtotal = -Number(row.querySelector(".prod-singlecostsubtotal").innerHTML.trim().replace(/[^0-9.-]+/g, ""))
+    console.log(row);
+    let productSubtotal = -Number(row.querySelector(".prod-singlecostsubtotal").innerHTML.trim().replace(/[^0-9.-]+/g, ""));
 
     $.ajax({
         url: "/checkout/deleteItem",
@@ -122,24 +121,24 @@ function deleteItem(row) {
             _productId: row.id,
             productCostSubtotal: productSubtotal,
         },
-    }).done(reloadCart)
+    }).done(reloadCart);
 }
 
 function incrementQuantity(row, decrement) {
-    console.log("CLICKED!")
+    console.log("CLICKED!");
     if (decrement && Number(row.querySelector(".quantity").innerHTML.trim()) <= 1) {
-        return
+        return;
     }
 
-    let incrementQuantity = 1
-    let incrementCost = Number(row.querySelector(".prod-singlecost").innerHTML.trim().replace(/[^0-9.-]+/g, ""))
+    let incrementQuantity = 1;
+    let incrementCost = Number(row.querySelector(".prod-singlecost").innerHTML.trim().replace(/[^0-9.-]+/g, ""));
 
     if (decrement) {
-        incrementQuantity *= -1
-        incrementCost *= -1
+        incrementQuantity *= -1;
+        incrementCost *= -1;
     }
 
-    console.log(row, incrementQuantity, incrementCost, row.id, orderId)
+    console.log(row, incrementQuantity, incrementCost, row.id, orderId);
 
     $.ajax({
         url: "/checkout/incrementQuantity",
@@ -150,24 +149,24 @@ function incrementQuantity(row, decrement) {
             incrementVal: incrementQuantity,
             productCost: incrementCost,
         }
-    }).done(reloadCart)
+    }).done(reloadCart);
 }
 
 function checkout() {
     fetch(`/checkout/buy/${orderId}`).then(() => {
-        window.location.href = "/receipts"
-    })
+        window.location.href = "/receipts";
+    });
 }
 
 function setup() {
     document.querySelectorAll(".single-product").forEach(prod => {
-        prod.querySelector(".deleteItem").addEventListener("click", () => deleteItem(prod))
-        prod.querySelector(".add").addEventListener("click", () => incrementQuantity(prod))
-        prod.querySelector(".minus").addEventListener("click", () => incrementQuantity(prod, true))
-    })
+        prod.querySelector(".deleteItem").addEventListener("click", () => deleteItem(prod));
+        prod.querySelector(".add").addEventListener("click", () => incrementQuantity(prod));
+        prod.querySelector(".minus").addEventListener("click", () => incrementQuantity(prod, true));
+    });
 
-    document.querySelector(".deleteAllItems").addEventListener("click", deleteAllItems)
-    document.querySelector(".submit").addEventListener("click", checkout)
+    document.querySelector(".deleteAllItems").addEventListener("click", deleteAllItems);
+    document.querySelector(".submit").addEventListener("click", checkout);
 }
 
-document.addEventListener("DOMContentLoaded", setup)
+document.addEventListener("DOMContentLoaded", setup);

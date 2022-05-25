@@ -1,7 +1,7 @@
 function setup() {
     document.querySelector("#browse").addEventListener("click", () => {
-        window.location.href="/home"
-    })
+        window.location.href="/home";
+    });
 }
 
-document.addEventListener("DOMContentLoaded", setup)
+document.addEventListener("DOMContentLoaded", setup);

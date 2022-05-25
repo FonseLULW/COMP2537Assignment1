@@ -4,8 +4,8 @@ const logSession = (req, res, next) => {
         uid: ${req.session.uid},
         username: ${req.session.username},
         authenticated: ${req.session.authenticated}
-    }`)
-    next()
-}
+    }`);
+    next();
+};
 
-module.exports = logSession
+module.exports = logSession;

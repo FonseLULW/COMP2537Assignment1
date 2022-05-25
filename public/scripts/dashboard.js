@@ -2,4 +2,4 @@ function setup() {
 
 }
 
-document.addEventListener("DOMContentLoaded", setup)
+document.addEventListener("DOMContentLoaded", setup);
