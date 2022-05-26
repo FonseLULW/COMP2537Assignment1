@@ -18,4 +18,12 @@ const ensureAuthenticated = (req, res, next) => {
     }
 };
 
-module.exports = {forwardAuthenticated, ensureAuthenticated};
+const verifyAdmin = (req, res, next) => {
+    if (req.session.isAdmin) {
+        next();
+    } else {
+        res.redirect("/user");
+    }
+};
+
+module.exports = {forwardAuthenticated, ensureAuthenticated, verifyAdmin};

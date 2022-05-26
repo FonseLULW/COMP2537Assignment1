@@ -11,7 +11,7 @@ const uriString = process.env.MONGODB_URI;
 
 // Middlewares
 const sessionLog = require("./middleware/session-log");
-const { ensureAuthenticated, forwardAuthenticated } = require("./middleware/auths");
+const { ensureAuthenticated, forwardAuthenticated, verifyAdmin } = require("./middleware/auths");
 const { confirmOrder, deleteAllProductsFromOrder, removeProductFromOrder, getProductsFromCurrentOrder, createProductIfNotExists, createOrderIfNotExists, incrementQuantityInOrderIfExists, pushToOrder, updateOrderCost, getCurrentOrder } = require("./middleware/collections");
 
 // Use middlewares
@@ -141,6 +141,7 @@ app.post("/auth/login", (req, res) => {
         } else {
             req.session.username = resp.username;
             req.session.uid = resp._id;
+            req.session.isAdmin = resp.admin;
             req.session.authenticated = true;
             res.redirect("/user");
         }
@@ -169,6 +170,7 @@ app.post("/auth/signup", (req, res) => {
                 } else {
                     req.session.username = data.username;
                     req.session.uid = data._id;
+                    req.session.isAdmin = resp.admin;
                     req.session.authenticated = true;
                     res.redirect("/user");
                 }
@@ -209,7 +211,7 @@ app.get("/signup", (req, res) => {
 });
 
 app.get("/user", ensureAuthenticated, (req, res) => {
-    User.findById(req.session.uid, "email username", (err, resp) => {
+    User.findById(req.session.uid, "email username admin", (err, resp) => {
         if (err) {
             res.send(err);
         } else {
@@ -293,8 +295,10 @@ app.post("/shop/addToCart", ensureAuthenticated, createProductIfNotExists, creat
 });
 
 // Admin
-app.get("/dashboard", ensureAuthenticated, (req, res, next) => {
-    res.render("dashboard");
+app.get("/dashboard", ensureAuthenticated, verifyAdmin, (req, res) => {
+    User.find({}, (err, resp) => {
+        res.render("dashboard", {accounts: resp, userId: req.session.uid});
+    });
 });
 
 // Game

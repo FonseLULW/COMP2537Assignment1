@@ -17,8 +17,8 @@ main {
     justify-content: center;
 }
 
-#browse {
-    width: fit-content;
+button {
+    width: 25rem;
     padding-left: 1rem;
     padding-right: 1rem;
 }
