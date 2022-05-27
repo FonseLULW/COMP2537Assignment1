@@ -170,7 +170,7 @@ app.post("/auth/signup", (req, res) => {
                 } else {
                     req.session.username = data.username;
                     req.session.uid = data._id;
-                    req.session.isAdmin = resp.admin;
+                    req.session.isAdmin = data.admin;
                     req.session.authenticated = true;
                     res.redirect("/user");
                 }

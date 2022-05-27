@@ -72,17 +72,15 @@
                     <!-- Status Section -->
                     <div class="status">
                         <% if (account.admin) { %>
-                            <div class="tag">Admin</div>
+                            <div class="tag">ADMIN</div>
                             <% } %>
                     </div>
 
                     <!-- Info Section -->
                     <div class="info">
                         <div class="username">
-                            <span class="uname-info label">Username:</span>
-                            <span class="uname-info val">
-                                <%= account.username %>
-                            </span>
+                            <label for="newUsername" class="uname-info label">Username:</label>
+                            <input type="text" name="newUsername" class="uname-info val" value="<%= account.username %>">
                         </div>
                         <div class="email">
                             <span class="email-info label">Email:</span>
@@ -94,23 +92,28 @@
 
                     <!-- Controls Section -->
                     <div class="controls">
-                        <div class="a-switch">
-                            <span class="admin-label">Toggle Admin:</span>
-                            <span class="admin-toggle">
-                                <label class="switch">
-                                    <input type="checkbox" 
-                                    <% if (account.admin) { %>
-                                     checked
-                                    <% } %>
-                                    <% if (account.id == userId) { %>
-                                     disabled
-                                    <% } %>
-                                    >
-                                    <span class="slider round"></span>
-                                </label>
-                            </span>
+                        <div class="update">
+                            <button class="edit btn">Edit</button>
+                            <input type="submit" class="save btn hidden" value="Save">
                         </div>
-                        <div class="a-delete">
+                        <div class="a-switch">
+                            <button class="toggleAdmin btn 
+                            <% if (account.id==userId) { %>
+                                disabled
+                            <% } %>
+                            "
+                            <% if (account.id==userId) { %>
+                                disabled
+                            <% } %>
+                            >
+                                Toggle Admin
+                            </button>
+                        </div>
+                        <div class="a-delete
+                        <% if (account.id==userId) { %>
+                         disabled
+                        <% } %>
+                        ">
                             <span class="material-symbols-outlined">
                                 delete
                             </span>
@@ -118,12 +121,12 @@
                     </div>
                 </div>
                 <% }) %>
-            <!-- Add new account -->
-            <button class="account-create">
-                <span class="material-symbols-outlined">
-                    add
-                </span>
-            </button>
+                    <!-- Add new account -->
+                    <button class="account-create">
+                        <span class="material-symbols-outlined">
+                            add
+                        </span>
+                    </button>
         </section>
     </main>
 

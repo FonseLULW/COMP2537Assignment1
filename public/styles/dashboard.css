@@ -1,3 +1,7 @@
+@import url('https://fonts.googleapis.com/css2?family=Itim&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Cantarell&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300&display=swap');
+
 .material-symbols-outlined {
   font-variation-settings:
   'FILL' 0,
@@ -15,6 +19,7 @@
 
 .head-text {
     margin: auto;
+    font-family: 'Cantarell';
 }
 
 .single-account {
@@ -22,6 +27,12 @@
     flex-direction: row;
     justify-content: space-between;
     align-items: center;
+    background-color: rgb(197, 197, 197);
+    height: 4rem;
+}
+
+.single-account:nth-child(2n) {
+    background-color: rgb(221, 221, 221);
 }
 
 .single-account > * {
@@ -29,6 +40,17 @@
     flex-direction: row;
     align-items: center;
     height: 100%;
+    
+    
+}
+
+/* Everything inside the all of the divs inside of single-account */
+.single-account > * > * {
+    height: 100%;
+    display: flex;
+    align-items: center;
+    
+    
 }
 
 .status {
@@ -36,26 +58,101 @@
     justify-content: center;
 }
 
-.info {
-    width: 60%;
+.tag {
+    background-color: rgb(21, 144, 225) ;
+    height: fit-content;
     box-sizing: border-box;
-    padding-right: 20%;
-    justify-content: space-around;
+    padding: 0.25rem 0.8rem;
+    border-radius: 8%;
+    color: #dfe9ef;
+    box-shadow: 2px 2px #2875A8;
+    font-family: 'Itim', cursive;
+    letter-spacing: 0.08rem;
+}
+
+.info {
+    width: 55%;
+    box-sizing: border-box;
+    padding-right: 0%;
+    justify-content: flex-start;
+    font-family: 'Noto Sans JP', sans-serif;
+    font-size: 1.5rem;
+    column-gap: 0.25rem;
+}
+
+.val {
+    border: unset;
+    background-color: unset;
+    font-size: unset;
+    font-family: unset;
+}
+
+.val[disabled] {
+    color: unset;
+}
+
+.username, .email {
+    width: 50%;
+    
+}
+
+.label {
+    margin-right: 1rem;
+}
+
+.val {
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
 .controls {
-    width: 25%;
+    width: 30%;
     box-sizing: border-box;
     justify-content: space-between;
     padding-left: 1rem;
+    justify-content: flex-end;
+    column-gap: 1rem;
 }
 
 .back {
     cursor: pointer;
 }
 
+.a-delete {
+    width: 3rem;
+    justify-content: center;
+}
+
 .a-delete:hover {
+    cursor: default;
+}
+
+.a-delete:not(.disabled):hover {
     transition: 1s;
     background-color: rgb(249, 74, 74);
     cursor: pointer;
+}
+
+button, input[type="submit"] {
+    font-size: 1.4rem;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.hidden {
+    display: none;
+}
+
+.disabled, input[type="submit"].disabled {
+    color: rgba(0, 0, 0, 0.426);
+}
+
+button.disabled, input[type="submit"].disabled{
+    background-color: rgba(146, 146, 146, 0.539);   
+}
+
+@media screen and (max-width: 950px) {
+    button, input[type="submit"] {
+        font-size: 1rem;
+    }
 }

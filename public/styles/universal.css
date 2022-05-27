@@ -81,8 +81,9 @@ button, input[type="submit"] {
     width: 100%;
 }
 
-button:hover, input[type="submit"]:hover {
+button:not(.disabled):hover, input[type="submit"]:not(.disabled):hover {
     background-color: rgb(195, 195, 195);
+    cursor: pointer;
 }
 
 /* Pokemon Card images grid */
