@@ -151,8 +151,26 @@ button.disabled, input[type="submit"].disabled{
     background-color: rgba(146, 146, 146, 0.539);   
 }
 
+.edit {
+    width: fit-content;
+    overflow: revert;
+}
+
+.update {
+    column-gap: 1rem;
+    width: fit-content;
+}
+
 @media screen and (max-width: 950px) {
-    button, input[type="submit"] {
+    main {
+        padding: 0px;
+    }
+
+    .tag {
+        font-size: 0rem;
+    }
+
+    button, input[type="submit"], .info {
         font-size: 1rem;
     }
 }

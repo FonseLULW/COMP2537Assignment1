@@ -67,7 +67,7 @@
 
             <% accounts.forEach(account=> { %>
                 <!-- One single account -->
-                <div class="single-account">
+                <form class="single-account" action="/sakdlm">
 
                     <!-- Status Section -->
                     <div class="status">
@@ -80,7 +80,7 @@
                     <div class="info">
                         <div class="username">
                             <label for="newUsername" class="uname-info label">Username:</label>
-                            <input type="text" name="newUsername" class="uname-info val" value="<%= account.username %>">
+                            <input type="text" name="newUsername" class="uname-info val" value="<%= account.username %>" disabled>
                         </div>
                         <div class="email">
                             <span class="email-info label">Email:</span>
@@ -93,11 +93,11 @@
                     <!-- Controls Section -->
                     <div class="controls">
                         <div class="update">
-                            <button class="edit btn">Edit</button>
+                            <button type="button" class="edit btn">Edit</button>
                             <input type="submit" class="save btn hidden" value="Save">
                         </div>
                         <div class="a-switch">
-                            <button class="toggleAdmin btn 
+                            <button type="button" class="toggleAdmin btn 
                             <% if (account.id==userId) { %>
                                 disabled
                             <% } %>
@@ -119,7 +119,7 @@
                             </span>
                         </div>
                     </div>
-                </div>
+                </form>
                 <% }) %>
                     <!-- Add new account -->
                     <button class="account-create">
