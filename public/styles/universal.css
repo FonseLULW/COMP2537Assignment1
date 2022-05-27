@@ -86,6 +86,10 @@ button:not(.disabled):hover, input[type="submit"]:not(.disabled):hover {
     cursor: pointer;
 }
 
+*[readonly] {
+    pointer-events: none;
+}
+
 /* Pokemon Card images grid */
 
 #pokemon-grid {
