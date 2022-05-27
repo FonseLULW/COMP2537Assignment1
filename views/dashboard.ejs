@@ -67,8 +67,7 @@
 
             <% accounts.forEach(account=> { %>
                 <!-- One single account -->
-                <form class="single-account" action="/sakdlm">
-
+                <form class="single-account" action="/admin/editUser" method="POST">
                     <!-- Status Section -->
                     <div class="status">
                         <% if (account.admin) { %>
@@ -80,13 +79,13 @@
                     <div class="info">
                         <div class="username">
                             <label for="newUsername" class="uname-info label">Username:</label>
-                            <input type="text" name="newUsername" class="uname-info val" value="<%= account.username %>" disabled>
+                            <input type="text" name="newUsername" class="uname-info val" value="<%= account.username %>"
+                                readonly>
                         </div>
                         <div class="email">
-                            <span class="email-info label">Email:</span>
-                            <span class="email-info val">
-                                <%= account.email %>
-                            </span>
+                            <label for="email" class="email-info label">Email:</label>
+                            <input type="email" name="email" class="email-info val" value="<%= account.email %>"
+                                readonly>
                         </div>
                     </div>
 
@@ -101,12 +100,11 @@
                             <% if (account.id==userId) { %>
                                 disabled
                             <% } %>
-                            "
-                            <% if (account.id==userId) { %>
+                            " <% if (account.id==userId) { %>
                                 disabled
-                            <% } %>
-                            >
-                                Toggle Admin
+                                <% } %>
+                                    >
+                                    Toggle Admin
                             </button>
                         </div>
                         <div class="a-delete

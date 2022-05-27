@@ -1,3 +1,5 @@
+const User = require("../models/User");
+
 const forwardAuthenticated = (req, res, next) => {
     if (req.session.authenticated) {
         res.redirect("/user");
@@ -19,11 +21,13 @@ const ensureAuthenticated = (req, res, next) => {
 };
 
 const verifyAdmin = (req, res, next) => {
-    if (req.session.isAdmin) {
-        next();
-    } else {
-        res.redirect("/user");
-    }
+    User.findById(req.session.uid, "admin", (err, data) => {
+        if (data.admin) {
+            next();
+        } else {
+            res.redirect("/user");
+        }
+    });
 };
 
 module.exports = {forwardAuthenticated, ensureAuthenticated, verifyAdmin};

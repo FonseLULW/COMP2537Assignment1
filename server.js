@@ -140,8 +140,8 @@ app.post("/auth/login", (req, res) => {
             res.render("login", {err: "Incorrect Email or Password"});
         } else {
             req.session.username = resp.username;
+            req.session.email = resp.email;
             req.session.uid = resp._id;
-            req.session.isAdmin = resp.admin;
             req.session.authenticated = true;
             res.redirect("/user");
         }
@@ -169,8 +169,8 @@ app.post("/auth/signup", (req, res) => {
                     console.log(err.message);
                 } else {
                     req.session.username = data.username;
+                    req.session.email = data.email;
                     req.session.uid = data._id;
-                    req.session.isAdmin = data.admin;
                     req.session.authenticated = true;
                     res.redirect("/user");
                 }
@@ -298,6 +298,35 @@ app.post("/shop/addToCart", ensureAuthenticated, createProductIfNotExists, creat
 app.get("/dashboard", ensureAuthenticated, verifyAdmin, (req, res) => {
     User.find({}, (err, resp) => {
         res.render("dashboard", {accounts: resp, userId: req.session.uid});
+    });
+});
+
+app.post("/admin/toggleAdmin", ensureAuthenticated, verifyAdmin, (req, res) => {
+    const {email} = req.body;
+    console.log(`Email: ${email}`);
+    if (req.session.email != email) {
+        User.findOneAndUpdate({email: email}, [{$set: {admin: {$not: "$admin"}}}], (err, resp) => {
+            if (err) {
+                res.send(err);
+            }
+            // res.send("OK");
+        });
+    } else {
+        res.send("OK");
+    }
+    
+});
+
+app.post("/admin/editUser", ensureAuthenticated, verifyAdmin, (req, res) => {
+    const {email, newUsername} = req.body;
+    console.log(req.body);
+    console.log(`Email: ${email} ; newUsername: ${newUsername}`);
+    User.findOneAndUpdate({email: email}, {username: newUsername}, (err, resp) => {
+        if (err) {
+            res.send(err);
+        } else {
+            res.redirect("/dashboard");
+        }
     });
 });
 

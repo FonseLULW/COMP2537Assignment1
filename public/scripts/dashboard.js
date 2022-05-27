@@ -1,11 +1,22 @@
+function reloadPage() {
+    window.location.href = "/dashboard";
+}
+
 function back() {
     window.location.href = "/user";
 }
 
 function initToggleAdmin(accountElem) {
     const toggleAdminBtn = accountElem.querySelector(".toggleAdmin");
+    const userEmail = accountElem.querySelector(".email-info.val").value.trim().toLowerCase();
     toggleAdminBtn.addEventListener("click", () => {
-        console.log(accountElem, toggleAdminBtn);
+        $.ajax({
+            url: "/admin/toggleAdmin",
+            method: "POST",
+            data: {
+                email: userEmail
+            }
+        }).done(reloadPage);
     });
 }
 
@@ -16,7 +27,7 @@ function initDeleteUser(accountElem) {
     });
 }
 
-function toggleControls(accountElem) {
+function toggleControls(accountElem, submitted) {
     const editBtn = accountElem.querySelector(".edit");
     const saveBtn = accountElem.querySelector(".save");
     const adminBtn = accountElem.querySelector(".toggleAdmin");
@@ -30,11 +41,14 @@ function toggleControls(accountElem) {
 
     if (isEditing) {
         editBtn.innerHTML = "Cancel";
-        usernameInput.disabled = false;
+        usernameInput.readOnly = false;
         usernameInput.focus();
     } else {
         editBtn.innerHTML = "Edit";
-        usernameInput.disabled = true;
+        usernameInput.readOnly = true;
+        if (!submitted) {
+            accountElem.reset();
+        }
     }
 }
 
@@ -55,6 +69,20 @@ function initEditUser(accountElem) {
     });
 }
 
+function initFormValidation(accountElem) {
+    const takenUsernames = [...document.querySelectorAll(".uname-info.val")].map(uname => uname.value.trim());
+    accountElem.onsubmit = () => {
+        toggleControls(accountElem, true);
+        if (takenUsernames.includes(accountElem.querySelector(".uname-info.val").value.trim())) {
+            accountElem.reset();
+            return false;
+        } else {
+            return true;
+        }
+        
+    };
+}
+
 function setup() {
     document.querySelector(".back").addEventListener("click", back);
 
@@ -62,6 +90,7 @@ function setup() {
         initToggleAdmin(account);
         initDeleteUser(account);
         initEditUser(account);
+        initFormValidation(account);
     });
 }
 
