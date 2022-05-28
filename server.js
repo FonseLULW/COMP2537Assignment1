@@ -332,6 +332,25 @@ app.post("/admin/editUser", ensureAuthenticated, verifyAdmin, (req, res) => {
     });
 });
 
+app.post("/admin/createUser", ensureAuthenticated, verifyAdmin, (req, res) => {
+    const {password, newUsername, email, admin} = req.body;
+    let newUser = {
+        username: newUsername,
+        email: email,
+        password: password,
+        admin: admin ? true : false
+    };
+    console.log(newUser);
+
+    User.create(newUser, (err, resp) => {
+        if (err) {
+            res.send(err);
+        } else {
+            res.redirect("/dashboard");
+        }
+    });
+});
+
 // Game
 app.get("/play", ensureAuthenticated, (req, res) => {
     res.render("game");

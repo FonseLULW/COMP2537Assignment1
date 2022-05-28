@@ -127,12 +127,20 @@ function setup() {
         const thisForm = document.querySelector(".newEntry");
         const uname = thisForm.querySelector(".uname-info.val").value.trim();
         const email = thisForm.querySelector(".email-info.val").value.trim();
+        const password = thisForm.querySelector(".password-info.val");
 
         if (takenUsernames.includes(uname) || takenEmails.includes(email)) {
             playShake(thisForm);
             return false;
         } else {
-            return true;
+            let pass = prompt(`Password: `);
+            if (pass) {
+                thisForm.querySelector(".password-info.val").value = pass.trim();
+                return true;
+            } else {
+                playShake(thisForm);
+                return false;
+            }
         }
     };
 }

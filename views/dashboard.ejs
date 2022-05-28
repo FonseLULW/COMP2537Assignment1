@@ -121,7 +121,7 @@
                 <% }) %>
                     <form class="single-account newEntry hidden" action="/admin/createUser" method="POST" autocomplete="off">
                         <div class="status">
-                            <input type="checkbox" value="Admin" class="tag">
+                            <input type="checkbox" value="true" class="tag" name="admin">
                         </div>
 
                         <div class="info">
@@ -134,6 +134,11 @@
                                 <label for="email" class="email-info label">Email:</label>
                                 <input type="email" name="email" class="email-info val" placeholder="email@domain.com"
                                     required autocomplete="off">
+                            </div>
+                            <div class="password hidden">
+                                <label for="password" class="password-info label">Password:</label>
+                                <input type="password" name="password" class="password-info val"
+                                    autocomplete="off">
                             </div>
                         </div>
 

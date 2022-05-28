@@ -184,6 +184,10 @@ button.disabled, input[type="submit"].disabled{
     border-style: solid;
 }
 
+.newEntry {
+    flex-wrap: wrap;
+}
+
 .hidden {
     display: none;
 }
