@@ -67,7 +67,7 @@
 
             <% accounts.forEach(account=> { %>
                 <!-- One single account -->
-                <form class="single-account" action="/admin/editUser" method="POST">
+                <form class="single-account currentUser" action="/admin/editUser" method="POST" autocomplete="off">
                     <!-- Status Section -->
                     <div class="status">
                         <% if (account.admin) { %>
@@ -80,12 +80,12 @@
                         <div class="username">
                             <label for="newUsername" class="uname-info label">Username:</label>
                             <input type="text" name="newUsername" class="uname-info val" value="<%= account.username %>"
-                                readonly>
+                                readonly required autocomplete="off">
                         </div>
                         <div class="email">
                             <label for="email" class="email-info label">Email:</label>
                             <input type="email" name="email" class="email-info val" value="<%= account.email %>"
-                                readonly>
+                                readonly required autocomplete="off">
                         </div>
                     </div>
 
@@ -119,6 +119,31 @@
                     </div>
                 </form>
                 <% }) %>
+                    <form class="single-account newEntry hidden" action="/admin/createUser" method="POST" autocomplete="off">
+                        <div class="status">
+                            <input type="checkbox" value="Admin" class="tag">
+                        </div>
+
+                        <div class="info">
+                            <div class="username">
+                                <label for="newUsername" class="uname-info label">Username:</label>
+                                <input type="text" name="newUsername" class="uname-info val" placeholder="Username"
+                                    required autocomplete="off">
+                            </div>
+                            <div class="email">
+                                <label for="email" class="email-info label">Email:</label>
+                                <input type="email" name="email" class="email-info val" placeholder="email@domain.com"
+                                    required autocomplete="off">
+                            </div>
+                        </div>
+
+                        <div class="controls">
+                            <div class="create">
+                                <button type="button" class="cancel btn">Cancel</button>
+                                <input type="submit" class="add btn" value="Add">
+                            </div>
+                        </div>
+                    </form>
                     <!-- Add new account -->
                     <button class="account-create">
                         <span class="material-symbols-outlined">

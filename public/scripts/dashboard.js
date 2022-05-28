@@ -15,8 +15,9 @@ function initToggleAdmin(accountElem) {
             method: "POST",
             data: {
                 email: userEmail
-            }
-        }).done(reloadPage);
+            },
+            success: reloadPage
+        });
     });
 }
 
@@ -53,12 +54,16 @@ function toggleControls(accountElem, submitted) {
 }
 
 function cancelAllEditsButThis(accountElem) {
-    const editsToCancel = [...document.querySelectorAll(".single-account")].filter(account => {
+    const editsToCancel = [...document.querySelectorAll(".currentUser")].filter(account => {
         let editBtn = account.querySelector(".edit");
         return editBtn.innerHTML.trim().toUpperCase() === "CANCEL" && account !== accountElem;
     }).forEach(editing => {
         toggleControls(editing);
     });
+    const createToCancel = document.querySelector(".newEntry");
+    if (!createToCancel.classList.contains("hidden")) {
+        toggleCreateUserForm();
+    }
 }
 
 function initEditUser(accountElem) {
@@ -69,29 +74,67 @@ function initEditUser(accountElem) {
     });
 }
 
-function initFormValidation(accountElem) {
-    const takenUsernames = [...document.querySelectorAll(".uname-info.val")].map(uname => uname.value.trim());
-    accountElem.onsubmit = () => {
-        toggleControls(accountElem, true);
-        if (takenUsernames.includes(accountElem.querySelector(".uname-info.val").value.trim())) {
-            accountElem.reset();
+function toggleCreateUserForm() {
+    const newUserForm = document.querySelector(".newEntry");
+    const plusBtn = document.querySelector(".account-create");
+    newUserForm.classList.toggle("hidden");
+    plusBtn.classList.toggle("hidden");
+    newUserForm.reset();
+}
+
+function playShake(elem) {
+    elem.classList.add("shaking");
+    console.log("shaking");
+
+    setTimeout(() => {
+        console.log("doneshaking");
+        elem.classList.remove("shaking");
+    }, 300);
+}
+
+function setup() {
+    const takenUsernames = [...document.querySelectorAll(".currentUser")].map(user => user.querySelector(".uname-info.val").value.trim());
+    const takenEmails = [...document.querySelectorAll(".currentUser")].map(user => user.querySelector(".email-info.val").value.trim());
+    console.log(takenUsernames, takenEmails);
+
+    document.querySelector(".back").addEventListener("click", back);
+
+    document.querySelectorAll(".currentUser").forEach(account => {
+        initToggleAdmin(account);
+        initDeleteUser(account);
+        initEditUser(account);
+        
+        account.onsubmit = () => {
+            toggleControls(account, true);
+            if (takenUsernames.includes(account.querySelector(".uname-info.val").value.trim())) {
+                account.reset();
+                playShake(account);
+                return false;
+            } else {
+                return true;
+            }
+    
+        };
+    });
+
+    document.querySelector(".account-create").addEventListener("click", () => {
+        cancelAllEditsButThis();
+        toggleCreateUserForm();
+        document.querySelector(".cancel").addEventListener("click", toggleCreateUserForm);
+    });
+    
+    document.querySelector(".newEntry").onsubmit = (e) => {
+        const thisForm = document.querySelector(".newEntry");
+        const uname = thisForm.querySelector(".uname-info.val").value.trim();
+        const email = thisForm.querySelector(".email-info.val").value.trim();
+
+        if (takenUsernames.includes(uname) || takenEmails.includes(email)) {
+            playShake(thisForm);
             return false;
         } else {
             return true;
         }
-        
     };
-}
-
-function setup() {
-    document.querySelector(".back").addEventListener("click", back);
-
-    document.querySelectorAll(".single-account").forEach(account => {
-        initToggleAdmin(account);
-        initDeleteUser(account);
-        initEditUser(account);
-        initFormValidation(account);
-    });
 }
 
 document.addEventListener("DOMContentLoaded", setup);

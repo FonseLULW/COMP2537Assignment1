@@ -309,7 +309,9 @@ app.post("/admin/toggleAdmin", ensureAuthenticated, verifyAdmin, (req, res) => {
             if (err) {
                 res.send(err);
             }
+            console.log("END");
             // res.send("OK");
+            res.redirect("/dashboard");
         });
     } else {
         res.send("OK");
