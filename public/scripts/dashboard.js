@@ -8,7 +8,7 @@ function back() {
 
 function initToggleAdmin(accountElem) {
     const toggleAdminBtn = accountElem.querySelector(".toggleAdmin");
-    const userEmail = accountElem.querySelector(".email-info.val").value.trim().toLowerCase();
+    const userEmail = accountElem.querySelector(".email-info.val").value.trim();
     toggleAdminBtn.addEventListener("click", () => {
         $.ajax({
             url: "/admin/toggleAdmin",
@@ -23,8 +23,16 @@ function initToggleAdmin(accountElem) {
 
 function initDeleteUser(accountElem) {
     const deleteBtn = accountElem.querySelector(".a-delete");
+    const email = accountElem.querySelector(".email-info.val").value.trim();
     deleteBtn.addEventListener("click", () => {
         console.log(accountElem, deleteBtn);
+        if (!deleteBtn.classList.contains("disabled")) {
+            $.ajax({
+                url: `/admin/deleteUser/${email}`,
+                method: `get`,
+                success: reloadPage
+            });
+        }
     });
 }
 
@@ -127,7 +135,6 @@ function setup() {
         const thisForm = document.querySelector(".newEntry");
         const uname = thisForm.querySelector(".uname-info.val").value.trim();
         const email = thisForm.querySelector(".email-info.val").value.trim();
-        const password = thisForm.querySelector(".password-info.val");
 
         if (takenUsernames.includes(uname) || takenEmails.includes(email)) {
             playShake(thisForm);

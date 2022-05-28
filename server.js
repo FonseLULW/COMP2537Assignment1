@@ -351,6 +351,16 @@ app.post("/admin/createUser", ensureAuthenticated, verifyAdmin, (req, res) => {
     });
 });
 
+app.get("/admin/deleteUser/:email", ensureAuthenticated, verifyAdmin, (req, res) => {
+    User.findOneAndDelete({email: req.params.email}, (err, resp) => {
+        if (err) {
+            res.send(err);
+        } else {
+            res.send("OK");
+        }
+    });
+});
+
 // Game
 app.get("/play", ensureAuthenticated, (req, res) => {
     res.render("game");
