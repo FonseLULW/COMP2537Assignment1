@@ -54,9 +54,38 @@
 
     <!-- Main -->
     <main>
-        <section id="game">
+        <form id="setup" class="content">
+            <h3 class="title" id="g-title">Setup Game</h3>
+            <div class="g-dimensions input-container">
+                <label for="dimensions">Grid Dimensions:</label>
+                <select id="dims" name="dimensions" class="field">
+                    <option value="4">2 x 2</option>
+                    <option value="16">4 x 4</option>
+                    <option value="36">6 x 6</option>
+                    <option value="64">8 x 8</option>
+                    <option value="100">10 x 10</option>
+                </select>
+            </div>
+
+            <div class="g-difficulty input-container">
+                <label for="difficulty">Difficulty:</label>
+                <select id="difficulty" name="difficulty" class="field">
+                    <option value="easy">Easy</option>
+                    <option value="medium">Medium</option>
+                    <option value="hard">Hard</option>
+                </select>
+            </div>
+
+            <div class="g-pokemons input-container">
+                <label for="pokes">Pokemons:</label>
+                <input type="number" name="pokes" class="field" min="1" required value="1">
+            </div>
+            
+            <input class="g-submit" type="submit" value="Play!">
+        </form>
+        <!-- <section id="game" class="content">
             <div class="card"></div>
-        </section>
+        </section> -->
     </main>
 
     <!-- Footer -->

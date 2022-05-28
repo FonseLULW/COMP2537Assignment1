@@ -1,3 +1,50 @@
+@import url('https://fonts.googleapis.com/css2?family=Poiret+One&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Roboto+Flex&display=swap');
+
+
+main {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+}
+
+#setup {
+    display: flex;
+    flex-direction: column;
+    min-width: fit-content;
+    width: 40%;
+    row-gap: 1rem;
+    border-radius: 5%;
+    background-color: rgb(252, 252, 252);
+}
+
+#g-title {
+    font-family: 'Poiret One', cursive;
+    font-size: 3rem;
+    text-align: center;
+    margin-top: 2.5rem;
+}
+
+.input-container {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    padding-left: 1rem;
+    padding-right: 1rem;
+    font-family: 'Roboto Flex', sans-serif;
+    font-size: 1.1rem;
+
+}
+
+.field {
+    width: 40%;
+}
+
+.g-pokemons .field{
+    width: 15%;
+}
+
 #game {
     border: 2px tomato solid;
     width: 600px;
