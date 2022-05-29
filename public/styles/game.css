@@ -1,5 +1,6 @@
 @import url('https://fonts.googleapis.com/css2?family=Poiret+One&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Roboto+Flex&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Cantarell&display=swap');
 
 
 main {
@@ -76,4 +77,13 @@ main {
 
 .flip {
     transform: rotateY(180deg);
+}
+
+.timer {
+    font-family: 'Cantarell';
+    font-size: 2rem;
+}
+
+.critical {
+    color: red;
 }

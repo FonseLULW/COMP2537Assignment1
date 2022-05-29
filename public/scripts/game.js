@@ -75,6 +75,7 @@ class MatchingGame {
     play() {
         this.gameboardDiv.classList.remove("hidden");
         console.log("STARTING GAME");
+        this.timerDiv.querySelector("#seconds").innerHTML = "--";
 
         let loseTimer;
 
@@ -138,13 +139,17 @@ class MatchingGame {
         this.timerDiv.classList.toggle("hidden");
         let timer = 0;
         let ticks = 1000;
+        let timeLeft;
         loseTimer = setInterval(() => {
-            this.timerDiv.querySelector("#seconds").innerHTML = (this.timeInMS - timer) / ticks;
+            timeLeft = (this.timeInMS - timer) / ticks;
+            this.timerDiv.querySelector("#seconds").innerHTML = timeLeft;
 
             if (timer == this.timeInMS) {
                 this.gameOver = true;
                 clearInterval(loseTimer);
                 this.lose();
+            } else if (timeLeft <= 15) {
+                this.timerDiv.querySelector("#seconds").classList.add("critical");
             }
 
             timer += ticks;
@@ -165,8 +170,9 @@ class MatchingGame {
 
     resetGame() {
         setTimeout(() => {
-            this.timerDiv.classList.toggle("hidden");
-            this.gameboardDiv.classList.toggle("hidden");
+            this.timerDiv.querySelector("#seconds").classList.remove("critical");
+            this.timerDiv.classList.add("hidden");
+            this.gameboardDiv.classList.add("hidden");
             document.querySelector("#setup").classList.remove("hidden");
         }, 2000);
     }
