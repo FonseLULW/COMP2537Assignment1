@@ -77,6 +77,32 @@ async function fireRestoreSearchEvent(historyType, historyValue, timestamp) {
     });
 }
 
+async function fireWinEvent(rows, cols, seconds, pokes, timestamp) {
+    $.ajax({
+        url: `/events/insertEvent`,
+        type: `put`,
+        data: {
+            text: `Won the ${seconds}s ${rows}x${cols} Pokemon Game with ${pokes} Pokemon!`,
+            date: getFormattedDate(timestamp),
+            time: getFormattedTime(timestamp),
+            hits: 1
+        },
+    });
+}
+
+async function fireLoseEvent(rows, cols, seconds, pokes, timestamp) {
+    $.ajax({
+        url: `/events/insertEvent`,
+        type: `put`,
+        data: {
+            text: `Lost the ${seconds}s ${rows}x${cols} Pokemon Game with ${pokes} Pokemon!`,
+            date: getFormattedDate(timestamp),
+            time: getFormattedTime(timestamp),
+            hits: 1
+        },
+    });
+}
+
 function setup() {
     console.log("Events have been loaded!");
 }

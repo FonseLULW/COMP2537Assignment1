@@ -160,6 +160,8 @@ class MatchingGame {
     win() {
         console.log("WINNER");
 
+        fireWinEvent(this.rows, this.cols, this.timeInMS / 1000, this.pokemonAmt, new Date());
+
         this.gameboardDiv.querySelectorAll(".card").forEach((card) => {
             card.classList.toggle("rotate");
         });
@@ -179,6 +181,8 @@ class MatchingGame {
 
     lose() {
         console.log("LOSER");
+
+        fireLoseEvent(this.rows, this.cols, this.timeInMS / 1000, this.pokemonAmt, new Date());
 
         this.gameboardDiv.querySelectorAll(".card").forEach((card) => {
             card.classList.toggle("rotate");
