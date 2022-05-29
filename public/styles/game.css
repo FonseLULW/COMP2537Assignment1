@@ -2,6 +2,10 @@
 @import url('https://fonts.googleapis.com/css2?family=Roboto+Flex&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Cantarell&display=swap');
 
+@keyframes turn {
+    0% { transform: rotateX(0deg);}
+    100% {transform: rotateX(360deg);}
+}
 
 main {
     display: flex;
@@ -79,11 +83,15 @@ main {
     transform: rotateY(180deg);
 }
 
-.timer {
+h3 {
     font-family: 'Cantarell';
     font-size: 2rem;
 }
 
 .critical {
     color: red;
+}
+
+.rotate {
+    animation: turn 1s linear infinite;
 }

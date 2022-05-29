@@ -6,6 +6,7 @@ class MatchingGame {
         this.timeInMS = timeInMS;
         this.gameboardDiv = gameboardDiv;
         this.timerDiv = document.querySelector("#seconds-left");
+        this.msgDiv = document.querySelector("#end-msg");
 
         this.firstSelected = null;
         this.secondSelected = null;
@@ -159,22 +160,50 @@ class MatchingGame {
     win() {
         console.log("WINNER");
 
-        this.resetGame();
+        this.gameboardDiv.querySelectorAll(".card").forEach((card) => {
+            card.classList.toggle("rotate");
+        });
+
+        setTimeout(() => {
+            this.gameboardDiv.querySelectorAll(".card").forEach((card) => {
+                card.classList.toggle("rotate");
+                card.classList.add("flip");
+            });
+
+            this.timerDiv.classList.add("hidden");
+            this.msgDiv.innerHTML = "You Win!";
+            this.msgDiv.classList.remove("hidden");
+            this.resetGame();
+        }, 5000);
     }
 
     lose() {
         console.log("LOSER");
 
-        this.resetGame();
+        this.gameboardDiv.querySelectorAll(".card").forEach((card) => {
+            card.classList.toggle("rotate");
+        });
+
+        setTimeout(() => {
+            this.gameboardDiv.querySelectorAll(".card").forEach((card) => {
+                card.classList.toggle("rotate");
+                card.classList.add("flip");
+            });
+            this.timerDiv.classList.add("hidden");
+            this.msgDiv.innerHTML = "You Lose!";
+            this.msgDiv.classList.remove("hidden");
+            this.resetGame();
+        }, 5000);
     }
 
     resetGame() {
         setTimeout(() => {
+            this.msgDiv.innerHTML = "";
+            this.msgDiv.classList.add("hidden");
             this.timerDiv.querySelector("#seconds").classList.remove("critical");
-            this.timerDiv.classList.add("hidden");
             this.gameboardDiv.classList.add("hidden");
             document.querySelector("#setup").classList.remove("hidden");
-        }, 2000);
+        }, 5000);
     }
 }
 
