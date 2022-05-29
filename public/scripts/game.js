@@ -5,6 +5,11 @@ class MatchingGame {
         this.pokemonAmt = pokemonAmt;
         this.timeInMS = timeInMS;
         this.gameboardDiv = gameboardDiv;
+
+        this.firstSelected = null;
+        this.secondSelected = null;
+        this.firstCardFlipped = false;
+        this.secondCardFlipped = false;
     }
 
     createBoard(cardsArr) {
@@ -17,7 +22,7 @@ class MatchingGame {
         for (let i = 1; i <= this.rows; i++) {
             for (let j = 1; j <= this.cols; j++) {
                 console.log(cards[index]);
-                cards[index] = `<div style="grid-column: ${j}; grid-row: ${i};" class="card"><img src="img/pokeball.png" class="card-back"><img src="${cards[index]}" class="card-front"></div>`;
+                cards[index] = `<div style="grid-column: ${j}; grid-row: ${i};" class="card" id="card${index}"><img src="img/pokeball.png" class="card-back"><img src="${cards[index]}" class="card-front"></div>`;
                 index++;
             }
         }
@@ -56,18 +61,35 @@ class MatchingGame {
         console.log(pokemonCards);
 
         this.createBoard(pokemonCards);
-
-        this.gameboardDiv.querySelectorAll(".card").forEach((card) => {
-            card.addEventListener("click", () => {
-                console.log(card);
-                card.classList.toggle("flip");
-            });
-        });
     }
 
     play() {
         this.gameboardDiv.classList.remove("hidden");
         console.log("STARTING GAME");
+
+        this.gameboardDiv.querySelectorAll(".card").forEach((card) => {
+            card.addEventListener("click", () => {
+                console.log(card, card.id, this.firstSelected);
+
+                if (this.secondCardFlipped) {
+                    console.log("ALREADY CLICKED 2 CARDS");
+                    return;
+                } else if (this.firstCardFlipped && this.firstSelected == card.querySelector(".card-front")) {
+                    console.log("CLICK ON SOMETHING ELSE");
+                    return;
+                }
+                card.classList.toggle("flip");
+
+                if (!this.firstCardFlipped) {
+                    this.firstSelected = card.querySelector(".card-front");
+                    this.firstCardFlipped = true;
+                } else {
+                    this.secondSelected = card.querySelector(".card-front");
+                    this.secondCardFlipped = true;
+                }
+
+            });
+        });
     }
 }
 
