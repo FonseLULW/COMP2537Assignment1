@@ -52,4 +52,28 @@ main {
     height: 600px;
     
     display: grid;
+    perspective: 1000px;
+    gap: 0.5rem;
+}
+
+.card {
+    position: relative;
+    transition: transform 1s;
+    transform-style: preserve-3d;
+}
+
+.card-back, .card-front {
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    backface-visibility: hidden;
+
+}
+
+.card-front {
+    transform: rotateY(180deg);
+}
+
+.flip {
+    transform: rotateY(180deg);
 }

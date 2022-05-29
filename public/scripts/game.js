@@ -8,37 +8,35 @@ class MatchingGame {
     }
 
     createBoard(cardsArr) {
+        // Give each card a pair, and then sort randomly
         let cards = cardsArr.concat(cardsArr);
-        console.log("DOUBLED: ", cards);
         cards.sort(() => Math.random() - 0.5);
-        console.log("SHUFFLED: ", cards);
 
+        // Assign a row and column to each card element
         let index = 0;
         for (let i = 1; i <= this.rows; i++) {
             for (let j = 1; j <= this.cols; j++) {
                 console.log(cards[index]);
-                cards[index] = `<div style="grid-column: ${j}; grid-row: ${i};" class="card"><img src="${cards[index]}"></div>`;
+                cards[index] = `<div style="grid-column: ${j}; grid-row: ${i};" class="card"><img src="img/pokeball.png" class="card-back"><img src="${cards[index]}" class="card-front"></div>`;
                 index++;
             }
         }
 
-        // let html = 
-
-        console.log(cards);
-
         this.gameboardDiv.innerHTML = "";
 
+        // Append each element in cards array into the board
         let board = "";
         cards.forEach((card) => {
             board += card;
         });
 
+        // Display the board with the proper dimensions
         this.gameboardDiv.innerHTML = board;
         this.gameboardDiv.style.gridTemplateColumns = `${(100 / this.cols)}%` * this.cols;
         this.gameboardDiv.style.gridTemplateRows = `${100 / this.rows}%` * this.rows;
     }
 
-    async generate() {
+    async setup() {
         console.log(`generating game board:\n\tcols: ${this.cols}\n\trows: ${this.rows}\n\tpokemons: ${this.pokemonAmt}\n\ttimeInMS: ${this.timeInMS}`);
 
         const pokemonIds = generateUniqueIds(this.pokemonAmt, this.cols * this.rows / 2);
@@ -58,6 +56,13 @@ class MatchingGame {
         console.log(pokemonCards);
 
         this.createBoard(pokemonCards);
+
+        this.gameboardDiv.querySelectorAll(".card").forEach((card) => {
+            card.addEventListener("click", () => {
+                console.log(card);
+                card.classList.toggle("flip");
+            });
+        });
     }
 
     play() {
@@ -122,7 +127,7 @@ function setup() {
         const time = determineTimeMS(setup.querySelector("#difficulty").value.trim());
 
         const game = new MatchingGame(dims, dims, pokeCount, time, target);
-        game.generate().then(() => {
+        game.setup().then(() => {
             setup.classList.add("hidden");
             game.play();
         });
