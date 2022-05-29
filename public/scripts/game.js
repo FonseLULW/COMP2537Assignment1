@@ -5,11 +5,13 @@ class MatchingGame {
         this.pokemonAmt = pokemonAmt;
         this.timeInMS = timeInMS;
         this.gameboardDiv = gameboardDiv;
+        this.timerDiv = document.querySelector("#seconds-left");
 
         this.firstSelected = null;
         this.secondSelected = null;
         this.firstCardFlipped = false;
         this.secondCardFlipped = false;
+        this.gameOver = false;
     }
 
     createBoard(cardsArr) {
@@ -63,23 +65,38 @@ class MatchingGame {
         this.createBoard(pokemonCards);
     }
 
+    resetSelection() {
+        this.firstSelected = null;
+        this.secondSelected = null;
+        this.firstCardFlipped = false;
+        this.secondCardFlipped = false;
+    }
+
     play() {
         this.gameboardDiv.classList.remove("hidden");
         console.log("STARTING GAME");
+
+        let loseTimer;
 
         this.gameboardDiv.querySelectorAll(".card").forEach((card) => {
             card.addEventListener("click", () => {
                 console.log(card, card.id, this.firstSelected);
 
-                if (this.secondCardFlipped) {
+                // Cancel click if the click is invalid
+                if (this.gameOver) {
+                    return;
+                } else if (this.secondCardFlipped) {
                     console.log("ALREADY CLICKED 2 CARDS");
                     return;
-                } else if (this.firstCardFlipped && this.firstSelected == card.querySelector(".card-front")) {
+                } else if (card.classList.contains("flip")) {
                     console.log("CLICK ON SOMETHING ELSE");
                     return;
                 }
+
+                // Flip the card
                 card.classList.toggle("flip");
 
+                // Keep track of flipped cards 1 and 2
                 if (!this.firstCardFlipped) {
                     this.firstSelected = card.querySelector(".card-front");
                     this.firstCardFlipped = true;
@@ -88,8 +105,70 @@ class MatchingGame {
                     this.secondCardFlipped = true;
                 }
 
+                // Check for flipped cards 'equality'
+                if (!this.secondCardFlipped) {
+                    console.log("PROCEED");
+                } else if (this.firstSelected.src.trim() == this.secondSelected.src.trim()) {
+                    console.log("MATCH");
+                    
+                    this.resetSelection();
+                } else {
+                    console.log("NOT MATCH");
+                    setTimeout(() => {
+                        this.firstSelected.parentElement.classList.toggle("flip");
+                        this.secondSelected.parentElement.classList.toggle("flip");
+
+                        this.resetSelection();
+                    }, 1000);
+                }
+
+                // Check for win condition
+                const revealed = this.gameboardDiv.querySelectorAll(".flip");
+                const allCards = this.gameboardDiv.querySelectorAll(".card");
+
+                if (revealed.length == allCards.length) {
+                    this.gameOver = true;
+                    clearInterval(loseTimer);
+                    this.win();
+                }
+
             });
         });
+
+        this.timerDiv.classList.toggle("hidden");
+        let timer = 0;
+        let ticks = 1000;
+        loseTimer = setInterval(() => {
+            this.timerDiv.querySelector("#seconds").innerHTML = (this.timeInMS - timer) / ticks;
+
+            if (timer == this.timeInMS) {
+                this.gameOver = true;
+                clearInterval(loseTimer);
+                this.lose();
+            }
+
+            timer += ticks;
+        }, ticks);
+    }
+
+    win() {
+        console.log("WINNER");
+
+        this.resetGame();
+    }
+
+    lose() {
+        console.log("LOSER");
+
+        this.resetGame();
+    }
+
+    resetGame() {
+        setTimeout(() => {
+            this.timerDiv.classList.toggle("hidden");
+            this.gameboardDiv.classList.toggle("hidden");
+            document.querySelector("#setup").classList.remove("hidden");
+        }, 2000);
     }
 }
 
